@@ -27,7 +27,7 @@
         android:text="@string/copyright" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btnUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView1"
@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/textView1"
-        android:layout_alignLeft="@+id/button3"
+        android:layout_alignLeft="@+id/btnUpdate"
         android:layout_marginBottom="20dp"
         android:text="Settings" />
 
@@ -48,7 +48,7 @@
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button3"
+        android:layout_above="@+id/btnUpdate"
         android:layout_centerHorizontal="true"
         android:text="Start" />
 

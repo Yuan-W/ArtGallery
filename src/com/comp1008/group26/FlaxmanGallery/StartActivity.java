@@ -61,12 +61,12 @@ public class StartActivity extends Activity implements OnClickListener {
 	
 			case R.id.imageButton1:
 			{
-				playMedia("/sdcard/ArtGallery/testing.mp4", "video/*");
+				playMedia(DbxSyncConfig.storeDir + "/testing.mp4", "video/*");
 				break;
 			}
 			case R.id.imageButton2:
 			{
-				playMedia("/sdcard/ArtGallery/testing.mp4", "video/*");
+				playMedia(DbxSyncConfig.storeDir +  "/testing.mp4", "video/*");
 				break;
 			}
 			case R.id.textView4:
