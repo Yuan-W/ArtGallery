@@ -4,8 +4,8 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk
-        android:minSdkVersion="8"
+   <uses-sdk
+        android:minSdkVersion="14"
         android:targetSdkVersion="17" />
 
     <application
@@ -31,14 +31,29 @@
             android:screenOrientation="landscape" >
         </activity>
         <activity
-            android:name="com.comp1008.group26.FlaxmanGallery.StartActivity"
-            android:configChanges="orientation"
-            android:label="@string/title_activity_start"
-            android:screenOrientation="landscape" >
+            android:name="com.comp1008.group26.FlaxmanGallery.VideoActivity"
+            android:label="@string/title_activity_video"
+            android:screenOrientation="landscape"  >
         </activity>
         <activity
-            android:name="com.comp1008.group26.FlaxmanGallery.VideoActivity"
-            android:label="@string/title_activity_video" >
+            android:name="com.comp1008.group26.FlaxmanGallery.AudioActivity"
+            android:label="@string/title_activity_audio"
+            android:screenOrientation="landscape"  >
+        </activity>
+        <activity
+            android:name="com.comp1008.group26.FlaxmanGallery.PhotoActivity"
+            android:label="@string/title_activity_photo"
+            android:screenOrientation="landscape"  >
+        </activity>
+        <activity
+            android:name="com.comp1008.group26.FlaxmanGallery.StartActivity"
+            android:label="@string/title_activity_start"
+            android:screenOrientation="landscape"  >
+        </activity>
+        <activity
+            android:name="com.comp1008.group26.FlaxmanGallery.VideoPlayerActivity"
+            android:label="@string/title_activity_video_player"
+            android:screenOrientation="landscape"  >
         </activity>
     </application>
 

@@ -7,7 +7,10 @@
     <string name="title_activity_setting">SettingActivity</string>
     <string name="title_activity_start">StartActivity</string>
     <string name="title_activity_video">VideoActivity</string>
+    <string name="title_activity_audio">AudioActivity</string>
+    <string name="title_activity_photo">PhotoActivity</string>
     <string name="dev_names">By Mateo Inchaurrandieta, Yuan Wei and Sze Nga Ho.</string>
     <string name="copyright">© 2014 Hydar Dewachi. All rights reserved.</string>
+    <string name="title_activity_video_player">VideoPlayerActivity</string>
 
 </resources>
