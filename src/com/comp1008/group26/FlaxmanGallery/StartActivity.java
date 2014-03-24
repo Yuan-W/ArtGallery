@@ -21,16 +21,20 @@ public class StartActivity extends Activity {
 		//Video
 		ArrayList<String> videos = new ArrayList<String>();
 		videos.add("Video 1");
-		videos.add("Video 2");
-		videos.add("Video 3");
+		//videos.add("Video 2");
+		//videos.add("Video 3");
 		ListView listview = (ListView) findViewById(R.id.listViewVideo);
 		listview.setAdapter(new ListAdapterVideo(this, videos));
-		
+/*
+		ArrayList<String> videos2 = new ArrayList<String>();
+		videos2.add("Video 2");
+		((ListView) findViewById(R.id.listViewVideo2)).setAdapter(new ListAdapterVideo(this, videos2));
+		*/
 		//Audio
 		ArrayList<String> audios = new ArrayList<String>();
 		audios.add("Audio 1");
-		audios.add("Audio 2");
-		audios.add("Audio 3");
+		//audios.add("Audio 2");
+		//audios.add("Audio 3");
 		ListView listview2 = (ListView) findViewById(R.id.listViewAudio);
 		listview2.setAdapter(new ListAdapterAudio(this, audios));
 		
@@ -38,8 +42,8 @@ public class StartActivity extends Activity {
 		//Photo
 		ArrayList<String> photos = new ArrayList<String>();
 		photos.add("Photo 1");
-		photos.add("Photo 2");
-		photos.add("Photo 3");
+		//photos.add("Photo 2");
+		//photos.add("Photo 3");
 		ListView listview3 = (ListView) findViewById(R.id.listViewPhoto);
 		listview3.setAdapter(new ListAdapterPhoto(this, photos));
 		
