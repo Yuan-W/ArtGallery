@@ -12,43 +12,14 @@
 
 // TODO: Remove unused defines
 // TODO: Add defines for sensors
-#define  LED3_RED       2
-#define  LED3_GREEN     4
-#define  LED3_BLUE      3
 
-#define  LED2_RED       5
-#define  LED2_GREEN     7
-#define  LED2_BLUE      6
-
-#define  LED1_RED       8
-#define  LED1_GREEN     10
-#define  LED1_BLUE      9
-
-#define  SERVO1         11
-#define  SERVO2         12
-#define  SERVO3         13
-
-#define  TOUCH_RECV     14
-#define  TOUCH_SEND     15
-
-#define  RELAY1         A0
-#define  RELAY2         A1
-
-#define  LIGHT_SENSOR   A2
-#define  TEMP_SENSOR    A3
-
-#define  BUTTON1        A6
-#define  BUTTON2        A7
-#define  BUTTON3        A8
-
-#define  JOY_SWITCH     A9      // pulls line down when pressed
-#define  JOY_nINT       A10     // active low interrupt input
-#define  JOY_nRESET     A11     // active low reset output
+#define US 22
+#define MS 24
 
 AndroidAccessory acc = AndroidAccessory("UCL",
 		     "Engagement Sensor",
 		     "Flaxman Gallery Armature sensor",
-		     "0.1",
+		     "1.0",
 		     "http://www.ucl.ac.uk/museums/uclart/about/collections/objects/flaxman-gallery",
 		     "0000000012345678");
 
@@ -61,23 +32,12 @@ void loop();
 uint16_t read_ultrasound();
 byte read_motion_sensor();
 
-void init_ultrasound() {
- //TODO: Implement! 
-}
-
-void init_motion_sensor() {
-  //TODO: Implement!
-}
-
 void setup()
 {
 	Serial.begin(115200);
 	Serial.print("\r\nStart");
 
-        init_ultrasound();
-        init_motion_sensor();
 
-	// autocalibrate OFF
 	touch_robot.set_CS_AutocaL_Millis(0xFFFFFFFF);
 
 	acc.powerOn();
@@ -117,30 +77,39 @@ void loop()
 		}
 	} else {
 		// reset outputs to default values on disconnect
-		analogWrite(LED1_RED, 255);
-		analogWrite(LED1_GREEN, 255);
-		analogWrite(LED1_BLUE, 255);
-		analogWrite(LED2_RED, 255);
-		analogWrite(LED2_GREEN, 255);
-		analogWrite(LED2_BLUE, 255);
-		analogWrite(LED3_RED, 255);
-		analogWrite(LED3_GREEN, 255);
-		analogWrite(LED3_BLUE, 255);
-		digitalWrite(RELAY1, LOW);
-		digitalWrite(RELAY2, LOW);
+		delay(150);
 	}
 
 	delay(10);
 }
 
-uint16_t read_ultrasound() {
-  //TODO: Implement!
-  return 0;
+uint16_t time_to_cm(int microseconds) {
+  return SPEED_OF_SOUND * microseconds / 2;
 }
 
+
+// NOTE: This method is partially based on the one found at:
+// http://arduino.cc/en/Tutorial/ping
+uint16_t read_ultrasound() {
+  
+  int pulseDuration;
+  pinMode(US, OUTPUT);
+  digitalWrite(US, LOW);
+  delayMicroseconds(2);
+  digitalWrite(US, HIGH);
+  delayMicroseconds(5);
+  digitalWrite(US, LOW);
+  
+  pinMode(US, INPUT);
+  pulseDuration = pulseIn(US, HIGH);
+  
+  return time_to_cm(pulseDuration);
+}
+
+
 byte read_motion_sensor() {
- //TODO: Implement!
-  return 0; 
+   pinMode(MS, INPUT);
+   return digitalRead(MS) == HIGH ? 0xFF : 0; 
 }
 
 
