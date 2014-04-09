@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
+
+import com.comp1008.group26.utility.SensorManager;
 import com.dropbox.sync.android.*;
 
 import java.io.File;
@@ -30,6 +32,7 @@ public class MainActivity extends Activity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

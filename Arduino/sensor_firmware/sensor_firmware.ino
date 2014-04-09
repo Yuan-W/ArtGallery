@@ -70,8 +70,8 @@ void loop()
 		case 0x4:
 			val = read_motion_sensor();
 			msg[0] = 0x2;
-			msg[1] = val >> 8;
-			msg[2] = 0; // This block isn't used
+			msg[1] = val;
+			msg[2] = msg[1]; // This block isn't used
 			acc.write(msg, 3);
 			break;
 		}
