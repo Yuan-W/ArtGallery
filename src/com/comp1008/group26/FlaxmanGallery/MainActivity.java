@@ -2,19 +2,16 @@ package com.comp1008.group26.FlaxmanGallery;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.LoaderManager;
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.Loader;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import com.comp1008.group26.utility.*;
+import com.comp1008.group26.utility.DbxSyncConfig;
+import com.comp1008.group26.utility.FileSyncTask;
 import com.dropbox.sync.android.*;
 
-import java.io.*;
 import java.util.List;
 
 import static com.comp1008.group26.utility.DbxSyncConfig.getAccountManager;
@@ -24,8 +21,6 @@ public class MainActivity extends Activity implements View.OnClickListener
 {
     private DbxAccountManager mDbxAcctMgr;
     private static final String LOG_TAG = "ART_GALLERY";
-    private DbxPath mSyncPath;
-    private ProgressDialog syncProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -92,9 +87,9 @@ public class MainActivity extends Activity implements View.OnClickListener
     {
         String selectedArmature = ((AlertDialog) dialog).getListView().getItemAtPosition(armatureIndex).toString();
         Log.d(LOG_TAG, selectedArmature);
-        mSyncPath = DbxPath.ROOT.getChild(selectedArmature);
+        DbxPath syncPath = DbxPath.ROOT.getChild(selectedArmature);
 
-        new FileSyncTask(this, mDbxAcctMgr, mSyncPath).execute();
+        new FileSyncTask(this, mDbxAcctMgr, syncPath).execute();
     }
 
     @Override
