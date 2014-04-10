@@ -1,4 +1,4 @@
-package com.comp1008.group26.FlaxmanGallery;
+package com.comp1008.group26.utility;
 
 import android.content.Context;
 import android.os.Environment;
