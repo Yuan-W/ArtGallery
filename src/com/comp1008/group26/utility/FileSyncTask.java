@@ -9,11 +9,9 @@ import com.comp1008.group26.Model.MediaInfo;
 import com.dropbox.sync.android.*;
 
 import java.io.*;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
-public class FileSyncTask extends AsyncTask<Void, String, Void>
+public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
 {
     private final DbxPath mPath;
     private final DbxAccountManager mAccountManager;
@@ -63,13 +61,30 @@ public class FileSyncTask extends AsyncTask<Void, String, Void>
     }
 
     @Override
-    protected Void doInBackground(Void... params)
+    protected List<MediaInfo> doInBackground(Void... params)
     {
         DbxFileSystem fs = getDbxFileSystem();
+        List<MediaInfo> mediaInfoList = new ArrayList<MediaInfo>();
         if (fs != null)
         {
             try
             {
+                DbxDatastore store = DbxDatastore.openDefault(mAccountManager.getLinkedAccount());
+                store.sync();
+                DbxTable tasksTbl = store.getTable("media");
+                DbxTable.QueryResult results = tasksTbl.query();
+                Iterator<DbxRecord> iterator = results.iterator();
+                while(iterator.hasNext())
+                {
+                    DbxRecord record = iterator.next();
+                    String title = record.getString("title");
+                    String fileName = record.getString("fileName");
+                    String description = record.getString("description");
+                    String thumbnail = record.getString("thumbnail");
+                    mediaInfoList.add(new MediaInfo(title, fileName, description, thumbnail));
+                }
+                store.close();
+
                 List<DbxFileInfo> entries = fs.listFolder(mPath);
 
                 if (mSortComparator != null)
@@ -107,7 +122,7 @@ public class FileSyncTask extends AsyncTask<Void, String, Void>
                     }
                 }
 
-                return null;
+                return mediaInfoList;
             } catch (DbxException e) {
                 e.printStackTrace();
             } catch (FileNotFoundException e) {
@@ -126,15 +141,19 @@ public class FileSyncTask extends AsyncTask<Void, String, Void>
         super.onProgressUpdate(message);
         String fileName = message[0];
         mProgressDialog.setMessage(fileName);
-        mDatabase.addMediaInfo(new MediaInfo("Title", fileName, "1234567", fileName));
-        Log.d("INSERT: ", fileName);
     }
 
     @Override
-    protected void onPostExecute(Void result)
+    protected void onPostExecute(List<MediaInfo> result)
     {
         super.onPostExecute(result);
-        mProgressDialog.dismiss();
+
+        Iterator<MediaInfo> iterator = result.iterator();
+        while(iterator.hasNext())
+        {
+            MediaInfo info = iterator.next();
+            mDatabase.addMediaInfo(info);
+        }
 
         List<MediaInfo> infoList = mDatabase.getAllMediaInfo();
 
@@ -145,7 +164,7 @@ public class FileSyncTask extends AsyncTask<Void, String, Void>
                     ", Path: " + info.getFilePath();
             Log.d("MediaInfo: ", msg);
         }
-
+        mProgressDialog.dismiss();
     }
 
     private DbxFileSystem getDbxFileSystem()
