@@ -5,27 +5,28 @@ import com.comp1008.group26.utility.DbxSyncConfig;
 public class MediaInfo
 {
     private int _id;
+    private String _title;
     private String _fileName;
     private String _thumbnail;
     private String _description;
 
-
-    public MediaInfo(String fileName, String description)
+    public MediaInfo(String title, String fileName, String description, String thumbnail)
     {
-        this(fileName, description, fileName);
-    }
-
-    public MediaInfo(String fileName, String description, String thumbnail)
-    {
+        this._title = title;
         this._fileName = fileName;
         this._description = description;
         this._thumbnail = thumbnail;
     }
 
-    public MediaInfo(int id, String fileName, String description, String thumbnail)
+    public MediaInfo(int id, String title, String fileName, String description, String thumbnail)
     {
-        this(fileName, description, thumbnail);
+        this(title, fileName, description, thumbnail);
         this._id = id;
+    }
+
+    public void setTitle(String title)
+    {
+        this._title = title;
     }
 
     public void setFileName(String fileName)
@@ -48,6 +49,11 @@ public class MediaInfo
         return _id;
     }
 
+    public String getTitle()
+    {
+        return _title;
+    }
+
     public String getFileName()
     {
         return _fileName;
@@ -63,8 +69,13 @@ public class MediaInfo
         return _description;
     }
 
-    public String getPath()
+    public String getFilePath()
     {
-        return DbxSyncConfig.storeDir + "/" + this._fileName;
+        return DbxSyncConfig.storeDir + this._fileName;
+    }
+
+    public String getThumbnailPath()
+    {
+        return DbxSyncConfig.storeDir + this._thumbnail;
     }
 }

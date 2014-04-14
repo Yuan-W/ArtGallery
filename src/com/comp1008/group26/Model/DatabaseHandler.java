@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper
 {
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String DATABASE_NAME = "ArtGallery.db";
 
@@ -39,7 +39,8 @@ public class DatabaseHandler extends SQLiteOpenHelper
         assert db != null;
 
         ContentValues values = new ContentValues();
-        values.put(Schema.MediaInfoEntry.COLUMN_NAME, info.getFileName());
+        values.put(Schema.MediaInfoEntry.COLUMN_TITLE, info.getTitle());
+        values.put(Schema.MediaInfoEntry.COLUMN_FILE_NAME, info.getFileName());
         values.put(Schema.MediaInfoEntry.COLUMN_DESCRIPTION, info.getDescription());
         values.put(Schema.MediaInfoEntry.COLUMN_THUMBNAIL, info.getThumbnail());
 
@@ -53,8 +54,9 @@ public class DatabaseHandler extends SQLiteOpenHelper
         SQLiteDatabase db = this.getReadableDatabase();
         assert db != null;
 
-        Cursor cursor = db.query(Schema.MediaInfoEntry.TABLE_NAME, new String[] {Schema.MediaInfoEntry._ID,
-                Schema.MediaInfoEntry.COLUMN_NAME, Schema.MediaInfoEntry.COLUMN_DESCRIPTION, Schema.MediaInfoEntry.COLUMN_THUMBNAIL},
+        Cursor cursor = db.query(Schema.MediaInfoEntry.TABLE_NAME, new String[] { Schema.MediaInfoEntry._ID,
+                Schema.MediaInfoEntry.COLUMN_TITLE, Schema.MediaInfoEntry.COLUMN_FILE_NAME,
+                Schema.MediaInfoEntry.COLUMN_DESCRIPTION, Schema.MediaInfoEntry.COLUMN_THUMBNAIL },
                 Schema.MediaInfoEntry._ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
@@ -62,7 +64,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
 
         assert cursor != null;
         return new MediaInfo(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3));
+                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
     }
 
     public List<MediaInfo> getAllMediaInfo()
@@ -80,7 +82,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
             do
             {
                 MediaInfo info = new MediaInfo(Integer.parseInt(cursor.getString(0)),
-                        cursor.getString(1), cursor.getString(2), cursor.getString(3));
+                        cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
 
                 mediaList.add(info);
             } while (cursor.moveToNext());
@@ -95,7 +97,8 @@ public class DatabaseHandler extends SQLiteOpenHelper
         assert db != null;
 
         ContentValues values = new ContentValues();
-        values.put(Schema.MediaInfoEntry.COLUMN_NAME, info.getFileName());
+        values.put(Schema.MediaInfoEntry.COLUMN_TITLE, info.getTitle());
+        values.put(Schema.MediaInfoEntry.COLUMN_FILE_NAME, info.getFileName());
         values.put(Schema.MediaInfoEntry.COLUMN_DESCRIPTION, info.getDescription());
         values.put(Schema.MediaInfoEntry.COLUMN_THUMBNAIL, info.getThumbnail());
 

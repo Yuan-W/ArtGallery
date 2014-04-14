@@ -13,13 +13,15 @@ public final class Schema
     public static abstract class MediaInfoEntry implements BaseColumns
     {
         public static final String TABLE_NAME = "media";
-        public static final String COLUMN_NAME = "name";
+        public static final String COLUMN_TITLE = "title";
+        public static final String COLUMN_FILE_NAME = "file_name";
         public static final String COLUMN_DESCRIPTION = "description";
         public static final String COLUMN_THUMBNAIL = "thumbnail";
 
         public static final String SQL_CREATE_ENTRIES = SQL_CREATE_TABLE + TABLE_NAME + " (" +
                 _ID + PRIMARY_KEY_TYPE + COMMA_SEP +
-                COLUMN_NAME + TEXT_TYPE + COMMA_SEP +
+                COLUMN_TITLE + TEXT_TYPE + COMMA_SEP +
+                COLUMN_FILE_NAME + TEXT_TYPE + COMMA_SEP +
                 COLUMN_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
                 COLUMN_THUMBNAIL + TEXT_TYPE +
                 " )";

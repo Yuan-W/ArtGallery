@@ -126,7 +126,7 @@ public class FileSyncTask extends AsyncTask<Void, String, Void>
         super.onProgressUpdate(message);
         String fileName = message[0];
         mProgressDialog.setMessage(fileName);
-        mDatabase.addMediaInfo(new MediaInfo(fileName, "1234567"));
+        mDatabase.addMediaInfo(new MediaInfo("Title", fileName, "1234567", fileName));
         Log.d("INSERT: ", fileName);
     }
 
@@ -140,9 +140,9 @@ public class FileSyncTask extends AsyncTask<Void, String, Void>
 
         for(MediaInfo info : infoList)
         {
-            String msg = "ID: " + info.getId() + ", Name: " + info.getFileName() +
-                    ", Description: " + info.getDescription() + ", Thumbnail:" + info.getThumbnail() +
-                    ", Path: " + info.getPath();
+            String msg = "ID: " + info.getId() + ", Title: " + info.getTitle() + ", Name: " + info.getFileName() +
+                    ", Description: " + info.getDescription() + ", Thumbnail: " + info.getThumbnail() +
+                    ", Path: " + info.getFilePath();
             Log.d("MediaInfo: ", msg);
         }
 
