@@ -1,5 +1,7 @@
 package com.comp1008.group26.utility;
 
+import java.io.IOException;
+
 
 
 /**
@@ -25,6 +27,7 @@ public interface EngagementSensor {
 	/**
 	 * Returns the sensor's current state
 	 * @return The state this sensor is currently in
+	 * @throws IOException 
 	 */
-	public EngagementState getCurrentState();
+	public EngagementState getCurrentState() throws IOException;
 }
