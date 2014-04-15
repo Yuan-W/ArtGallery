@@ -9,9 +9,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.comp1008.group26.Model.Schema.*;
+
 public class DatabaseHandler extends SQLiteOpenHelper
 {
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private static final String DATABASE_NAME = "ArtGallery.db";
 
@@ -23,13 +25,13 @@ public class DatabaseHandler extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-        db.execSQL(Schema.MediaInfoEntry.SQL_CREATE_ENTRIES);
+        db.execSQL(MediaInfoEntry.SQL_CREATE_ENTRIES);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
-        db.execSQL(Schema.MediaInfoEntry.SQL_DELETE_ENTRIES);
+        db.execSQL(MediaInfoEntry.SQL_DELETE_ENTRIES);
         onCreate(db);
     }
 
@@ -39,12 +41,15 @@ public class DatabaseHandler extends SQLiteOpenHelper
         assert db != null;
 
         ContentValues values = new ContentValues();
-        values.put(Schema.MediaInfoEntry.COLUMN_TITLE, info.getTitle());
-        values.put(Schema.MediaInfoEntry.COLUMN_FILE_NAME, info.getFileName());
-        values.put(Schema.MediaInfoEntry.COLUMN_DESCRIPTION, info.getDescription());
-        values.put(Schema.MediaInfoEntry.COLUMN_THUMBNAIL, info.getThumbnail());
-
-        db.insert(Schema.MediaInfoEntry.TABLE_NAME, null, values);
+        values.put(MediaInfoEntry.COLUMN_TITLE, info.getTitle());
+        values.put(MediaInfoEntry.COLUMN_FILE_NAME, info.getFileName());
+        values.put(MediaInfoEntry.COLUMN_SUMMARY, info.getSummary());
+        values.put(MediaInfoEntry.COLUMN_DESCRIPTION, info.getDescription());
+        values.put(MediaInfoEntry.COLUMN_THUMBNAIL_NAME, info.getThumbnailName());
+        values.put(MediaInfoEntry.COLUMN_RELATED_ITEMS, info.getRelatedItems());
+        values.put(MediaInfoEntry.COLUMN_IS_ON_HOME_GRID, booleanToInt(info.getIsOnHomeGrid()));
+        values.put(MediaInfoEntry.COLUMN_IS_ON_BOTTOM_MENU, booleanToInt(info.getIsOnBottomMenu()));
+        db.insert(MediaInfoEntry.TABLE_NAME, null, values);
         db.close();
     }
 
@@ -54,24 +59,27 @@ public class DatabaseHandler extends SQLiteOpenHelper
         SQLiteDatabase db = this.getReadableDatabase();
         assert db != null;
 
-        Cursor cursor = db.query(Schema.MediaInfoEntry.TABLE_NAME, new String[] { Schema.MediaInfoEntry._ID,
-                Schema.MediaInfoEntry.COLUMN_TITLE, Schema.MediaInfoEntry.COLUMN_FILE_NAME,
-                Schema.MediaInfoEntry.COLUMN_DESCRIPTION, Schema.MediaInfoEntry.COLUMN_THUMBNAIL },
-                Schema.MediaInfoEntry._ID + "=?",
+        Cursor cursor = db.query(MediaInfoEntry.TABLE_NAME, new String[] { MediaInfoEntry._ID,
+                MediaInfoEntry.COLUMN_TITLE, MediaInfoEntry.COLUMN_FILE_NAME, MediaInfoEntry.COLUMN_SUMMARY,
+                MediaInfoEntry.COLUMN_DESCRIPTION, MediaInfoEntry.COLUMN_THUMBNAIL_NAME, MediaInfoEntry.COLUMN_RELATED_ITEMS,
+                MediaInfoEntry.COLUMN_IS_ON_HOME_GRID, MediaInfoEntry.COLUMN_IS_ON_BOTTOM_MENU },
+                MediaInfoEntry._ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         assert cursor != null;
         return new MediaInfo(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+                cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                cursor.getString(4), cursor.getString(5), cursor.getString(6),
+                intToBoolean(cursor.getInt(7)),intToBoolean(cursor.getInt(8)));
     }
 
     public List<MediaInfo> getAllMediaInfo()
     {
         List<MediaInfo> mediaList = new ArrayList<MediaInfo>();
 
-        String selectQuery = "SELECT  * FROM " + Schema.MediaInfoEntry.TABLE_NAME;
+        String selectQuery = "SELECT  * FROM " + MediaInfoEntry.TABLE_NAME;
 
         SQLiteDatabase db = this.getWritableDatabase();
         assert db != null;
@@ -82,7 +90,9 @@ public class DatabaseHandler extends SQLiteOpenHelper
             do
             {
                 MediaInfo info = new MediaInfo(Integer.parseInt(cursor.getString(0)),
-                        cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+                        cursor.getString(1), cursor.getString(2), cursor.getString(3),
+                        cursor.getString(4), cursor.getString(5), cursor.getString(6),
+                        intToBoolean(cursor.getInt(7)),intToBoolean(cursor.getInt(8)));
 
                 mediaList.add(info);
             } while (cursor.moveToNext());
@@ -97,12 +107,16 @@ public class DatabaseHandler extends SQLiteOpenHelper
         assert db != null;
 
         ContentValues values = new ContentValues();
-        values.put(Schema.MediaInfoEntry.COLUMN_TITLE, info.getTitle());
-        values.put(Schema.MediaInfoEntry.COLUMN_FILE_NAME, info.getFileName());
-        values.put(Schema.MediaInfoEntry.COLUMN_DESCRIPTION, info.getDescription());
-        values.put(Schema.MediaInfoEntry.COLUMN_THUMBNAIL, info.getThumbnail());
+        values.put(MediaInfoEntry.COLUMN_TITLE, info.getTitle());
+        values.put(MediaInfoEntry.COLUMN_FILE_NAME, info.getFileName());
+        values.put(MediaInfoEntry.COLUMN_SUMMARY, info.getSummary());
+        values.put(MediaInfoEntry.COLUMN_DESCRIPTION, info.getDescription());
+        values.put(MediaInfoEntry.COLUMN_THUMBNAIL_NAME, info.getThumbnailName());
+        values.put(MediaInfoEntry.COLUMN_RELATED_ITEMS, info.getRelatedItems());
+        values.put(MediaInfoEntry.COLUMN_IS_ON_HOME_GRID, booleanToInt(info.getIsOnHomeGrid()));
+        values.put(MediaInfoEntry.COLUMN_IS_ON_BOTTOM_MENU, booleanToInt(info.getIsOnBottomMenu()));
 
-        return db.update(Schema.MediaInfoEntry.TABLE_NAME, values, Schema.MediaInfoEntry._ID + " = ?",
+        return db.update(MediaInfoEntry.TABLE_NAME, values, MediaInfoEntry._ID + " = ?",
                 new String[] { String.valueOf(info.getId()) });
     }
 
@@ -110,14 +124,14 @@ public class DatabaseHandler extends SQLiteOpenHelper
     {
         SQLiteDatabase db = this.getWritableDatabase();
         assert db != null;
-        db.delete(Schema.MediaInfoEntry.TABLE_NAME, Schema.MediaInfoEntry._ID + " = ?",
+        db.delete(MediaInfoEntry.TABLE_NAME, MediaInfoEntry._ID + " = ?",
                 new String[] { String.valueOf(info.getId()) });
         db.close();
     }
 
     public int getMediaInfoCount()
     {
-        String countQuery = "SELECT  * FROM " + Schema.MediaInfoEntry.TABLE_NAME;
+        String countQuery = "SELECT  * FROM " + MediaInfoEntry.TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         assert db != null;
         Cursor cursor = db.rawQuery(countQuery, null);
@@ -130,6 +144,16 @@ public class DatabaseHandler extends SQLiteOpenHelper
     {
         SQLiteDatabase db = this.getWritableDatabase();
         assert db != null;
-        db.execSQL("DELETE FROM " + Schema.MediaInfoEntry.TABLE_NAME);
+        db.execSQL("DELETE FROM " + MediaInfoEntry.TABLE_NAME);
+    }
+
+    private Boolean intToBoolean(Integer value)
+    {
+        return value>0;
+    }
+
+    private Integer booleanToInt(Boolean value)
+    {
+        return value ? 1 : 0;
     }
 }

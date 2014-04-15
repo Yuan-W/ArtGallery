@@ -70,7 +70,11 @@ public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
             try
             {
                 DbxDatastore store = DbxDatastore.openDefault(mAccountManager.getLinkedAccount());
+                publishProgress("Syncing Database...");
                 store.sync();
+                while (store.getSyncStatus().isDownloading)
+                {
+                }
                 DbxTable tasksTbl = store.getTable("media");
                 DbxTable.QueryResult results = tasksTbl.query();
                 Iterator<DbxRecord> iterator = results.iterator();
@@ -78,10 +82,14 @@ public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
                 {
                     DbxRecord record = iterator.next();
                     String title = record.getString("title");
-                    String fileName = record.getString("fileName");
+                    String fileName = record.getString("file_name");
+                    String summary = record.getString("summary");
                     String description = record.getString("description");
-                    String thumbnail = record.getString("thumbnail");
-                    mediaInfoList.add(new MediaInfo(title, fileName, description, thumbnail));
+                    String thumbnail = record.getString("thumbnail_name");
+                    String relatedItems = record.getString("related_items");
+                    Boolean isOnHomeGrid = record.getBoolean("is_on_home_grid");
+                    Boolean isOnBottomMenu = record.getBoolean("is_on_bottom_menu");
+                    mediaInfoList.add(new MediaInfo(title, fileName, summary, description, thumbnail, relatedItems, isOnHomeGrid, isOnBottomMenu));
                 }
                 store.close();
 
@@ -160,8 +168,9 @@ public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
         for(MediaInfo info : infoList)
         {
             String msg = "ID: " + info.getId() + ", Title: " + info.getTitle() + ", Name: " + info.getFileName() +
-                    ", Description: " + info.getDescription() + ", Thumbnail: " + info.getThumbnail() +
-                    ", Path: " + info.getFilePath();
+                    ", Summary" + info.getSummary() + ", Description: " + info.getDescription() + ", Thumbnail: " + info.getThumbnailName() +
+                    ", Path: " + info.getFilePath() + ", Related: " + info.getRelatedItems() +
+                    ", IsOnHome: " + info.getIsOnHomeGrid() + ", isOnBottom: " + info.getIsOnBottomMenu() ;
             Log.d("MediaInfo: ", msg);
         }
         mProgressDialog.dismiss();
