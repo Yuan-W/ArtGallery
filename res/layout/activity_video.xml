@@ -4,12 +4,37 @@
     android:layout_height="match_parent"
     tools:context=".VideoActivity" >
 
+	<LinearLayout
+	        android:id="@+id/linearLayout1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+			android:layout_alignTop="@+id/relativeLayout1"
+			android:layout_toLeftOf="@+id/linearLayout1"
+			android:layout_marginLeft="20dp"
+	        android:orientation="vertical" >
+		
+	       <TextView
+	           android:id="@+id/title"
+	           android:layout_width="wrap_content"
+	           android:layout_height="wrap_content"
+	           android:text="MARCIA FARQUHAR&apos;S"
+	           android:textAppearance="?android:attr/textAppearanceMedium" />
 
+		    <TextView
+		        android:id="@+id/body"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="17dp"
+		        android:text="Description" />
+    
+    </LinearLayout>
     <RelativeLayout
         
        	android:id="@+id/relativeLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp" >
         
@@ -36,57 +61,9 @@
 
     
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-		android:layout_toRightOf="@+id/relativeLayout1"
-		android:layout_alignTop="@+id/relativeLayout1"
-		android:layout_marginLeft="10dp"
-        android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="MARCIA FARQUHAR&apos;S"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-		    <TextView
-		        android:id="@+id/textView2"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:text="The Flaxman Exchange"
-		        android:textAppearance="?android:attr/textAppearanceSmall" />
-		    <TextView
-		        android:id="@+id/textView3"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_marginTop="17dp"
-		        android:text="Description" />
     
-    </LinearLayout>
     
     
 
-    <LinearLayout
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/relativeLayout1"
-		android:layout_marginLeft="10dp"
-        android:orientation="vertical" >
-		<TextView
-	        android:id="@+id/textView4"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="Related" />
-	    <ListView
-	        android:id="@+id/relatedVideo"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="1" >
-	    </ListView>
-    </LinearLayout>
     
 </RelativeLayout>

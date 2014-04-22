@@ -1,16 +1,62 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    tools:context=".PhotoActivity"
-    android:background="#000000" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PhotoActivity" >
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/video" />
+	<LinearLayout
+	        android:id="@+id/linearLayout1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+			android:layout_alignTop="@+id/relativeLayout1"
+			android:layout_toLeftOf="@+id/linearLayout1"
+			android:layout_marginLeft="20dp"
+	        android:orientation="vertical" >
+		
+	       <TextView
+	           android:id="@+id/title"
+	           android:layout_width="wrap_content"
+	           android:layout_height="wrap_content"
+	           android:text="MARCIA FARQUHAR&apos;S"
+	           android:textAppearance="?android:attr/textAppearanceMedium" />
+
+		    <TextView
+		        android:id="@+id/body"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="17dp"
+		        android:text="Description" />
+		    
+		    <TextView
+		        android:id="@+id/caption"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="30dp"
+		        android:text="caption"
+		        android:textAppearance="?android:attr/textAppearanceMedium" />
     
+    
+    </LinearLayout>
+    <RelativeLayout
+        
+       	android:id="@+id/relativeLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:gravity="top"
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp" >
+
+           <ImageView
+               android:id="@+id/videomain"
+               android:layout_width="400dp"
+               android:layout_height="300dp"
+               android:layout_alignParentLeft="true"
+               android:layout_alignParentTop="true"
+               android:src="@drawable/video" />
+
+    </RelativeLayout>
+
 </RelativeLayout>

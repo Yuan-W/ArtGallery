@@ -5,8 +5,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import com.comp1008.group26.FlaxmanGallery.AudioActivity;
+import com.comp1008.group26.FlaxmanGallery.PhotoActivity;
 import com.comp1008.group26.FlaxmanGallery.R;
+import com.comp1008.group26.FlaxmanGallery.TextActivity;
 import com.comp1008.group26.FlaxmanGallery.VideoActivity;
+import com.comp1008.group26.Model.Item;
+import com.comp1008.group26.Model.Partner;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,17 +23,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class ListAdapterVideoSmall extends BaseAdapter {
+public class PartnerListAdapter extends BaseAdapter {
     
     private Activity activity;
-    private ArrayList<String> data;
+    private ArrayList<Partner> data;
     private static LayoutInflater inflater=null;
-    public ListAdapterVideoSmall(Activity a, ArrayList<String> b) {
+    public PartnerListAdapter(Activity a, ArrayList<Partner> b) {
         activity = a;
         data = b;
         inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -47,22 +57,24 @@ public class ListAdapterVideoSmall extends BaseAdapter {
     
 
 
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView( int position, View convertView, ViewGroup parent) {
         View vi=convertView;
-        final String title = data.get(position);
+        Partner p = data.get(position) ;
 
         if(convertView==null)
-            vi = inflater.inflate(R.layout.item_video_small, null);
+        {
+        	vi = inflater.inflate(R.layout.item_partner, null);
+        	
+        }
 
-        TextView text=(TextView)vi.findViewById(R.id.title);
-        text.setText(title);
+       ((ImageView)vi.findViewById(R.id.logo)).setBackgroundResource(p.getLogo());
+       ( (TextView)vi.findViewById(R.id.name)).setText(p.getName());
+       ( (TextView)vi.findViewById(R.id.details)).setText(p.getDetails());
+       ( (TextView)vi.findViewById(R.id.link)).setText(p.getLink());
         
-
         vi.setOnClickListener(new OnClickListener() {
         public void onClick(View v) {
-	           	Intent intent=new Intent(activity, VideoActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-	           	intent.putExtra("title", title);
-	           	activity.startActivity(intent);
+	           	
             }
         }); 
         return vi;

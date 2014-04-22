@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageButton;
+import android.view.Window;
+
 import com.comp1008.group26.utility.DbxSyncConfig;
 import com.comp1008.group26.utility.FileSyncTask;
 import com.dropbox.sync.android.*;
@@ -25,16 +28,18 @@ public class MainActivity extends Activity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+    	requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mDbxAcctMgr = getAccountManager(this);
 
-        findViewById(R.id.button1).setOnClickListener(this);
-        findViewById(R.id.button2).setOnClickListener(this);
+        ((ImageButton) findViewById(R.id.start_btn)).setOnClickListener(this);
+        ((ImageButton) findViewById(R.id.setting_btn)).setOnClickListener(this);
+        ((ImageButton) findViewById(R.id.update_btn)).setOnClickListener(this);
 
-        findViewById(R.id.btnUpdate).setOnClickListener(new View.OnClickListener()
+        findViewById(R.id.update_btn).setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
@@ -102,21 +107,28 @@ public class MainActivity extends Activity implements View.OnClickListener
 
     public void onClick(View v)
     {
-        switch (v.getId())
+    	switch (v.getId())
         {
-            case R.id.button1:
+            case R.id.start_btn:
             {
                 Intent intent = new Intent(this, StartActivity.class);
                 startActivity(intent);
                 break;
             }
-            case R.id.button2:
+            case R.id.setting_btn:
+            {
+                Intent intent = new Intent(this, SettingActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.update_btn:
             {
                 Intent intent = new Intent(this, SettingActivity.class);
                 startActivity(intent);
                 break;
             }
         }
+
     }
 
     private void linkToDropbox()

@@ -4,9 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 
-import com.comp1008.group26.utility.ListAdapterAudio;
-import com.comp1008.group26.utility.ListAdapterVideo;
-import com.comp1008.group26.utility.ListAdapterVideoSmall;
+import com.comp1008.group26.utility.ItemListAdapter;
 
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -32,6 +30,12 @@ public class AudioActivity extends Activity implements OnClickListener{
     ImageButton imageButton;
     boolean isPlay;
 
+	String title;
+	String body;
+	String caption;
+	int img;
+	int link;
+	
     final Runnable run = new Runnable() {
 		 
        @Override
@@ -47,14 +51,19 @@ public class AudioActivity extends Activity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_audio);
-		((TextView)findViewById(R.id.title)).setText( getIntent().getExtras().getString("title"));
 		
-		ArrayList<String> audios = new ArrayList<String>();
-		audios.add("Audio 4");
-		audios.add("Audio 5");
-		ListView listview = (ListView) findViewById(R.id.relatedAudio);
-		listview.setAdapter(new ListAdapterAudio(this, audios));
-		mplayer = MediaPlayer.create(this, R.raw.phyllida_surprise);
+		title = getIntent().getExtras().getString("title");
+		body = getIntent().getExtras().getString("body");
+		caption = getIntent().getExtras().getString("caption");
+		img = getIntent().getExtras().getInt("img");
+		link = getIntent().getExtras().getInt("link");
+
+
+		((ImageButton) findViewById(R.id.videomain)).setImageResource(img);
+		((TextView)findViewById(R.id.title)).setText( title);
+		((TextView)findViewById(R.id.body)).setText( body);
+		
+		mplayer = MediaPlayer.create(this, link);
 
        // mplayer.start();
 		/*try {

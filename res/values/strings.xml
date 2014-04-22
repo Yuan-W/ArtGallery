@@ -12,5 +12,9 @@
     <string name="dev_names">By Mateo Inchaurrandieta, Yuan Wei and Sze Nga Ho.</string>
     <string name="copyright">© 2014 Hydar Dewachi. All rights reserved.</string>
     <string name="title_activity_video_player">VideoPlayerActivity</string>
-
+	<string name="title_activity_text">TextActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_contact">ContactActivity</string>
+    <string name="title_activity_special">SpecialActivity</string>
+    <string name="title_activity_partner">PartnerActivity</string>
 </resources>

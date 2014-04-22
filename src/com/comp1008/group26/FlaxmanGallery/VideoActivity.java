@@ -3,8 +3,7 @@ package com.comp1008.group26.FlaxmanGallery;
 import java.io.File;
 import java.util.ArrayList;
 
-import com.comp1008.group26.utility.ListAdapterVideo;
-import com.comp1008.group26.utility.ListAdapterVideoSmall;
+import com.comp1008.group26.utility.ItemListAdapter;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,20 +19,30 @@ import android.widget.TextView;
 
 public class VideoActivity extends Activity  implements OnClickListener {
 
+	String title;
+	String body;
+	String caption;
+	int img;
+	int link;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_video);
+
+		title = getIntent().getExtras().getString("title");
+		body = getIntent().getExtras().getString("body");
+		caption = getIntent().getExtras().getString("caption");
+		img = getIntent().getExtras().getInt("img");
+		link = getIntent().getExtras().getInt("link");
+
+		((ImageButton) findViewById(R.id.videomain)).setImageResource(img);
 		((ImageButton) findViewById(R.id.videomain)).setOnClickListener(this);
 		((ImageButton) findViewById(R.id.videoplay)).setOnClickListener(this);
-		((TextView)findViewById(R.id.title)).setText( getIntent().getExtras().getString("title"));
+		((TextView)findViewById(R.id.title)).setText( title);
+		((TextView)findViewById(R.id.body)).setText( body);
 		
-		ArrayList<String> videos = new ArrayList<String>();
-		videos.add("Video 4");
-		videos.add("Video 5");
-		ListView listview = (ListView) findViewById(R.id.relatedVideo);
-		listview.setAdapter(new ListAdapterVideoSmall(this, videos));
 	}
 
 	@Override
@@ -50,12 +59,12 @@ public class VideoActivity extends Activity  implements OnClickListener {
 		
 			case R.id.videomain:
 			{
-				playMedia(R.raw.testing, "video/*");
+				playMedia(link, "video/*");
 				break;
 			}
 			case R.id.videoplay:
 			{
-				playMedia(R.raw.testing, "video/*");
+				playMedia(link, "video/*");
 				break;
 			}
 		}
