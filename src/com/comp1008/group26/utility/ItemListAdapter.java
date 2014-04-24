@@ -7,10 +7,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import com.comp1008.group26.FlaxmanGallery.AudioActivity;
+import com.comp1008.group26.FlaxmanGallery.PartnerActivity;
 import com.comp1008.group26.FlaxmanGallery.PhotoActivity;
 import com.comp1008.group26.FlaxmanGallery.R;
 import com.comp1008.group26.FlaxmanGallery.TextActivity;
 import com.comp1008.group26.FlaxmanGallery.VideoActivity;
+import com.comp1008.group26.FlaxmanGallery.WebActivity;
 import com.comp1008.group26.Model.Item;
 
 import android.app.Activity;
@@ -24,6 +26,7 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
@@ -57,7 +60,8 @@ public class ItemListAdapter extends BaseAdapter {
 
 
 	public View getView( int position, View convertView, ViewGroup parent) {
-        View vi=convertView;
+        
+		View vi=convertView;
         //Item data.get(position) = data.get(position);
 
         if(convertView==null)
@@ -74,6 +78,7 @@ public class ItemListAdapter extends BaseAdapter {
         ImageView play=(ImageView)vi.findViewById(R.id.play);
         TextView titleV=(TextView)vi.findViewById(R.id.title);
         TextView summaryV=(TextView)vi.findViewById(R.id.summary);
+        TextView largeTitle=(TextView)vi.findViewById(R.id.large_title);
         
         final int type=data.get(position).getType(); //0 text		1 video		2 audio		3 image
         final String title=data.get(position).getTitle();
@@ -82,6 +87,7 @@ public class ItemListAdapter extends BaseAdapter {
         final String body=data.get(position).getBody();
         final int link=data.get(position).getLink();
         final String caption=data.get(position).getCaption();
+        final String website=data.get(position).getWebsite();
     	
     	
         if(type==Item.TEXT)
@@ -92,6 +98,7 @@ public class ItemListAdapter extends BaseAdapter {
         	summaryV.setVisibility(View.VISIBLE);
         	titleV.setText(title);
         	summaryV.setText(summary);
+        	largeTitle.setVisibility(View.GONE);
         }
         else if(type==Item.AUDIO)
         {
@@ -104,6 +111,7 @@ public class ItemListAdapter extends BaseAdapter {
         	titleV.setText(title);
         	summaryV.setText(summary);
         	image_srcB.setImageResource(image_src);
+        	largeTitle.setVisibility(View.GONE);
         } 
         else if(type==Item.VIDEO)
         {
@@ -116,6 +124,7 @@ public class ItemListAdapter extends BaseAdapter {
         	titleV.setText(title);
         	summaryV.setText(summary);
         	image_srcB.setImageResource(image_src);
+        	largeTitle.setVisibility(View.GONE);
         } 
         else if(type==Item.IMAGE)
         {
@@ -124,13 +133,22 @@ public class ItemListAdapter extends BaseAdapter {
         	summaryV.setVisibility(View.GONE);
         	image_srcB.setVisibility(View.VISIBLE);
         	image_srcB.setImageResource(image_src);
-        	
+        	largeTitle.setVisibility(View.GONE);
         	/*android.view.ViewGroup.LayoutParams layoutParams = image_srcB.getLayoutParams();
         	layoutParams.width = 400;
         	layoutParams.height = 400;
         	image_srcB.setLayoutParams(layoutParams);*/
         } 
-
+        else if(type==Item.WEB || type==Item.PARTNER )
+        {
+        	largeTitle.setVisibility(View.VISIBLE);
+        	play.setVisibility(View.GONE);
+        	image_srcB.setVisibility(View.GONE);
+        	titleV.setVisibility(View.GONE);
+        	summaryV.setVisibility(View.GONE);
+        	largeTitle.setText(title);
+        }
+        
         vi.setOnClickListener(new OnClickListener() {
         public void onClick(View v) {
 	           	Intent intent =new Intent(activity, VideoActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -149,12 +167,21 @@ public class ItemListAdapter extends BaseAdapter {
 	            else if(type==Item.IMAGE)
 	            {
 		           	intent=new Intent(activity, PhotoActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	            } 
+	            else if(type==Item.WEB)
+	            {
+		           	intent=new Intent(activity, WebActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	            } 
+	            else if(type==Item.PARTNER)
+	            {
+		           	intent=new Intent(activity, PartnerActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 	            }
 	           	intent.putExtra("title", title);
 	           	intent.putExtra("body", body);
 	           	intent.putExtra("caption", caption);
 	           	intent.putExtra("img", image_src);
 	           	intent.putExtra("link", link);
+	           	intent.putExtra("website", website);
 	           	activity.startActivity(intent);
             }
         }); 

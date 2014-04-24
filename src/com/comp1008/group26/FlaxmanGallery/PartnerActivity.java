@@ -1,35 +1,29 @@
 package com.comp1008.group26.FlaxmanGallery;
 
-import java.io.File;
 import java.util.ArrayList;
 
-import com.comp1008.group26.utility.ItemListAdapter;
+import com.comp1008.group26.Model.Partner;
+import com.comp1008.group26.utility.PartnerListAdapter;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.View.OnClickListener;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class PhotoActivity extends Activity implements OnClickListener {
+public class PartnerActivity extends Activity implements OnClickListener {
 
 	String title;
 	String body;
-	String caption;
-	int img;
-	int link;
-	boolean isfill=false;
+
 	View decorView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		if (SettingActivity.fontSize==2)
         {
             setTheme(R.style.Theme_Large);
@@ -40,32 +34,41 @@ public class PhotoActivity extends Activity implements OnClickListener {
         }
 		
 		super.onCreate(savedInstanceState);
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_photo);
-		
+		setContentView(R.layout.activity_partner);
+		 
 		decorView = getWindow().getDecorView();
 		int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
 		decorView.setSystemUiVisibility(uiOptions);
 
-		title = getIntent().getExtras().getString("title");
+		/*title = getIntent().getExtras().getString("title");
 		body = getIntent().getExtras().getString("body");
-		caption = getIntent().getExtras().getString("caption");
-		img = getIntent().getExtras().getInt("img");
-		link = getIntent().getExtras().getInt("link");
-		((ImageView) findViewById(R.id.videomain)).setImageResource(img);
+		
 		((TextView)findViewById(R.id.title)).setText( title);
 		((TextView)findViewById(R.id.body)).setText( body);
-		((TextView)findViewById(R.id.caption)).setText( caption);
+		*/
 		((ImageButton) findViewById(R.id.home)).setOnClickListener(this);
 		
+		
+		ArrayList<Partner> partners = new ArrayList<Partner>();
+		Partner p1 = new Partner( R.drawable.uclbanner, "Partner1", "Details", "http://www.ucl.ac.uk/");
+		Partner p2 = new Partner( R.drawable.uclbanner, "Partner2", "Details", "http://www.ucl.ac.uk/");
+		partners.add(p1);
+		partners.add(p2);
+		
+		ListView list = (ListView)findViewById(R.id.partnerList);
+		PartnerListAdapter las = new PartnerListAdapter(this, partners);
+		list.setAdapter(las);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		//getMenuInflater().inflate(R.menu.video, menu);
+		//getMenuInflater().inflate(R.menu.text, menu);
 		return true;
 	}
+
 
 	@Override
 	public void onClick(View v) {
@@ -101,5 +104,4 @@ public class PhotoActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		//super.onBackPressed();
 	}
-
 }

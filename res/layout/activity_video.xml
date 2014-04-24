@@ -2,6 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
+	android:id="@+id/videoLayoutParent"
     tools:context=".VideoActivity" >
 
 	<LinearLayout
@@ -9,20 +11,20 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 			android:layout_alignTop="@+id/relativeLayout1"
-			android:layout_toLeftOf="@+id/linearLayout1"
-			android:layout_marginLeft="20dp"
 	        android:orientation="vertical" >
 		
 	       <TextView
 	           android:id="@+id/title"
 	           android:layout_width="wrap_content"
 	           android:layout_height="wrap_content"
+	           style="?textTitle" 
 	           android:text="MARCIA FARQUHAR&apos;S"
 	           android:textAppearance="?android:attr/textAppearanceMedium" />
 
 		    <TextView
 		        android:id="@+id/body"
 		        android:layout_width="wrap_content"
+		        style="?textBody" 
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="17dp"
 		        android:text="Description" />
@@ -33,33 +35,49 @@
        	android:id="@+id/relativeLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp" >
+        android:layout_alignParentRight="true">
         
            <ImageButton
                android:id="@+id/videomain"
-               android:layout_width="300dp"
-               android:layout_height="300dp"
-               android:layout_alignParentLeft="true"
+               android:layout_width="400dp"
+               android:layout_height="240dp"
+               
+       		 	android:layout_alignParentRight="true"
                android:layout_alignParentTop="true"
-               android:layout_marginLeft="0dp"
-               android:layout_marginTop="0dp"
                android:src="@drawable/video" />
-
-	    <ImageButton
+           <ImageButton
 	        android:id="@+id/videoplay"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_centerHorizontal="true"
+	        android:layout_alignRight="@+id/video"
 	        android:layout_centerVertical="true"
+	        android:layout_marginRight="153dp"
 	        android:background="#00000000"
+	        android:gravity="center_horizontal"
 	        android:src="@drawable/play" />
+	    <VideoView
+	        android:id="@+id/video"
+	        android:layout_width="400dp"
+	        android:layout_height="240dp"
+		        
+      		android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+	        android:visibility="invisible" />
+
+	    
 
     </RelativeLayout>
 
     
+ 	<ImageButton
+ 	    android:id="@+id/home"
+ 	    android:layout_width="50dp"
+ 	    android:layout_height="50dp"
+ 	    android:layout_alignParentBottom="true"
+ 	    android:layout_alignParentLeft="true"
+ 	    android:padding="6dp"
+        android:scaleType="fitCenter"
+ 	    android:src="@drawable/home_white" />
 
     
     

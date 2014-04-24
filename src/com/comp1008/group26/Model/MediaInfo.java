@@ -12,8 +12,10 @@ public class MediaInfo
     private String _thumbnailName;
     private String _relatedItems;
     private Boolean _isOnHomeGrid;
+    private Boolean _isOnBottomMenu;
 
-    public MediaInfo(String title, String fileName, String summary, String description, String thumbnailName, String relatedItems, Boolean isOnHomeGrid)
+
+    public MediaInfo(String title, String fileName, String summary, String description, String thumbnailName, String relatedItems, Boolean isOnHomeGrid, Boolean isOnBottomMenu)
     {
         this._title = title;
         this._fileName = fileName;
@@ -22,11 +24,12 @@ public class MediaInfo
         this._thumbnailName = thumbnailName;
         this._relatedItems = relatedItems;
         this._isOnHomeGrid = isOnHomeGrid;
+        this._isOnBottomMenu = isOnBottomMenu;
     }
 
-    public MediaInfo(int id, String title, String fileName, String summary, String description, String thumbnailName, String relatedItems, Boolean isOnHomeGrid)
+    public MediaInfo(int id, String title, String fileName, String summary, String description, String thumbnailName, String relatedItems, Boolean isOnHomeGrid, Boolean isOnBottomMenu)
     {
-        this(title, fileName, summary, description, thumbnailName, relatedItems, isOnHomeGrid);
+        this(title, fileName, summary, description, thumbnailName, relatedItems, isOnHomeGrid, isOnBottomMenu);
         this._id = id;
     }
 
@@ -63,6 +66,11 @@ public class MediaInfo
     public void setIsOnHomeGrid(Boolean isOnHomeGrid)
     {
         this._isOnHomeGrid = _isOnHomeGrid;
+    }
+
+    public void setIsOnBottomMenu(Boolean isOnBottomMenu)
+    {
+        this._isOnBottomMenu = _isOnBottomMenu;
     }
 
     public int getId()
@@ -103,6 +111,11 @@ public class MediaInfo
     public Boolean getIsOnHomeGrid()
     {
         return _isOnHomeGrid;
+    }
+
+    public Boolean getIsOnBottomMenu()
+    {
+        return _isOnBottomMenu;
     }
 
     public String getFilePath()

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -17,4 +17,39 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="small_title_text">
+      <item name="android:textSize">18sp</item>
+      <item name="android:textStyle">normal</item>
+      <item name="android:paddingBottom">5dip</item>
+   </style>
+   <style name="small_body_text">
+      <item name="android:textSize">15sp</item>
+      <item name="android:textStyle">normal</item>
+      <item name="android:paddingBottom">5dip</item>
+   </style>
+   <style name="large_title_text">
+      <item name="android:textSize">21sp</item>
+      <item name="android:textStyle">normal</item>
+      <item name="android:paddingBottom">5dip</item>
+   </style>
+
+   <style name="large_body_text">
+      <item name="android:textSize">18sp</item>
+      <item name="android:textStyle">normal</item>
+      <item name="android:paddingBottom">5dip</item>
+   </style>
+
+  <!-- Base application theme is the default theme. -->
+  <style name="Theme">
+  </style>
+
+  <style name="Theme.Small">
+     <item name="textTitle">@style/small_title_text</item>
+     <item name="textBody">@style/small_body_text</item>
+  </style>
+
+  <style name="Theme.Large">
+      <item name="textTitle">@style/large_title_text</item>
+      <item name="textBody">@style/large_body_text</item>
+  </style>
 </resources>

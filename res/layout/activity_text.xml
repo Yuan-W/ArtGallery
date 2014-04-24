@@ -1,24 +1,41 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TextActivity"
     android:orientation="vertical"
-    android:padding="10dp" >
+    android:padding="20dp" >
 
+ 	<LinearLayout
+ 	    android:layout_width="match_parent"
+ 	    android:layout_height="wrap_content"
+ 	    android:orientation="vertical" >
+ 	    
 
     <TextView android:id="@+id/title" 
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content" 
         android:text="title"
+	 	style="?textTitle" 
         android:paddingBottom="20dp"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
  
  	<TextView android:id="@+id/body" 
         android:layout_width="wrap_content" 
         android:layout_height="wrap_content"
+	    style="?textBody" 
         android:text="body" />
-    
-   
+ 	    
+ 	</LinearLayout>
 
-</LinearLayout>
+ 	<ImageButton
+ 	    android:id="@+id/home"
+ 	    android:layout_width="50dp"
+ 	    android:layout_height="50dp"
+ 	    android:layout_alignParentBottom="true"
+ 	    android:layout_alignParentLeft="true"
+ 	    android:padding="6dp"
+        android:scaleType="fitCenter"
+ 	    android:src="@drawable/home_white" />
+ 	
+</RelativeLayout>

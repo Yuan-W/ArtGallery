@@ -27,6 +27,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -66,17 +67,23 @@ public class PartnerListAdapter extends BaseAdapter {
         	vi = inflater.inflate(R.layout.item_partner, null);
         	
         }
-
+        final String link = p.getLink();
        ((ImageView)vi.findViewById(R.id.logo)).setBackgroundResource(p.getLogo());
        ( (TextView)vi.findViewById(R.id.name)).setText(p.getName());
        ( (TextView)vi.findViewById(R.id.details)).setText(p.getDetails());
-       ( (TextView)vi.findViewById(R.id.link)).setText(p.getLink());
-        
-        vi.setOnClickListener(new OnClickListener() {
+       //( (TextView)vi.findViewById(R.id.link)).setText(p.getLink());
+        ((Button)vi.findViewById(R.id.button1)).setOnClickListener(new OnClickListener() {
         public void onClick(View v) {
-	           	
+	        	Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+	    		activity.startActivity(myIntent);
             }
-        }); 
+        });
+        /*vi.setOnClickListener(new OnClickListener() {
+        public void onClick(View v) {
+	        	Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+	    		activity.startActivity(myIntent);
+            }
+        }); */
         return vi;
     }
 }

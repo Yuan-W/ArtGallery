@@ -21,6 +21,7 @@ public final class Schema
         public static final String COLUMN_THUMBNAIL_NAME = "thumbnail_name";
         public static final String COLUMN_RELATED_ITEMS= "related_items";
         public static final String COLUMN_IS_ON_HOME_GRID = "is_on_home_grid";
+        public static final String COLUMN_IS_ON_BOTTOM_MENU = "is_on_bottom_menu";
 
         public static final String SQL_CREATE_ENTRIES = SQL_CREATE_TABLE + TABLE_NAME + " (" +
                 _ID + PRIMARY_KEY_TYPE + COMMA_SEP +
@@ -30,7 +31,8 @@ public final class Schema
                 COLUMN_DESCRIPTION + TEXT_TYPE + COMMA_SEP +
                 COLUMN_THUMBNAIL_NAME + TEXT_TYPE + COMMA_SEP +
                 COLUMN_RELATED_ITEMS + TEXT_TYPE + COMMA_SEP +
-                COLUMN_IS_ON_HOME_GRID + INTEGER_TYPE +
+                COLUMN_IS_ON_HOME_GRID + INTEGER_TYPE + COMMA_SEP +
+                COLUMN_IS_ON_BOTTOM_MENU + INTEGER_TYPE +
                 " )";
 
         public static final String SQL_DELETE_ENTRIES = SQL_DROP_TABLE + TABLE_NAME;

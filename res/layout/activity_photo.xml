@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PhotoActivity" >
+    tools:context=".PhotoActivity"
+    android:padding="20dp" >
 
 	<LinearLayout
 	        android:id="@+id/linearLayout1"
@@ -10,18 +11,19 @@
 	        android:layout_height="wrap_content"
 			android:layout_alignTop="@+id/relativeLayout1"
 			android:layout_toLeftOf="@+id/linearLayout1"
-			android:layout_marginLeft="20dp"
 	        android:orientation="vertical" >
 		
 	       <TextView
 	           android:id="@+id/title"
 	           android:layout_width="wrap_content"
 	           android:layout_height="wrap_content"
+	           style="?textTitle" 
 	           android:text="MARCIA FARQUHAR&apos;S"
 	           android:textAppearance="?android:attr/textAppearanceMedium" />
 
 		    <TextView
 		        android:id="@+id/body"
+	    		style="?textBody" 
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="17dp"
@@ -32,6 +34,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_marginTop="30dp"
+	    		style="?textBody" 
 		        android:text="caption"
 		        android:textAppearance="?android:attr/textAppearanceMedium" />
     
@@ -44,19 +47,25 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:gravity="top"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp" >
+        android:gravity="top" >
 
            <ImageView
                android:id="@+id/videomain"
                android:layout_width="400dp"
-               android:layout_height="300dp"
+               android:layout_height="240dp"
                android:layout_alignParentLeft="true"
                android:layout_alignParentTop="true"
                android:src="@drawable/video" />
 
     </RelativeLayout>
 
+ 	<ImageButton
+ 	    android:id="@+id/home"
+ 	    android:layout_width="50dp"
+ 	    android:layout_height="50dp"
+ 	    android:layout_alignParentBottom="true"
+ 	    android:layout_alignParentLeft="true"
+ 	    android:padding="6dp"
+        android:scaleType="fitCenter"
+ 	    android:src="@drawable/home_white" />
 </RelativeLayout>

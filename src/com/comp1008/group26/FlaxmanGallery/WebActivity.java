@@ -13,23 +13,29 @@ import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class PhotoActivity extends Activity implements OnClickListener {
+public class WebActivity extends Activity implements OnClickListener{
 
-	String title;
-	String body;
-	String caption;
-	int img;
-	int link;
-	boolean isfill=false;
+	String website;
 	View decorView;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
+		
+		if (SettingActivity.fontSize==2)
+        {
+            setTheme(R.style.Theme_Large);
+        }
+        else if (SettingActivity.fontSize==1)
+        {
+            setTheme(R.style.Theme_Small);
+        }
 		if (SettingActivity.fontSize==2)
         {
             setTheme(R.style.Theme_Large);
@@ -41,21 +47,14 @@ public class PhotoActivity extends Activity implements OnClickListener {
 		
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_photo);
+		setContentView(R.layout.activity_website);
 		
 		decorView = getWindow().getDecorView();
 		int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
 		decorView.setSystemUiVisibility(uiOptions);
 
-		title = getIntent().getExtras().getString("title");
-		body = getIntent().getExtras().getString("body");
-		caption = getIntent().getExtras().getString("caption");
-		img = getIntent().getExtras().getInt("img");
-		link = getIntent().getExtras().getInt("link");
-		((ImageView) findViewById(R.id.videomain)).setImageResource(img);
-		((TextView)findViewById(R.id.title)).setText( title);
-		((TextView)findViewById(R.id.body)).setText( body);
-		((TextView)findViewById(R.id.caption)).setText( caption);
+		website = getIntent().getExtras().getString("website");
+		((WebView)findViewById(R.id.webView)).loadUrl(website);
 		((ImageButton) findViewById(R.id.home)).setOnClickListener(this);
 		
 	}

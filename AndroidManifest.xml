@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+	
     <uses-feature android:name="android.hardware.usb.accessory" />
 
     <application
@@ -66,11 +66,7 @@
             android:name="com.comp1008.group26.FlaxmanGallery.StartActivity"
             android:label="@string/title_activity_start"
             android:screenOrientation="landscape" >
-        </activity>
-        <activity
-            android:name="com.comp1008.group26.FlaxmanGallery.VideoPlayerActivity"
-            android:label="@string/title_activity_video_player"
-            android:screenOrientation="landscape" >
+            
         </activity>
         <activity android:name="com.dropbox.sync.android.DbxAuthActivity" />
         <activity
@@ -90,9 +86,16 @@
             android:name="com.comp1008.group26.FlaxmanGallery.TextActivity"
             android:label="@string/title_activity_text" >
         </activity>
-       
         
-
+        <activity
+            android:name="com.comp1008.group26.FlaxmanGallery.WebActivity"
+            android:label="@string/title_activity_text" >
+        </activity>
+        <activity
+            android:name="com.comp1008.group26.FlaxmanGallery.PartnerActivity"
+            android:label="@string/title_activity_text" >
+        </activity>
+        
         <service
             android:name="com.dropbox.sync.android.DbxSyncService"
             android:enabled="true"

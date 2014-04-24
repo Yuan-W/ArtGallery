@@ -9,10 +9,11 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="40dp"
+            android:layout_width="80dp"
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
-            android:layout_alignBottom="@+id/linearLayout1"/>
+	        android:layout_centerVertical="true"
+   			android:gravity="center_vertical"/>
     
    
         <LinearLayout
@@ -20,6 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/logo"
+            
+	    android:layout_centerVertical="true"
             android:orientation="horizontal" >
 
 
@@ -27,23 +30,34 @@
                 android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                style="?textBody" 
+                android:layout_marginLeft="20dp"
                 android:text="name" />
 
             <TextView
                 android:id="@+id/details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                style="?textBody" 
+                android:layout_marginLeft="20dp"
                 android:text="details" />
 
-            <TextView
+            <!-- TextView
                 android:id="@+id/link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:text="link" />
-        </LinearLayout>
+                style="?textBody" 
+                android:text="link" /-->
 
+	</LinearLayout>
+
+	<Button
+	    android:id="@+id/button1"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+		android:layout_alignParentRight="true"
+	    android:layout_centerVertical="true"
+	    android:text="Visit" />
 
 </RelativeLayout>

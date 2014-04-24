@@ -25,13 +25,25 @@ public class MainActivity extends Activity implements View.OnClickListener
     private DbxAccountManager mDbxAcctMgr;
     private static final String LOG_TAG = "ART_GALLERY";
 
+	View decorView;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
     	requestWindowFeature(Window.FEATURE_NO_TITLE);
-
+    	if (SettingActivity.fontSize==2)
+        {
+            setTheme(R.style.Theme_Large);
+        }
+        else if (SettingActivity.fontSize==1)
+        {
+            setTheme(R.style.Theme_Small);
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        decorView = getWindow().getDecorView();
+		int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+		decorView.setSystemUiVisibility(uiOptions);
 
         mDbxAcctMgr = getAccountManager(this);
 
@@ -138,4 +150,41 @@ public class MainActivity extends Activity implements View.OnClickListener
             mDbxAcctMgr.startLink(this, DbxSyncConfig.REQUEST_LINK_TO_DBX);
         }
     }
+    
+    @Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		// TODO Auto-generated method stub
+		super.onWindowFocusChanged(hasFocus);
+	    if (hasFocus) {
+
+	        decorView.setSystemUiVisibility(
+	        		  View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+		            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+		            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+		            | View.SYSTEM_UI_FLAG_FULLSCREEN
+		            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);}
+		            
+	}
+	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		//super.onBackPressed();
+	}
+/*
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		
+		if (SettingActivity.fontSize==2)
+        {
+            setTheme(R.style.Theme_Large);
+        }
+        else if (SettingActivity.fontSize==1)
+        {
+            setTheme(R.style.Theme_Small);
+        }
+	}
+	*/
 }

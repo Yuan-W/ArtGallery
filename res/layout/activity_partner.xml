@@ -6,11 +6,25 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".PartnerActivity" >
+    tools:context=".PartnerActivity" 
+    android:orientation="vertical"
+    android:padding="20dp" >
 
     <ListView
         android:id="@+id/partnerList"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.72" />
+    
+    
+    
+ 	<ImageButton
+ 	    android:id="@+id/home"
+ 	    android:layout_width="50dp"
+ 	    android:layout_height="50dp"
+ 	    android:layout_alignParentBottom="true"
+ 	    android:layout_alignParentLeft="true"
+ 	    android:padding="6dp"
+        android:scaleType="fitCenter"
+ 	    android:src="@drawable/home_white" />
 </RelativeLayout>

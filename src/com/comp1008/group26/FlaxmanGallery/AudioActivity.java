@@ -35,19 +35,31 @@ public class AudioActivity extends Activity implements OnClickListener{
 	String caption;
 	int img;
 	int link;
-	
+
+	View decorView;
     final Runnable run = new Runnable() {
 		 
        @Override
        public void run() {
        	seekBar.setProgress(mplayer.getCurrentPosition());
     	seekHandler.postDelayed(run, 1000);
-    	System.out.println("testing");
        }
    };
    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
+		
+		if (SettingActivity.fontSize==2)
+        {
+            setTheme(R.style.Theme_Large);
+        }
+        else if (SettingActivity.fontSize==1)
+        {
+            setTheme(R.style.Theme_Small);
+        }
+		
+		
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_audio);
@@ -57,11 +69,16 @@ public class AudioActivity extends Activity implements OnClickListener{
 		caption = getIntent().getExtras().getString("caption");
 		img = getIntent().getExtras().getInt("img");
 		link = getIntent().getExtras().getInt("link");
+		
+		decorView = getWindow().getDecorView();
+		int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+		decorView.setSystemUiVisibility(uiOptions);
 
 
 		((ImageButton) findViewById(R.id.videomain)).setImageResource(img);
 		((TextView)findViewById(R.id.title)).setText( title);
 		((TextView)findViewById(R.id.body)).setText( body);
+		((ImageButton) findViewById(R.id.home)).setOnClickListener(this);
 		
 		mplayer = MediaPlayer.create(this, link);
 
@@ -99,20 +116,52 @@ public class AudioActivity extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		
-		if(isPlay)
+		switch (v.getId())
 		{
-			imageButton.setBackgroundResource(R.drawable.pause);
-			mplayer.start();
+
+	         case R.id.home:
+	         {
+	        	 super.onBackPressed();
+	        	 break;
+	         }
+	        case R.id.audioControl:
+			{
+	        
+				if(isPlay)
+				{
+					imageButton.setBackgroundResource(R.drawable.pause);
+					mplayer.start();
+				}
+				else
+				{
+					imageButton.setBackgroundResource(R.drawable.play2);
+					mplayer.pause();
+				}
+				
+				isPlay = !isPlay;
+				break;
+			}
 		}
-		else
-		{
-			imageButton.setBackgroundResource(R.drawable.play2);
-			mplayer.pause();
-		}
-		
-		isPlay = !isPlay;
+	}
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		// TODO Auto-generated method stub
+		super.onWindowFocusChanged(hasFocus);
+	    if (hasFocus) {
+
+	        decorView.setSystemUiVisibility(
+	        		  View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+		            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+		            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+		            | View.SYSTEM_UI_FLAG_FULLSCREEN
+		            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);}
+		            
 	}
 	
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		//super.onBackPressed();
+	}
 
 }

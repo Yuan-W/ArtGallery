@@ -6,13 +6,16 @@ public class Item {
 	public static final int VIDEO = 1;
 	public static final int AUDIO = 2;
 	public static final int IMAGE = 3;
-	private int type=0; //0 text		1 video		2 audio		3 image
+	public static final int WEB = 4;
+	public static final int PARTNER = 5;
+	private int type=0;
 	private String title="";
 	private String summary="";
 	private int image_src=0;
 	private String body="";
 	private int link=0;
 	private String caption="";
+	private String website="";
 	
 	public int getType() {
 		return type;
@@ -55,6 +58,12 @@ public class Item {
 	}
 	public void setCaption(String caption) {
 		this.caption = caption;
+	}
+	public String getWebsite() {
+		return website;
+	}
+	public void setWebsite(String website) {
+		this.website = website;
 	}
 	
 }
