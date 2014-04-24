@@ -158,7 +158,7 @@ public class VideoActivity extends Activity  implements OnClickListener, OnTouch
 			
 		}else
 		{
-			((RelativeLayout)findViewById(R.id.videoLayoutParent)).setBackgroundColor(Color.WHITE);
+			((RelativeLayout)findViewById(R.id.videoLayoutParent)).setBackgroundResource(R.drawable.bg4);
 			
 			((ImageButton) findViewById(R.id.home)).setVisibility(View.VISIBLE);
 			layoutParams.width = own_w;

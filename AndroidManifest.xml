@@ -84,15 +84,18 @@
         
         <activity
             android:name="com.comp1008.group26.FlaxmanGallery.TextActivity"
+            android:screenOrientation="landscape"
             android:label="@string/title_activity_text" >
         </activity>
         
         <activity
             android:name="com.comp1008.group26.FlaxmanGallery.WebActivity"
+            android:screenOrientation="landscape"
             android:label="@string/title_activity_text" >
         </activity>
         <activity
             android:name="com.comp1008.group26.FlaxmanGallery.PartnerActivity"
+            android:screenOrientation="landscape"
             android:label="@string/title_activity_text" >
         </activity>
         
