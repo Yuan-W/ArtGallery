@@ -72,24 +72,29 @@ public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
                 DbxDatastore store = DbxDatastore.openDefault(mAccountManager.getLinkedAccount());
                 publishProgress("Syncing Database...");
                 store.sync();
-                while (store.getSyncStatus().isDownloading)
+                while (store.getSyncStatus().hasIncoming)
                 {
                 }
                 DbxTable tasksTbl = store.getTable("media");
                 DbxTable.QueryResult results = tasksTbl.query();
                 Iterator<DbxRecord> iterator = results.iterator();
+                String armatureDownload = mPath.getName();
                 while(iterator.hasNext())
                 {
                     DbxRecord record = iterator.next();
-                    String title = record.getString("title");
-                    String fileName = record.getString("file_name");
-                    String summary = record.getString("summary");
-                    String description = record.getString("description");
-                    String thumbnail = record.getString("thumbnail_name");
-                    String relatedItems = record.getString("related_items");
-                    Boolean isOnHomeGrid = record.getBoolean("is_on_home_grid");
-                    Boolean isOnBottomMenu = record.getBoolean("is_on_bottom_menu");
-                    mediaInfoList.add(new MediaInfo(title, fileName, summary, description, thumbnail, relatedItems, isOnHomeGrid, isOnBottomMenu));
+                    String armature = record.getString("armature");
+
+                    if(armature.equals(armatureDownload))
+                    {
+                        String title = record.getString("title");
+                        String fileName = record.getString("file_name");
+                        String summary = record.getString("summary");
+                        String description = record.getString("description");
+                        String thumbnail = record.getString("thumbnail_name");
+                        String relatedItems = record.getString("related_items");
+                        Boolean isOnHomeGrid = record.getBoolean("is_on_home_grid");
+                        mediaInfoList.add(new MediaInfo(title, fileName, summary, description, thumbnail, relatedItems, isOnHomeGrid));
+                    }
                 }
                 store.close();
 
@@ -170,7 +175,7 @@ public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
             String msg = "ID: " + info.getId() + ", Title: " + info.getTitle() + ", Name: " + info.getFileName() +
                     ", Summary" + info.getSummary() + ", Description: " + info.getDescription() + ", Thumbnail: " + info.getThumbnailName() +
                     ", Path: " + info.getFilePath() + ", Related: " + info.getRelatedItems() +
-                    ", IsOnHome: " + info.getIsOnHomeGrid() + ", isOnBottom: " + info.getIsOnBottomMenu() ;
+                    ", IsOnHome: " + info.getIsOnHomeGrid();
             Log.d("MediaInfo: ", msg);
         }
         mProgressDialog.dismiss();
