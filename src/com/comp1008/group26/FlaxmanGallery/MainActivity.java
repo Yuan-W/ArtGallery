@@ -133,12 +133,6 @@ public class MainActivity extends Activity implements View.OnClickListener
                 startActivity(intent);
                 break;
             }
-            case R.id.update_btn:
-            {
-                Intent intent = new Intent(this, SettingActivity.class);
-                startActivity(intent);
-                break;
-            }
         }
 
     }

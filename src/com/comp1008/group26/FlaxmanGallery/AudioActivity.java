@@ -80,6 +80,7 @@ public class AudioActivity extends Activity implements OnClickListener{
 		((TextView)findViewById(R.id.body)).setText( body);
 		((ImageButton) findViewById(R.id.home)).setOnClickListener(this);
 		
+		
 		mplayer = MediaPlayer.create(this, link);
 
        // mplayer.start();
@@ -99,6 +100,10 @@ public class AudioActivity extends Activity implements OnClickListener{
 	     isPlay = true;	
 	     imageButton.setBackgroundResource(R.drawable.play2);
 	     run.run();
+	     
+	     imageButton.setBackgroundResource(R.drawable.pause);
+		 mplayer.start();
+		 isPlay = !isPlay;
 	}
 
     public void updateAudio() {
@@ -121,6 +126,7 @@ public class AudioActivity extends Activity implements OnClickListener{
 
 	         case R.id.home:
 	         {
+	        	 mplayer.stop();
 	        	 super.onBackPressed();
 	        	 break;
 	         }

@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     tools:context=".TextActivity"
     android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:background="#BBFFFFFF"
     android:padding="20dp" >
 
  	<LinearLayout

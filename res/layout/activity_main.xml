@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/bg3"
+    android:background="#33FFFFFF"
     android:gravity="center_horizontal"
     tools:context=".MainActivity" >
 
@@ -25,13 +25,14 @@
             android:id="@+id/imageView1"
 	        android:layout_width="307dp"
 	        android:layout_height="46dp"
-            android:src="@drawable/title" />
+	        android:alpha="0.9"
+            android:src="@drawable/title2" />
 	
 	    <ImageView
 	        android:id="@+id/imageView3"
 	        android:layout_width="307dp"
 	        android:layout_height="46dp"
-	        android:src="@drawable/header_dec2" />
+	        android:src="@drawable/header_dec22" />
 
     </LinearLayout>
 
@@ -64,7 +65,8 @@
         android:background="#00000000"
         android:scaleType="fitCenter"
         android:src="@drawable/update_btn2" />
-  
+
+	    
     <TextView
         android:id="@+id/textView1"
     	style="?textBody" 
@@ -79,6 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/copyright" />
+
 
 
 </LinearLayout>

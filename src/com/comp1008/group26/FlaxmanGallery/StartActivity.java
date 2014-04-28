@@ -2,8 +2,11 @@ package com.comp1008.group26.FlaxmanGallery;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
+import com.comp1008.group26.Model.DatabaseHandler;
 import com.comp1008.group26.Model.Item;
+import com.comp1008.group26.Model.MediaInfo;
 import com.comp1008.group26.Model.Partner;
 import com.comp1008.group26.utility.ItemListAdapter;
 import com.comp1008.group26.utility.PartnerListAdapter;
@@ -73,6 +76,14 @@ public class StartActivity extends Activity {
 		int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
 		decorView.setSystemUiVisibility(uiOptions);
 
+
+		DatabaseHandler databaseHandler = new DatabaseHandler(this);
+		List<MediaInfo> itemss = databaseHandler.getAllMediaInfo();
+		
+		for(MediaInfo item : itemss)
+		{
+			String title = item.getTitle();
+		}
 		ArrayList<Item> items = new ArrayList<Item>();
 		Item i1 = new Item();
 		i1.setType(Item.TEXT);

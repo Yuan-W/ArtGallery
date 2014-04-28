@@ -8,17 +8,21 @@ import com.comp1008.group26.utility.ItemListAdapter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class WebActivity extends Activity implements OnClickListener{
 
@@ -54,9 +58,39 @@ public class WebActivity extends Activity implements OnClickListener{
 		decorView.setSystemUiVisibility(uiOptions);
 
 		website = getIntent().getExtras().getString("website");
-		((WebView)findViewById(R.id.webView)).loadUrl(website);
+		final WebView webview = ((WebView)findViewById(R.id.webView));//.loadUrl(website);
 		((ImageButton) findViewById(R.id.home)).setOnClickListener(this);
 		
+		webview.getSettings().setJavaScriptEnabled(true); // enable javascript
+		webview.getSettings().setLoadWithOverviewMode(true);
+		webview.getSettings().setUseWideViewPort(true);
+		webview.getSettings().setBuiltInZoomControls(true);
+		final ProgressDialog pd = ProgressDialog.show(this, "", "Loading...", true);
+
+
+		webview.setWebViewClient(new WebViewClient() {
+			public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+			    //Toast.makeText(this, description, Toast.LENGTH_SHORT).show();
+		    }
+			
+			@Override
+			public void onPageStarted(WebView view, String url, Bitmap favicon)
+			{
+			    pd.show();
+			}
+
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                	pd.dismiss();
+
+                    String website = webview.getUrl();
+
+             }
+
+		} );
+
+        webview .loadUrl(website);
 	}
 
 	@Override

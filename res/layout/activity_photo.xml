@@ -3,6 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PhotoActivity"
+    android:layout_margin="10dp"
+    android:background="#BBFFFFFF"
+	android:id="@+id/photoLayoutParent"
     android:padding="20dp" >
 
 	<LinearLayout
