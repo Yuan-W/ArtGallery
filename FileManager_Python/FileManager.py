@@ -413,9 +413,9 @@ class ItemEditDialog(wx.Dialog):
         for item in media_info.relatedItems.split(','):
             self.lst_related.Append(item)
         self.chk_home.SetValue(media_info.isOnHomeGrid)
-        armature_path = self.dbxPath + '/' + media_info.armature
-        self.filePath = armature_path + '/' + media_info.fileName
-        self.thumbnailPath = armature_path + '/' + media_info.thumbnail
+        armature_path = os.path.join(self.dbxPath, media_info.armature)
+        self.filePath = os.path.join(armature_path, media_info.fileName)
+        self.thumbnailPath = os.path.join(armature_path, media_info.thumbnail)
 
     def addArmature(self, event):
         dialog = wx.TextEntryDialog(self, 'Please enter a new armature name.', 'Create New Armature', defaultValue='Armature')
@@ -426,7 +426,7 @@ class ItemEditDialog(wx.Dialog):
                 return
             self.cbx_armature.SetValue(new_armature)
             self.cbx_armature.Append(new_armature)
-            armature_dir = self.dbxPath + '/' + new_armature
+            armature_dir = os.path.join(self.dbxPath, new_armature)
             if not os.path.exists(armature_dir):
                 os.makedirs(armature_dir)
 
@@ -445,7 +445,7 @@ class ItemEditDialog(wx.Dialog):
         self.lst_related.Delete(index)
 
     def browseMediaFile(self, event):
-        format = 'Media Files (*.wav,*.avi,*.mp4)|*.wav;*.avi;*.mp4'
+        format = 'Videos (*.avi,*.mp4)|*.avi;*.mp4|Audios (*.wav)|*.wav|Pictures (*.jpg,*.jpeg,*.png)|*.jpg;*.jpeg;*.png|Texts (*.txt)|*.txt'
         fileName, path = self.openFile(format)
         if fileName is not None:
             self.txt_file.SetValue(fileName)
@@ -477,7 +477,8 @@ class ItemEditDialog(wx.Dialog):
         if not (title and fileName and summary and description and thumbnail and armature):
             wx.MessageBox('Invalid item.', 'Error', wx.OK|wx.ICON_ERROR, self)
             return
-        armature_dir = self.dbxPath + '/' + armature
+        armature_dir = os.path.join(self.dbxPath, armature)
+        print armature_dir
         if self.filePath is not None:
             if os.path.dirname(self.filePath) != armature_dir:
                 print "copyfile from" + self.filePath + "to" + armature_dir
