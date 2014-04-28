@@ -9,7 +9,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,8 +32,8 @@ public class VideoActivity extends Activity  implements OnClickListener, OnTouch
 	String title;
 	String body;
 	String caption;
-	int img;
-	int link;
+	String img;
+	String link;
 	VideoView videoView ;
 	View decorView;
 	
@@ -60,23 +62,27 @@ public class VideoActivity extends Activity  implements OnClickListener, OnTouch
 		title = getIntent().getExtras().getString("title");
 		body = getIntent().getExtras().getString("body");
 		caption = getIntent().getExtras().getString("caption");
-		img = getIntent().getExtras().getInt("img");
-		link = getIntent().getExtras().getInt("link");
+		img = getIntent().getExtras().getString("img");
+		link = getIntent().getExtras().getString("link");
 		
 		((ImageButton) findViewById(R.id.home)).setOnClickListener(this);
 		
-		((ImageButton) findViewById(R.id.videomain)).setImageResource(img);
+		((ImageButton) findViewById(R.id.videomain)).setImageBitmap(BitmapFactory.decodeFile(img));
 		((ImageButton) findViewById(R.id.videomain)).setOnClickListener(this);
 		((ImageButton) findViewById(R.id.videoplay)).setOnClickListener(this);
-		((TextView)findViewById(R.id.title)).setText( title);
-		((TextView)findViewById(R.id.body)).setText( body);
+		((TextView)findViewById(R.id.title)).setText(Html.fromHtml( title));
+		((TextView)findViewById(R.id.body)).setText(Html.fromHtml( body));
 		
 		videoView = (VideoView) findViewById(R.id.video);
+
 		videoView.setMediaController(null);
-		videoView.setVideoURI(Uri.parse("android.resource://" + getPackageName() +"/"+link ));
+		File f = new File(link);   
+        Uri uri = Uri.fromFile(f); 
+		videoView.setVideoURI(uri);
 		videoView.setOnTouchListener(this);
 		videoView.requestFocus();
-		
+
+        
 		layoutParamsParent = ((RelativeLayout)findViewById(R.id.videoLayoutParent)).getLayoutParams();
 		layoutParams = videoView.getLayoutParams();
 		own_w = layoutParams.width;
@@ -158,8 +164,12 @@ public class VideoActivity extends Activity  implements OnClickListener, OnTouch
 			
 		}else
 		{
-			((RelativeLayout)findViewById(R.id.videoLayoutParent)).setBackgroundResource(R.drawable.bg4);
-			
+			//((RelativeLayout)findViewById(R.id.videoLayoutParent)).setBackgroundResource(R.drawable.bg3);
+
+			((RelativeLayout)findViewById(R.id.videoLayoutParent)).setBackgroundColor(Color.parseColor("#BBFFFFFF"));
+			FrameLayout.LayoutParams llp2 = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			llp2.setMargins(30, 30, 30, 30); // llp.setMargins(left, top, right, bottom);
+			((RelativeLayout)findViewById(R.id.videoLayoutParent)).setLayoutParams(llp2);
 			((ImageButton) findViewById(R.id.home)).setVisibility(View.VISIBLE);
 			layoutParams.width = own_w;
 			layoutParams.height = own_h;

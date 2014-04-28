@@ -18,8 +18,10 @@ import com.comp1008.group26.Model.Item;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,9 +85,9 @@ public class ItemListAdapter extends BaseAdapter {
         final int type=data.get(position).getType(); //0 text		1 video		2 audio		3 image
         final String title=data.get(position).getTitle();
         final String summary=data.get(position).getSummary();
-        final int image_src=data.get(position).getImage_src();
+        final String image_src=data.get(position).getImage_src();
         final String body=data.get(position).getBody();
-        final int link=data.get(position).getLink();
+        final String link=data.get(position).getLink();
         final String caption=data.get(position).getCaption();
         final String website=data.get(position).getWebsite();
     	
@@ -96,8 +98,8 @@ public class ItemListAdapter extends BaseAdapter {
         	play.setVisibility(View.GONE);
         	titleV.setVisibility(View.VISIBLE);
         	summaryV.setVisibility(View.VISIBLE);
-        	titleV.setText(title);
-        	summaryV.setText(summary);
+        	titleV.setText(Html.fromHtml((title)));
+        	summaryV.setText(Html.fromHtml((summary)));
         	largeTitle.setVisibility(View.GONE);
         }
         else if(type==Item.AUDIO)
@@ -108,9 +110,9 @@ public class ItemListAdapter extends BaseAdapter {
         	summaryV.setVisibility(View.VISIBLE);
         	play.setVisibility(View.VISIBLE);
         	play.setImageResource(R.drawable.play);
-        	titleV.setText(title);
-        	summaryV.setText(summary);
-        	image_srcB.setImageResource(image_src);
+        	titleV.setText(Html.fromHtml((title)));
+        	summaryV.setText(Html.fromHtml((summary)));
+        	image_srcB.setImageBitmap(BitmapFactory.decodeFile(image_src));
         	largeTitle.setVisibility(View.GONE);
         } 
         else if(type==Item.VIDEO)
@@ -121,9 +123,9 @@ public class ItemListAdapter extends BaseAdapter {
         	summaryV.setVisibility(View.VISIBLE);
         	play.setVisibility(View.VISIBLE);
         	play.setImageResource(R.drawable.play);
-        	titleV.setText(title);
-        	summaryV.setText(summary);
-        	image_srcB.setImageResource(image_src);
+        	titleV.setText(Html.fromHtml((title)));
+        	summaryV.setText(Html.fromHtml((summary)));
+        	image_srcB.setImageBitmap(BitmapFactory.decodeFile(image_src));
         	largeTitle.setVisibility(View.GONE);
         } 
         else if(type==Item.IMAGE)
@@ -132,7 +134,7 @@ public class ItemListAdapter extends BaseAdapter {
         	titleV.setVisibility(View.GONE);
         	summaryV.setVisibility(View.GONE);
         	image_srcB.setVisibility(View.VISIBLE);
-        	image_srcB.setImageResource(image_src);
+        	image_srcB.setImageBitmap(BitmapFactory.decodeFile(image_src));
         	largeTitle.setVisibility(View.GONE);
         	/*android.view.ViewGroup.LayoutParams layoutParams = image_srcB.getLayoutParams();
         	layoutParams.width = 400;
@@ -146,7 +148,7 @@ public class ItemListAdapter extends BaseAdapter {
         	image_srcB.setVisibility(View.GONE);
         	titleV.setVisibility(View.GONE);
         	summaryV.setVisibility(View.GONE);
-        	largeTitle.setText(title);
+        	largeTitle.setText(Html.fromHtml((title)));
         }
         
         vi.setOnClickListener(new OnClickListener() {

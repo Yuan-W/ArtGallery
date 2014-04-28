@@ -11,9 +11,9 @@ public class Item {
 	private int type=0;
 	private String title="";
 	private String summary="";
-	private int image_src=0;
+	private String image_src="";
 	private String body="";
-	private int link=0;
+	private String link="";
 	private String caption="";
 	private String website="";
 	
@@ -35,10 +35,10 @@ public class Item {
 	public void setSummary(String summary) {
 		this.summary = summary;
 	}
-	public int getImage_src() {
+	public String getImage_src() {
 		return image_src;
 	}
-	public void setImage_src(int image_src) {
+	public void setImage_src(String image_src) {
 		this.image_src = image_src;
 	}
 	public String getBody() {
@@ -47,10 +47,10 @@ public class Item {
 	public void setBody(String body) {
 		this.body = body;
 	}
-	public int getLink() {
+	public String getLink() {
 		return link;
 	}
-	public void setLink(int link) {
+	public void setLink(String link) {
 		this.link = link;
 	}
 	public String getCaption() {

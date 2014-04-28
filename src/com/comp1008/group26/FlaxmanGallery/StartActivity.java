@@ -24,6 +24,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.hardware.Camera;
+import android.text.Html;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -78,46 +79,65 @@ public class StartActivity extends Activity {
 
 
 		DatabaseHandler databaseHandler = new DatabaseHandler(this);
-		List<MediaInfo> itemss = databaseHandler.getAllMediaInfo();
-		
-		for(MediaInfo item : itemss)
-		{
-			String title = item.getTitle();
-		}
-		ArrayList<Item> items = new ArrayList<Item>();
-		Item i1 = new Item();
-		i1.setType(Item.TEXT);
-		i1.setTitle("Text title");
-		i1.setSummary("Text summary");
-		i1.setBody("Text body");
-		items.add(i1);
-		
-		Item i2 = new Item();
-		i2.setType(Item.AUDIO);
-		i2.setTitle("Audio title");
-		i2.setSummary("Audio summary");
-		i2.setBody("Audio body");
-		i2.setImage_src(R.drawable.video);
-		i2.setLink(R.raw.phyllida_surprise);
-		items.add(i2);	
+		List<MediaInfo> infoList = databaseHandler.getAllMediaInfo();
 
-		Item i3 = new Item();
-		i3.setType(Item.VIDEO);
-		i3.setTitle("Video title");
-		i3.setSummary("Video summary");
-		i3.setBody("Video body");
-		i3.setImage_src(R.drawable.video);
-		i3.setLink(R.raw.testing);
-		items.add(i3);	
+		ArrayList<Item> items = new ArrayList<Item>();
 		
-		Item i4 = new Item();
-		i4.setType(Item.IMAGE);
-		i4.setTitle("Image title");
-		i4.setCaption("Image caption");
-		i3.setImage_src(R.drawable.video);
-		i4.setBody("Image body");
-		items.add(i4);
-		
+		for(MediaInfo info : infoList)
+        {
+            String msg = "\nID: " + info.getId() + ",\nTitle: " + info.getTitle() + ",\nName: " + info.getFileName() +
+                    ",\nSummary: " + info.getSummary() + ",\nDescription: " + info.getDescription() + ",\nThumbnail: " + info.getThumbnailName() +
+                    ",\nPath: " + info.getFilePath() + ",\nRelated: " + info.getRelatedItems() +
+                    ",\nIsOnHome: " + info.getIsOnHomeGrid()+"\n\n";
+           System.out.println(msg);
+            
+            String filenameArray[] = info.getFileName().split("\\.");
+            String extension = filenameArray[filenameArray.length-1];
+           // System.out.println(extension);
+        
+			String thumbnail = "/storage/emulated/0/ArtGallery/"+info.getThumbnailName();
+			if(extension.compareTo("txt")==0)
+			{
+				Item i1 = new Item();
+				i1.setType(Item.TEXT);
+				i1.setTitle(info.getTitle());
+				i1.setSummary(info.getSummary());
+				i1.setBody(info.getDescription());
+				items.add(i1);
+			}
+			else if(extension.compareTo("wav")==0)
+			{
+				Item i2 = new Item();
+				i2.setType(Item.AUDIO);
+				i2.setTitle(info.getTitle());
+				i2.setSummary(info.getSummary());
+				i2.setBody(info.getDescription());
+				i2.setImage_src(thumbnail);
+				i2.setLink(info.getFilePath());
+				items.add(i2);	
+			}
+			else if(extension.compareTo("mp4")==0)
+			{
+				Item i3 = new Item();
+				i3.setType(Item.VIDEO);
+				i3.setTitle(info.getTitle());
+				i3.setSummary(info.getSummary());
+				i3.setBody(info.getDescription());
+				i3.setImage_src(thumbnail);
+				i3.setLink(info.getFilePath());
+				items.add(i3);	
+			}
+			else if(extension.compareTo("jpg")==0)
+			{
+				Item i4 = new Item();
+				i4.setType(Item.IMAGE);
+				i4.setTitle(info.getTitle());
+				i4.setCaption("Image caption");
+				i4.setImage_src(thumbnail);
+				i4.setBody(info.getDescription());
+				items.add(i4);
+			}
+        }
 		Item i5 = new Item();
 		i5.setType(Item.WEB);
 		i5.setTitle("About");
@@ -175,6 +195,6 @@ public class StartActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		super.onBackPressed();
+		//super.onBackPressed();
 	}
 }

@@ -9,7 +9,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.text.Html;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,8 +30,8 @@ public class PhotoActivity extends Activity implements OnClickListener {
 	String title;
 	String body;
 	String caption;
-	int img;
-	int link;
+	String img;
+
 	boolean isfill=false;
 	View decorView;
 	
@@ -61,14 +63,14 @@ public class PhotoActivity extends Activity implements OnClickListener {
 		title = getIntent().getExtras().getString("title");
 		body = getIntent().getExtras().getString("body");
 		caption = getIntent().getExtras().getString("caption");
-		img = getIntent().getExtras().getInt("img");
-		link = getIntent().getExtras().getInt("link");
+		img = getIntent().getExtras().getString("img");
+		
 		imageView = ((ImageView) findViewById(R.id.videomain));
-		imageView.setImageResource(img);
+		imageView.setImageBitmap(BitmapFactory.decodeFile(img));
 		imageView.setOnClickListener(this);
-		((TextView)findViewById(R.id.title)).setText( title);
-		((TextView)findViewById(R.id.body)).setText( body);
-		((TextView)findViewById(R.id.caption)).setText( caption);
+		((TextView)findViewById(R.id.title)).setText( Html.fromHtml(title));
+		((TextView)findViewById(R.id.body)).setText(Html.fromHtml( body));
+		((TextView)findViewById(R.id.caption)).setText( Html.fromHtml(caption));
 		((ImageButton) findViewById(R.id.home)).setOnClickListener(this);
 		
 
@@ -119,6 +121,10 @@ public class PhotoActivity extends Activity implements OnClickListener {
      			imageView.setLayoutParams(llp);
      			
      			((ImageButton) findViewById(R.id.home)).setVisibility(View.INVISIBLE);
+
+     			((TextView)findViewById(R.id.title)).setVisibility(View.INVISIBLE);
+     			((TextView)findViewById(R.id.body)).setVisibility(View.INVISIBLE);
+     			((TextView)findViewById(R.id.caption)).setVisibility(View.INVISIBLE);
      			/*layoutParams.width = parent_w;
      			layoutParams.height = parent_h;
      	    	videoView.setLayoutParams(layoutParams);*/
@@ -126,12 +132,18 @@ public class PhotoActivity extends Activity implements OnClickListener {
      			
      		}else
      		{
-     			((RelativeLayout)findViewById(R.id.photoLayoutParent)).setBackgroundResource(R.drawable.bg4);
-     			
-     			((ImageButton) findViewById(R.id.home)).setVisibility(View.VISIBLE);
-     			layoutParams.width = own_w;
-     			layoutParams.height = own_h;
-     			imageView.setLayoutParams(layoutParams);
+     			((RelativeLayout)findViewById(R.id.photoLayoutParent)).setBackgroundColor(Color.parseColor("#BBFFFFFF"));
+    			FrameLayout.LayoutParams llp2 = new FrameLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+    			llp2.setMargins(30, 30, 30, 30); // llp.setMargins(left, top, right, bottom);
+    			((RelativeLayout)findViewById(R.id.photoLayoutParent)).setLayoutParams(llp2);
+    			((ImageButton) findViewById(R.id.home)).setVisibility(View.VISIBLE);
+    			layoutParams.width = own_w;
+    			layoutParams.height = own_h;
+    	    	imageView.setLayoutParams(layoutParams);
+
+     			((TextView)findViewById(R.id.title)).setVisibility(View.VISIBLE);
+     			((TextView)findViewById(R.id.body)).setVisibility(View.VISIBLE);
+     			((TextView)findViewById(R.id.caption)).setVisibility(View.VISIBLE);
      		}
      		
      		isPlay=!isPlay;

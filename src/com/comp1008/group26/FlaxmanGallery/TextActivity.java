@@ -2,6 +2,7 @@ package com.comp1008.group26.FlaxmanGallery;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.text.Html;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
@@ -39,8 +40,8 @@ public class TextActivity extends Activity implements OnClickListener {
 		title = getIntent().getExtras().getString("title");
 		body = getIntent().getExtras().getString("body");
 		
-		((TextView)findViewById(R.id.title)).setText( title);
-		((TextView)findViewById(R.id.body)).setText( body);
+		((TextView)findViewById(R.id.title)).setText(Html.fromHtml( title));
+		((TextView)findViewById(R.id.body)).setText( Html.fromHtml(body));
 		((ImageButton) findViewById(R.id.home)).setOnClickListener(this);
 		
 	}

@@ -9,9 +9,12 @@ import com.comp1008.group26.utility.ItemListAdapter;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.text.Html;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,8 +36,8 @@ public class AudioActivity extends Activity implements OnClickListener{
 	String title;
 	String body;
 	String caption;
-	int img;
-	int link;
+	String img;
+	String link;
 
 	View decorView;
     final Runnable run = new Runnable() {
@@ -67,21 +70,21 @@ public class AudioActivity extends Activity implements OnClickListener{
 		title = getIntent().getExtras().getString("title");
 		body = getIntent().getExtras().getString("body");
 		caption = getIntent().getExtras().getString("caption");
-		img = getIntent().getExtras().getInt("img");
-		link = getIntent().getExtras().getInt("link");
+		img = getIntent().getExtras().getString("img");
+		link = getIntent().getExtras().getString("link");
 		
 		decorView = getWindow().getDecorView();
 		int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
 		decorView.setSystemUiVisibility(uiOptions);
 
-
-		((ImageButton) findViewById(R.id.videomain)).setImageResource(img);
-		((TextView)findViewById(R.id.title)).setText( title);
-		((TextView)findViewById(R.id.body)).setText( body);
+		((ImageButton) findViewById(R.id.videomain)).setImageBitmap(BitmapFactory.decodeFile(img));
+		((TextView)findViewById(R.id.title)).setText(Html.fromHtml( title));
+		((TextView)findViewById(R.id.body)).setText( Html.fromHtml(body));
 		((ImageButton) findViewById(R.id.home)).setOnClickListener(this);
 		
-		
-		mplayer = MediaPlayer.create(this, link);
+		File f = new File(link);   
+        Uri uri = Uri.fromFile(f);  
+		mplayer = MediaPlayer.create(this, uri);
 
        // mplayer.start();
 		/*try {

@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,9 +70,9 @@ public class PartnerListAdapter extends BaseAdapter {
         }
         final String link = p.getLink();
        ((ImageView)vi.findViewById(R.id.logo)).setBackgroundResource(p.getLogo());
-       ( (TextView)vi.findViewById(R.id.name)).setText(p.getName());
-       ( (TextView)vi.findViewById(R.id.details)).setText(p.getDetails());
-       //( (TextView)vi.findViewById(R.id.link)).setText(p.getLink());
+       ( (TextView)vi.findViewById(R.id.name)).setText(Html.fromHtml((p.getName())));
+       ( (TextView)vi.findViewById(R.id.details)).setText(Html.fromHtml((p.getDetails())));
+       //( (TextView)vi.findViewById(R.id.link)).setText(Html.fromHtml((p.getLink());
         ((Button)vi.findViewById(R.id.button1)).setOnClickListener(new OnClickListener() {
         public void onClick(View v) {
 	        	Intent myIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
