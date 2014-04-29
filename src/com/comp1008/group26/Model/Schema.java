@@ -2,6 +2,12 @@ package com.comp1008.group26.Model;
 
 import android.provider.BaseColumns;
 
+/**
+ * Database Schema, stores constants needed for database operation.
+ *
+ * @author  Yuan Wei
+ */
+
 public final class Schema
 {
     private static final String TEXT_TYPE = " TEXT";

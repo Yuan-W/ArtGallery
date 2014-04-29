@@ -2,6 +2,8 @@
 File Manager and Uploader for ArtGallery Anrdoid App
 
 Require: Python 2.7 and wxPython 3.0, Dropbox Python SDK
+
+Author: Yuan Wei
 """
 
 import sys

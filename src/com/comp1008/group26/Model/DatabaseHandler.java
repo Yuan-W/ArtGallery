@@ -11,6 +11,12 @@ import java.util.List;
 
 import static com.comp1008.group26.Model.Schema.*;
 
+/**
+ * DatabaseHandler, provides REST API of MediaInfo Model stored in the database..
+ *
+ * @author  Yuan Wei
+ */
+
 public class DatabaseHandler extends SQLiteOpenHelper
 {
     private static final int DATABASE_VERSION = 4;

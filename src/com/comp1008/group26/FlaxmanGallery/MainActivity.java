@@ -20,7 +20,7 @@ import java.util.List;
 import static com.comp1008.group26.utility.DbxSyncConfig.getAccountManager;
 
 /**
- * @author HO Sze Nga (s.ho.13@ucl.ac.uk)
+ * @author HO Sze Nga (s.ho.13@ucl.ac.uk), Yuan Wei
  */
 public class MainActivity extends Activity implements View.OnClickListener {
 	private DbxAccountManager mDbxAcctMgr;

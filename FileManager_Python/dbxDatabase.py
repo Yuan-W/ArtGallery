@@ -1,3 +1,11 @@
+"""
+Dropbox Database Handler App
+
+Require: Dropbox Python SDK
+
+Author: Yuan Wei
+"""
+
 import sys
 
 from dropbox.client import (

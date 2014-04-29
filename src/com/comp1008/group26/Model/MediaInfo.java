@@ -2,6 +2,12 @@ package com.comp1008.group26.Model;
 
 import com.comp1008.group26.utility.DbxSyncConfig;
 
+/**
+ * MediaInfo Model
+ *
+ * @author  Yuan Wei
+ */
+
 public class MediaInfo
 {
     private int _id;

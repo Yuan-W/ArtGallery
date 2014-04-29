@@ -5,7 +5,9 @@ import android.os.Environment;
 import com.dropbox.sync.android.DbxAccountManager;
 
 /**
- * Created by Yuan on 16/03/14.
+ * Dropbox Config, provides constants needed for dropbox authorization and synchronization.
+ *
+ * @author  Yuan Wei
  */
 
 public final class DbxSyncConfig

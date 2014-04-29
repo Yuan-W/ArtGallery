@@ -11,6 +11,12 @@ import com.dropbox.sync.android.*;
 import java.io.*;
 import java.util.*;
 
+/**
+ * AsyncTask for dropbox file and database synchronization.
+ *
+ * @author  Yuan Wei
+ */
+
 public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
 {
     private final DbxPath mPath;
