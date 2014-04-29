@@ -16,6 +16,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -62,9 +63,9 @@ public class VideoActivity extends Activity implements OnClickListener,
 
 		((ImageButton) findViewById(R.id.home)).setOnClickListener(this);
 
-		((ImageButton) findViewById(R.id.videomain))
+		((ImageView) findViewById(R.id.videomain))
 				.setImageBitmap(BitmapFactory.decodeFile(img));
-		((ImageButton) findViewById(R.id.videomain)).setOnClickListener(this);
+		((ImageView) findViewById(R.id.videomain)).setOnClickListener(this);
 		((ImageButton) findViewById(R.id.videoplay)).setOnClickListener(this);
 		((TextView) findViewById(R.id.title)).setText(Html.fromHtml(title));
 		((TextView) findViewById(R.id.body)).setText(Html.fromHtml(body));
@@ -118,13 +119,10 @@ public class VideoActivity extends Activity implements OnClickListener,
 
 	private void playMedia() {
 
-		// Intent intent=new Intent(this,
-		// VideoPlayerActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		// this.startActivity(intent);
 		if (isFirst) {
 			videoView.start();
 			videoView.setVisibility(View.VISIBLE);
-			((ImageButton) findViewById(R.id.videomain))
+			((ImageView) findViewById(R.id.videomain))
 					.setVisibility(View.GONE);
 			((ImageButton) findViewById(R.id.videoplay))
 					.setVisibility(View.GONE);
@@ -136,8 +134,7 @@ public class VideoActivity extends Activity implements OnClickListener,
 
 			FrameLayout.LayoutParams llp2 = new FrameLayout.LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-			llp2.setMargins(0, 0, 0, 0); // llp.setMargins(left, top, right,
-											// bottom);
+			llp2.setMargins(0, 0, 0, 0); 
 			llp2.width = parent_w;
 			llp2.height = parent_h;
 			((RelativeLayout) findViewById(R.id.videoLayoutParent))
@@ -155,14 +152,8 @@ public class VideoActivity extends Activity implements OnClickListener,
 
 			((ImageButton) findViewById(R.id.home))
 					.setVisibility(View.INVISIBLE);
-			/*
-			 * layoutParams.width = parent_w; layoutParams.height = parent_h;
-			 * videoView.setLayoutParams(layoutParams);
-			 */
 
 		} else {
-			// ((RelativeLayout)findViewById(R.id.videoLayoutParent)).setBackgroundResource(R.drawable.bg3);
-
 			((RelativeLayout) findViewById(R.id.videoLayoutParent))
 					.setBackgroundColor(Color.parseColor("#BBFFFFFF"));
 			FrameLayout.LayoutParams llp2 = new FrameLayout.LayoutParams(

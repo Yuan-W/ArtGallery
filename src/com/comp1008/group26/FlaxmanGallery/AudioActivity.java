@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.SeekBar;
 
@@ -65,7 +66,7 @@ public class AudioActivity extends Activity implements OnClickListener {
 		int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
 		decorView.setSystemUiVisibility(uiOptions);
 
-		((ImageButton) findViewById(R.id.videomain))
+		((ImageView) findViewById(R.id.videomain))
 				.setImageBitmap(BitmapFactory.decodeFile(img));
 		((TextView) findViewById(R.id.title)).setText(Html.fromHtml(title));
 		((TextView) findViewById(R.id.body)).setText(Html.fromHtml(body));

@@ -52,12 +52,11 @@
 	        android:layout_height="wrap_content"
 	        android:layout_alignParentRight="true">
 	        
-	           <ImageButton
+	           <ImageView
 	               android:id="@+id/videomain"
 	               android:layout_width="400dp"
 	               android:layout_height="240dp"
-	               
-	       		 	android:layout_alignParentRight="true"
+	       		   android:layout_alignParentRight="true"
 	               android:layout_alignParentTop="true"
 	               android:src="@drawable/video" />
 		    <VideoView
