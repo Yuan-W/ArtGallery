@@ -7,13 +7,17 @@ Author: Yuan Wei
 """
 
 import sys
+import webbrowser
 import shutil
 import ConfigParser, os.path
 import wx
 
 from dbxDatabase import *
 
+ID_UNLINK = wx.NewId()
+
 #----------------------------------------------------------------------------
+
 class MainFrame(wx.Frame):
     def __init__(self, *args, **kwds):
         kwds['style'] = wx.DEFAULT_FRAME_STYLE
@@ -21,16 +25,20 @@ class MainFrame(wx.Frame):
 
         # Menubar
         menuBar = wx.MenuBar()
-        self.fileMenu = wx.Menu()
-        self.fileMenu.Append(wx.ID_NEW,     '&New\tCtrl-N', 'Create a new item')
-        self.fileMenu.Append(wx.ID_EDIT,    '&Edit\tCtrl-E', 'Edit selected item')
-        self.fileMenu.Append(wx.ID_DELETE,  '&Delete\tCtrl-D', 'Delete selected item')
-        self.fileMenu.AppendSeparator()
-        self.fileMenu.Append(wx.ID_SAVE,   '&Sync\tCtrl-S', 'Save changes to dropbox')
-        self.fileMenu.AppendSeparator()
-        self.fileMenu.Append(wx.ID_EXIT,   '&Quit\tCtrl-Q')
+        self.itemMenu = wx.Menu()
+        self.itemMenu.Append(wx.ID_NEW,     '&New\tCtrl-N', 'Create a new item')
+        self.itemMenu.Append(wx.ID_EDIT,    '&Edit\tCtrl-E', 'Edit selected item')
+        self.itemMenu.Append(wx.ID_DELETE,  '&Delete\tCtrl-D', 'Delete selected item')
+        self.itemMenu.AppendSeparator()
+        self.itemMenu.Append(wx.ID_SAVE,   '&Sync\tCtrl-S', 'Save changes to dropbox')
+        self.itemMenu.AppendSeparator()
+        self.itemMenu.Append(wx.ID_EXIT,   '&Quit\tCtrl-Q')
 
-        menuBar.Append(self.fileMenu, '&Item')
+        menuBar.Append(self.itemMenu, '&Item')
+
+        self.accountMenu = wx.Menu()
+        self.accountMenu.Append(ID_UNLINK,     '&Unlink\tCtrl-U', 'Unlink Current Account')
+        menuBar.Append(self.accountMenu, '&Account')
 
         self.SetMenuBar(menuBar)
 
@@ -62,7 +70,8 @@ class MainFrame(wx.Frame):
         (wx.ID_EDIT,      self.doEditItem),
         (wx.ID_DELETE,    self.doDelete),
         (wx.ID_SAVE,      self.doSave),
-        (wx.ID_EXIT,      self.doExit)]
+        (wx.ID_EXIT,      self.doExit),
+        (ID_UNLINK,       self.doUnlink)]
 
         for combo in menuHandlers:
             id, handler = combo[:2]
@@ -81,9 +90,10 @@ class MainFrame(wx.Frame):
         self.listCtrl.InsertColumn(2, 'File', width=200)
         self.listCtrl.InsertColumn(3, 'Summary', width=100)
         self.listCtrl.InsertColumn(4, 'Description', width=250)
-        self.listCtrl.InsertColumn(5, 'Thumbnail', width=150)
-        self.listCtrl.InsertColumn(6, 'RelatedItem', width=150)
-        self.listCtrl.InsertColumn(7, 'Home Grid')
+        self.listCtrl.InsertColumn(5, 'Caption', width=100)
+        self.listCtrl.InsertColumn(6, 'Thumbnail', width=150)
+        self.listCtrl.InsertColumn(7, 'RelatedItem', width=150)
+        self.listCtrl.InsertColumn(8, 'Home Grid')
         self.listCtrl.SetBackgroundColour(wx.WHITE)
         self.listCtrl.Bind(wx.EVT_LEFT_DCLICK, self.doEditItem)
         self.listCtrl.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
@@ -104,6 +114,19 @@ class MainFrame(wx.Frame):
         self.needSave = False
 
         self.database = DbxDataAdapter(APP_KEY, APP_SECRET)
+        if not self.database.is_linked():
+            url = self.database.get_authorize_url()
+            dlg = wx.TextEntryDialog(self, "1. Authorize this app on the opened webpage.\n2. Enter the code below and press ENTER.", "App Authorization", " ")
+            webbrowser.open(url,new=2)
+            if dlg.ShowModal() == wx.ID_OK:
+                auth_code = dlg.GetValue()
+                self.database.link(auth_code)
+            else:
+                dlg.Destroy()
+                self.Destroy()
+                return
+            dlg.Destroy()
+
         self.database.connect()
         self.media_info_list = self.database.read_data()
 
@@ -149,9 +172,10 @@ class MainFrame(wx.Frame):
         self.listCtrl.SetStringItem(index, 2, info.fileName)
         self.listCtrl.SetStringItem(index, 3, info.summary)
         self.listCtrl.SetStringItem(index, 4, info.description)
-        self.listCtrl.SetStringItem(index, 5, info.thumbnail)
-        self.listCtrl.SetStringItem(index, 6, info.relatedItems)
-        self.listCtrl.SetStringItem(index, 7, bool_to_string(info.isOnHomeGrid))
+        self.listCtrl.SetStringItem(index, 5, info.caption)
+        self.listCtrl.SetStringItem(index, 6, info.thumbnail)
+        self.listCtrl.SetStringItem(index, 7, info.relatedItems)
+        self.listCtrl.SetStringItem(index, 8, bool_to_string(info.isOnHomeGrid))
         self.needSave = True
         editor.Hide()
 
@@ -173,9 +197,10 @@ class MainFrame(wx.Frame):
         self.listCtrl.SetStringItem(index, 2, info.fileName)
         self.listCtrl.SetStringItem(index, 3, info.summary)
         self.listCtrl.SetStringItem(index, 4, info.description)
-        self.listCtrl.SetStringItem(index, 5, info.thumbnail)
-        self.listCtrl.SetStringItem(index, 6, info.relatedItems)
-        self.listCtrl.SetStringItem(index, 7, bool_to_string(info.isOnHomeGrid))
+        self.listCtrl.SetStringItem(index, 5, info.caption)
+        self.listCtrl.SetStringItem(index, 6, info.thumbnail)
+        self.listCtrl.SetStringItem(index, 7, info.relatedItems)
+        self.listCtrl.SetStringItem(index, 8, bool_to_string(info.isOnHomeGrid))
         self.needSave = True
         editor.Hide()
 
@@ -191,6 +216,13 @@ class MainFrame(wx.Frame):
             self.listCtrl.DeleteItem(index)
 
         self.needSave = True
+
+    def doUnlink(self, event):
+        if os.path.exists('token_store.txt'):
+            os.remove('token_store.txt')
+        if os.path.exists('config.cfg'):
+            os.remove('config.cfg')
+        self.doExit(event)
 
     def doSave(self, event):
         """ Respond to the "Sync" menu command. """
@@ -255,14 +287,16 @@ class MainFrame(wx.Frame):
             self.listCtrl.SetStringItem(index, 2, info.fileName)
             self.listCtrl.SetStringItem(index, 3, info.summary)
             self.listCtrl.SetStringItem(index, 4, info.description)
-            self.listCtrl.SetStringItem(index, 5, info.thumbnail)
-            self.listCtrl.SetStringItem(index, 6, info.relatedItems)
-            self.listCtrl.SetStringItem(index, 7, bool_to_string(info.isOnHomeGrid))
+            if info.caption:
+                self.listCtrl.SetStringItem(index, 5, info.caption)
+            self.listCtrl.SetStringItem(index, 6, info.thumbnail)
+            self.listCtrl.SetStringItem(index, 7, info.relatedItems)
+            self.listCtrl.SetStringItem(index, 8, bool_to_string(info.isOnHomeGrid))
             index += 1
 
     def _updateMenu(self, enable):
-        self.fileMenu.Enable(wx.ID_EDIT, enable)
-        self.fileMenu.Enable(wx.ID_DELETE, enable)
+        self.itemMenu.Enable(wx.ID_EDIT, enable)
+        self.itemMenu.Enable(wx.ID_DELETE, enable)
         self.toolbar.EnableTool(wx.ID_EDIT, enable)
         self.toolbar.EnableTool(wx.ID_DELETE, enable)
 
@@ -333,27 +367,33 @@ class ItemEditDialog(wx.Dialog):
         sizer.Add(lbl_description, pos=(4, 0), flag=wx.TOP|wx.LEFT, border=10)
         self.txt_description = wx.TextCtrl(panel, style=wx.TE_MULTILINE)
         sizer.Add(self.txt_description, pos=(4, 1), span=(1, 4), flag=wx.TOP|wx.RIGHT|wx.EXPAND, border=5)
+        # Caption
+        lbl_caption = wx.StaticText(panel, label='Caption')
+        sizer.Add(lbl_caption, pos=(5, 0), flag=wx.TOP|wx.LEFT, border=10)
+        self.txt_caption = wx.TextCtrl(panel)
+        self.txt_caption.Enable(False);
+        sizer.Add(self.txt_caption, pos=(5, 1), span=(1, 4), flag=wx.TOP|wx.RIGHT|wx.EXPAND, border=5)
         # Armature
         lbl_armature = wx.StaticText(panel, label='Armature')
-        sizer.Add(lbl_armature, pos=(5, 0), flag=wx.LEFT|wx.TOP, border=10)
+        sizer.Add(lbl_armature, pos=(6, 0), flag=wx.LEFT|wx.TOP, border=10)
         self.cbx_armature = wx.ComboBox(panel, style=wx.CB_READONLY)
-        sizer.Add(self.cbx_armature, pos=(5, 1), span=(1, 3), flag=wx.TOP|wx.EXPAND, border=5)
+        sizer.Add(self.cbx_armature, pos=(6, 1), span=(1, 3), flag=wx.TOP|wx.EXPAND, border=5)
         btn_armature_new = wx.Button(panel, label='Create')
         self.Bind(wx.EVT_BUTTON, self.addArmature, btn_armature_new)
-        sizer.Add(btn_armature_new, pos=(5, 4), flag=wx.TOP|wx.RIGHT, border=5)
+        sizer.Add(btn_armature_new, pos=(6, 4), flag=wx.TOP|wx.RIGHT, border=5)
         # Related Items
         lbl_related = wx.StaticText(panel, label='Related Items')
-        sizer.Add(lbl_related, pos=(6, 0), flag=wx.LEFT|wx.TOP, border=10)
+        sizer.Add(lbl_related, pos=(7, 0), flag=wx.LEFT|wx.TOP, border=10)
         self.cbx_related = wx.ComboBox(panel, style=wx.CB_READONLY)
-        sizer.Add(self.cbx_related, pos=(6, 1), span=(1, 3), flag=wx.TOP|wx.EXPAND, border=5)
+        sizer.Add(self.cbx_related, pos=(7, 1), span=(1, 3), flag=wx.TOP|wx.EXPAND, border=5)
         btn_related_add = wx.Button(panel, label='Add')
         self.Bind(wx.EVT_BUTTON, self.addItem, btn_related_add)
-        sizer.Add(btn_related_add, pos=(6, 4), flag=wx.TOP|wx.RIGHT, border=5)
+        sizer.Add(btn_related_add, pos=(7, 4), flag=wx.TOP|wx.RIGHT, border=5)
         self.lst_related = wx.ListBox(panel, style=wx.LB_SINGLE)
-        sizer.Add(self.lst_related, pos=(7, 1), span=(1, 3), flag=wx.TOP|wx.EXPAND, border=5)
+        sizer.Add(self.lst_related, pos=(8, 1), span=(1, 3), flag=wx.TOP|wx.EXPAND, border=5)
         btn_related_remove = wx.Button(panel, label='Remove')
         self.Bind(wx.EVT_BUTTON, self.removeItem, btn_related_remove)
-        sizer.Add(btn_related_remove, pos=(7, 4), flag=wx.TOP|wx.RIGHT, border=5)
+        sizer.Add(btn_related_remove, pos=(8, 4), flag=wx.TOP|wx.RIGHT, border=5)
         # Show On Home Grid        
         sb = wx.StaticBox(panel, label='Optional Attributes')
 
@@ -361,16 +401,16 @@ class ItemEditDialog(wx.Dialog):
         self.chk_home = wx.CheckBox(panel, label='Show on Home Grid')
         boxsizer.Add(self.chk_home, 
             flag=wx.LEFT|wx.TOP, border=5)
-        sizer.Add(boxsizer, pos=(8, 0), span=(1, 5), 
+        sizer.Add(boxsizer, pos=(9, 0), span=(1, 5), 
             flag=wx.EXPAND|wx.TOP|wx.LEFT|wx.RIGHT , border=5)
 
         btn_OK = wx.Button(panel, wx.ID_OK, '&OK')
         btn_OK.SetDefault()
         self.Bind(wx.EVT_BUTTON, self.validateContents, btn_OK)
-        sizer.Add(btn_OK, pos=(9, 3))
+        sizer.Add(btn_OK, pos=(10, 3))
 
         btn_cancel = wx.Button(panel, wx.ID_CANCEL, '&Cancel')
-        sizer.Add(btn_cancel, pos=(9, 4), flag=wx.BOTTOM|wx.RIGHT)
+        sizer.Add(btn_cancel, pos=(10, 4), flag=wx.BOTTOM|wx.RIGHT)
 
         sizer.AddGrowableCol(2)
         sizer.AddGrowableRow(4)
@@ -396,6 +436,8 @@ class ItemEditDialog(wx.Dialog):
         self.txt_thumbnail.Clear()
         self.txt_summary.Clear()
         self.txt_description.Clear()
+        self.txt_caption.Clear()
+        self.txt_caption.Enable(False);
         self.cbx_armature.SetValue('')
         self.cbx_related.SetValue('')
         self.lst_related.Clear()
@@ -409,11 +451,19 @@ class ItemEditDialog(wx.Dialog):
         self.txt_thumbnail.SetValue(media_info.thumbnail)
         self.txt_summary.SetValue(media_info.summary)
         self.txt_description.SetValue(media_info.description)
+        self.txt_caption.Clear()
+        if self._checkFileType(media_info.fileName) is FileType.Image:
+            if media_info.caption:
+                self.txt_caption.SetValue(media_info.caption)
+            self.txt_caption.Enable(True)
+        else:
+            self.txt_caption.Enable(False);
         self.cbx_armature.SetValue(media_info.armature)
         self.cbx_related.SetValue('')
         self.lst_related.Clear()
         for item in media_info.relatedItems.split(','):
-            self.lst_related.Append(item)
+            if item:
+                self.lst_related.Append(item)
         self.chk_home.SetValue(media_info.isOnHomeGrid)
         armature_path = os.path.join(self.dbxPath, media_info.armature)
         self.filePath = os.path.join(armature_path, media_info.fileName)
@@ -447,12 +497,13 @@ class ItemEditDialog(wx.Dialog):
         self.lst_related.Delete(index)
 
     def browseMediaFile(self, event):
-        format = 'Videos (*.avi,*.mp4)|*.avi;*.mp4|Audios (*.wav)|*.wav|Pictures (*.jpg,*.jpeg,*.png)|*.jpg;*.jpeg;*.png|Texts (*.txt)|*.txt'
+        format = 'Videos (*.avi,*.mp4)|*.avi;*.mp4|Audios (*.wav)|*.wav|Pictures (*.jpg,*.jpeg,*.png)|*.jpg;*.jpeg;*.png'
         fileName, path = self.openFile(format)
         if fileName is not None:
             self.txt_file.SetValue(fileName)
             self.filePath = path
-            print self.filePath
+            if self._checkFileType(fileName) is FileType.Image:
+                self.txt_caption.Enable(True)
 
     def browseThumabail(self, event):
         format = 'Pictures (*.jpg,*.jpeg,*.png)|*.jpg;*.jpeg;*.png'
@@ -472,6 +523,7 @@ class ItemEditDialog(wx.Dialog):
         fileName = self.txt_file.GetValue()
         summary = self.txt_summary.GetValue()
         description = self.txt_description.GetValue()
+        caption = self.txt_caption.GetValue()
         thumbnail = self.txt_thumbnail.GetValue()
         relatedItems = ','.join(self.lst_related.GetStrings())
         isOnHomeGrid = self.chk_home.GetValue()
@@ -480,7 +532,6 @@ class ItemEditDialog(wx.Dialog):
             wx.MessageBox('Invalid item.', 'Error', wx.OK|wx.ICON_ERROR, self)
             return
         armature_dir = os.path.join(self.dbxPath, armature)
-        print armature_dir
         if self.filePath is not None:
             if os.path.dirname(self.filePath) != armature_dir:
                 print "copyfile from" + self.filePath + "to" + armature_dir
@@ -488,8 +539,25 @@ class ItemEditDialog(wx.Dialog):
         if not self.thumbnailPath is None:
             if os.path.dirname(self.thumbnailPath) != armature_dir:
                 shutil.copy(self.thumbnailPath, armature_dir)
-        self.mediainfo = MediaInfo(title, fileName, summary, description, thumbnail, relatedItems, isOnHomeGrid, armature)
+
+        fileType = self._checkFileType(fileName)
+        print fileType
+        self.mediainfo = MediaInfo(title, fileName, summary, description, caption, thumbnail, relatedItems, isOnHomeGrid, armature, fileType)
         event.Skip()
+
+    def _checkFileType(self, fileName):
+        extension = os.path.splitext(fileName)[1]
+        print extension
+        videos = ['.avi', '.mp4']
+        audios = ['.wav']
+        images = ['.jpg', '.jpeg', '.png']
+        if extension in videos:
+            return FileType.Video
+        if extension in audios:
+            return FileType.Audio
+        if extension in images:
+            return FileType.Image
+        return None
 
 class ExceptionHandler:
     """ A simple error-handling class to write exceptions to a text file. """
