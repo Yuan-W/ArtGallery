@@ -94,6 +94,7 @@ class MainFrame(wx.Frame):
         self.listCtrl.InsertColumn(6, 'Thumbnail', width=150)
         self.listCtrl.InsertColumn(7, 'RelatedItem', width=150)
         self.listCtrl.InsertColumn(8, 'Home Grid')
+        self.listCtrl.InsertColumn(9, 'Order')
         self.listCtrl.SetBackgroundColour(wx.WHITE)
         self.listCtrl.Bind(wx.EVT_LEFT_DCLICK, self.doEditItem)
         self.listCtrl.Bind(wx.EVT_LIST_ITEM_SELECTED, self.OnItemSelected)
@@ -176,6 +177,7 @@ class MainFrame(wx.Frame):
         self.listCtrl.SetStringItem(index, 6, info.thumbnail)
         self.listCtrl.SetStringItem(index, 7, info.relatedItems)
         self.listCtrl.SetStringItem(index, 8, bool_to_string(info.isOnHomeGrid))
+        self.listCtrl.SetStringItem(index, 9, str(info.order))
         self.needSave = True
         editor.Hide()
 
@@ -201,6 +203,7 @@ class MainFrame(wx.Frame):
         self.listCtrl.SetStringItem(index, 6, info.thumbnail)
         self.listCtrl.SetStringItem(index, 7, info.relatedItems)
         self.listCtrl.SetStringItem(index, 8, bool_to_string(info.isOnHomeGrid))
+        self.listCtrl.SetStringItem(index, 9, str(info.order))
         self.needSave = True
         editor.Hide()
 
@@ -292,6 +295,7 @@ class MainFrame(wx.Frame):
             self.listCtrl.SetStringItem(index, 6, info.thumbnail)
             self.listCtrl.SetStringItem(index, 7, info.relatedItems)
             self.listCtrl.SetStringItem(index, 8, bool_to_string(info.isOnHomeGrid))
+            self.listCtrl.SetStringItem(index, 9, str(info.order))
             index += 1
 
     def _updateMenu(self, enable):
@@ -381,36 +385,39 @@ class ItemEditDialog(wx.Dialog):
         btn_armature_new = wx.Button(panel, label='Create')
         self.Bind(wx.EVT_BUTTON, self.addArmature, btn_armature_new)
         sizer.Add(btn_armature_new, pos=(6, 4), flag=wx.TOP|wx.RIGHT, border=5)
+        # Order
+        lbl_order = wx.StaticText(panel, label='Order')
+        sizer.Add(lbl_order, pos=(7, 0), flag=wx.LEFT|wx.TOP, border=10)
+        self.num_order = wx.SpinCtrl(panel, min=1)
+        sizer.Add(self.num_order, pos=(7, 1), span=(1, 4), flag=wx.TOP|wx.EXPAND, border=5)
         # Related Items
         lbl_related = wx.StaticText(panel, label='Related Items')
-        sizer.Add(lbl_related, pos=(7, 0), flag=wx.LEFT|wx.TOP, border=10)
+        sizer.Add(lbl_related, pos=(8, 0), flag=wx.LEFT|wx.TOP, border=10)
         self.cbx_related = wx.ComboBox(panel, style=wx.CB_READONLY)
-        sizer.Add(self.cbx_related, pos=(7, 1), span=(1, 3), flag=wx.TOP|wx.EXPAND, border=5)
+        sizer.Add(self.cbx_related, pos=(8, 1), span=(1, 3), flag=wx.TOP|wx.EXPAND, border=5)
         btn_related_add = wx.Button(panel, label='Add')
         self.Bind(wx.EVT_BUTTON, self.addItem, btn_related_add)
-        sizer.Add(btn_related_add, pos=(7, 4), flag=wx.TOP|wx.RIGHT, border=5)
+        sizer.Add(btn_related_add, pos=(8, 4), flag=wx.TOP|wx.RIGHT, border=5)
         self.lst_related = wx.ListBox(panel, style=wx.LB_SINGLE)
-        sizer.Add(self.lst_related, pos=(8, 1), span=(1, 3), flag=wx.TOP|wx.EXPAND, border=5)
+        sizer.Add(self.lst_related, pos=(9, 1), span=(1, 3), flag=wx.TOP|wx.EXPAND, border=5)
         btn_related_remove = wx.Button(panel, label='Remove')
         self.Bind(wx.EVT_BUTTON, self.removeItem, btn_related_remove)
-        sizer.Add(btn_related_remove, pos=(8, 4), flag=wx.TOP|wx.RIGHT, border=5)
+        sizer.Add(btn_related_remove, pos=(9, 4), flag=wx.TOP|wx.RIGHT, border=5)
         # Show On Home Grid        
         sb = wx.StaticBox(panel, label='Optional Attributes')
 
-        boxsizer = wx.StaticBoxSizer(sb, wx.VERTICAL)
+        boxsizer = wx.StaticBoxSizer(sb, wx.HORIZONTAL)
         self.chk_home = wx.CheckBox(panel, label='Show on Home Grid')
-        boxsizer.Add(self.chk_home, 
-            flag=wx.LEFT|wx.TOP, border=5)
-        sizer.Add(boxsizer, pos=(9, 0), span=(1, 5), 
-            flag=wx.EXPAND|wx.TOP|wx.LEFT|wx.RIGHT , border=5)
+        boxsizer.Add(self.chk_home, flag=wx.LEFT|wx.TOP, border=5)
+        sizer.Add(boxsizer, pos=(10, 0), span=(1, 5), flag=wx.EXPAND|wx.TOP|wx.LEFT|wx.RIGHT , border=5)
 
         btn_OK = wx.Button(panel, wx.ID_OK, '&OK')
         btn_OK.SetDefault()
         self.Bind(wx.EVT_BUTTON, self.validateContents, btn_OK)
-        sizer.Add(btn_OK, pos=(10, 3))
+        sizer.Add(btn_OK, pos=(11, 3))
 
         btn_cancel = wx.Button(panel, wx.ID_CANCEL, '&Cancel')
-        sizer.Add(btn_cancel, pos=(10, 4), flag=wx.BOTTOM|wx.RIGHT)
+        sizer.Add(btn_cancel, pos=(11, 4), flag=wx.BOTTOM|wx.RIGHT)
 
         sizer.AddGrowableCol(2)
         sizer.AddGrowableRow(4)
@@ -441,6 +448,7 @@ class ItemEditDialog(wx.Dialog):
         self.cbx_armature.SetValue('')
         self.cbx_related.SetValue('')
         self.lst_related.Clear()
+        self.num_order.SetValue(1)
         self.chk_home.SetValue(False)
         self.filePath = None
         self.thumbnailPath = None
@@ -459,6 +467,7 @@ class ItemEditDialog(wx.Dialog):
         else:
             self.txt_caption.Enable(False);
         self.cbx_armature.SetValue(media_info.armature)
+        self.num_order.SetValue(media_info.order)
         self.cbx_related.SetValue('')
         self.lst_related.Clear()
         for item in media_info.relatedItems.split(','):
@@ -528,6 +537,7 @@ class ItemEditDialog(wx.Dialog):
         relatedItems = ','.join(self.lst_related.GetStrings())
         isOnHomeGrid = self.chk_home.GetValue()
         armature = self.cbx_armature.GetValue()
+        order = self.num_order.GetValue()
         if not (title and fileName and summary and description and thumbnail and armature):
             wx.MessageBox('Invalid item.', 'Error', wx.OK|wx.ICON_ERROR, self)
             return
@@ -542,7 +552,7 @@ class ItemEditDialog(wx.Dialog):
 
         fileType = self._checkFileType(fileName)
         print fileType
-        self.mediainfo = MediaInfo(title, fileName, summary, description, caption, thumbnail, relatedItems, isOnHomeGrid, armature, fileType)
+        self.mediainfo = MediaInfo(title, fileName, summary, description, caption, thumbnail, relatedItems, isOnHomeGrid, armature, fileType, order)
         event.Skip()
 
     def _checkFileType(self, fileName):

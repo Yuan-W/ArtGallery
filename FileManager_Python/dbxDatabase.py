@@ -25,7 +25,7 @@ class FileType():
     Video, Audio, Image = range(1, 4)
 
 class MediaInfo():
-    def __init__(self, title, fileName, summary, description, caption, thumbnail, relatedItems, isOnHomeGrid, armature, fileType):
+    def __init__(self, title, fileName, summary, description, caption, thumbnail, relatedItems, isOnHomeGrid, armature, fileType, order):
         self.title = title
         self.fileName = fileName
         self.summary = summary
@@ -36,6 +36,7 @@ class MediaInfo():
         self.isOnHomeGrid = isOnHomeGrid
         self.armature = armature
         self.fileType = fileType
+        self.order = order
 
 class DbxDataAdapter():
     TOKEN_FILE = "token_store.txt"
@@ -102,7 +103,7 @@ class DbxDataAdapter():
             media_table.insert(title=info.title, file_name=info.fileName,\
                 summary=info.summary, description=info.description, caption=info.caption,\
                 thumbnail_name=info.thumbnail, related_items=info.relatedItems,\
-                is_on_home_grid=info.isOnHomeGrid, armature=info.armature, file_type=info.fileType)
+                is_on_home_grid=info.isOnHomeGrid, armature=info.armature, file_type=info.fileType, order=info.order)
         try:
             self.datastore.commit()
         except DatastoreConflictError:
@@ -125,8 +126,9 @@ class DbxDataAdapter():
             isOnHomeGrid = data.get('is_on_home_grid')
             armature = data.get('armature')
             fileType = data.get('file_type')
+            order = data.get('order')
             media_list.append(MediaInfo(title, fileName, summary, \
-                description, caption, thumbnail, relatedItems, isOnHomeGrid, armature, fileType))
+                description, caption, thumbnail, relatedItems, isOnHomeGrid, armature, fileType, order))
         return media_list
 
 def main():
@@ -149,6 +151,7 @@ def main():
         print 'Related: ' + info.relatedItems
         print 'IsOnHome: ' + bool_to_string(info.isOnHomeGrid)
         print 'FileType: ' + str(info.fileType)
+        print 'Order: ' + str(info.order)
         print '-----------------------------'
     print '*' * 40
 

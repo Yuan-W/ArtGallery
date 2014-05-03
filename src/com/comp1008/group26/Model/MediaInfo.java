@@ -55,8 +55,9 @@ public class MediaInfo
     private String _relatedItems;
     private Boolean _isOnHomeGrid;
     private FileType _fileType;
+    private int _order;
 
-    public MediaInfo(String title, String fileName, String summary, String description, String caption, String thumbnailName, String relatedItems, Boolean isOnHomeGrid, FileType fileType)
+    public MediaInfo(String title, String fileName, String summary, String description, String caption, String thumbnailName, String relatedItems, Boolean isOnHomeGrid, FileType fileType, int order)
     {
         this._title = title;
         this._fileName = fileName;
@@ -67,11 +68,12 @@ public class MediaInfo
         this._relatedItems = relatedItems;
         this._isOnHomeGrid = isOnHomeGrid;
         this._fileType = fileType;
+        this._order = order;
     }
 
-    public MediaInfo(int id, String title, String fileName, String summary, String description, String caption, String thumbnailName, String relatedItems, Boolean isOnHomeGrid, FileType fileType)
+    public MediaInfo(int id, String title, String fileName, String summary, String description, String caption, String thumbnailName, String relatedItems, Boolean isOnHomeGrid, FileType fileType, int order)
     {
-        this(title, fileName, summary, description, caption, thumbnailName, relatedItems, isOnHomeGrid, fileType);
+        this(title, fileName, summary, description, caption, thumbnailName, relatedItems, isOnHomeGrid, fileType, order);
         this._id = id;
     }
 
@@ -118,6 +120,11 @@ public class MediaInfo
     public void setFileType(FileType fileType)
     {
         this._fileType = fileType;
+    }
+
+    public void setOrder(int order)
+    {
+        this._order = order;
     }
 
     public int getId()
@@ -168,6 +175,11 @@ public class MediaInfo
     public FileType getFileType()
     {
         return _fileType;
+    }
+
+    public int getOrder()
+    {
+        return _order;
     }
 
     public String getFilePath()

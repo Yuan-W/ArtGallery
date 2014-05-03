@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.comp1008.group26.Model.Schema.*;
@@ -19,7 +21,7 @@ import static com.comp1008.group26.Model.Schema.*;
 
 public class DatabaseHandler extends SQLiteOpenHelper
 {
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
 
     private static final String DATABASE_NAME = "ArtGallery.db";
 
@@ -56,6 +58,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
         values.put(MediaInfoEntry.COLUMN_RELATED_ITEMS, info.getRelatedItems());
         values.put(MediaInfoEntry.COLUMN_IS_ON_HOME_GRID, booleanToInt(info.getIsOnHomeGrid()));
         values.put(MediaInfoEntry.COLUMN_FILE_TYPE, info.getFileType().getValue());
+        values.put(MediaInfoEntry.COLUMN_ORDER, info.getOrder());
         db.insert(MediaInfoEntry.TABLE_NAME, null, values);
         db.close();
     }
@@ -69,7 +72,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
         Cursor cursor = db.query(MediaInfoEntry.TABLE_NAME, new String[] { MediaInfoEntry._ID,
                 MediaInfoEntry.COLUMN_TITLE, MediaInfoEntry.COLUMN_FILE_NAME, MediaInfoEntry.COLUMN_SUMMARY, MediaInfoEntry.COLUMN_DESCRIPTION,
                 MediaInfoEntry.COLUMN_CAPTION, MediaInfoEntry.COLUMN_THUMBNAIL_NAME, MediaInfoEntry.COLUMN_RELATED_ITEMS, MediaInfoEntry.COLUMN_IS_ON_HOME_GRID,
-                MediaInfoEntry.COLUMN_FILE_TYPE},
+                MediaInfoEntry.COLUMN_FILE_TYPE, MediaInfoEntry.COLUMN_ORDER},
                 MediaInfoEntry._ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
@@ -79,7 +82,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
         return new MediaInfo(Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
                 cursor.getString(5), cursor.getString(6), cursor.getString(7),
-                intToBoolean(cursor.getInt(8)), MediaInfo.FileType.values()[cursor.getInt(9)]);
+                intToBoolean(cursor.getInt(8)), MediaInfo.FileType.values()[cursor.getInt(9)], cursor.getInt(10));
     }
 
     public List<MediaInfo> getAllMediaInfo()
@@ -99,11 +102,20 @@ public class DatabaseHandler extends SQLiteOpenHelper
                 MediaInfo info = new MediaInfo(Integer.parseInt(cursor.getString(0)),
                         cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
                         cursor.getString(5), cursor.getString(6), cursor.getString(7),
-                        intToBoolean(cursor.getInt(8)), MediaInfo.FileType.from(cursor.getInt(9)));
+                        intToBoolean(cursor.getInt(8)), MediaInfo.FileType.from(cursor.getInt(9)), cursor.getInt(10));
 
                 mediaList.add(info);
             } while (cursor.moveToNext());
         }
+
+        Collections.sort(mediaList, new Comparator<MediaInfo>()
+        {
+            @Override
+            public int compare(MediaInfo info1, MediaInfo info2)
+            {
+                return info1.getOrder() - info2.getOrder();
+            }
+        });
 
         return mediaList;
     }
@@ -123,6 +135,7 @@ public class DatabaseHandler extends SQLiteOpenHelper
         values.put(MediaInfoEntry.COLUMN_RELATED_ITEMS, info.getRelatedItems());
         values.put(MediaInfoEntry.COLUMN_IS_ON_HOME_GRID, booleanToInt(info.getIsOnHomeGrid()));
         values.put(MediaInfoEntry.COLUMN_FILE_TYPE, info.getFileType().getValue());
+        values.put(MediaInfoEntry.COLUMN_ORDER, info.getOrder());
 
         return db.update(MediaInfoEntry.TABLE_NAME, values, MediaInfoEntry._ID + " = ?",
                 new String[] { String.valueOf(info.getId()) });

@@ -100,10 +100,10 @@ public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
                         String thumbnail = record.getString("thumbnail_name");
                         String relatedItems = record.getString("related_items");
                         Boolean isOnHomeGrid = record.getBoolean("is_on_home_grid");
-                        long fileTypel = record.getLong("file_type");
-                        Log.d(LOG_TAG, String.valueOf(fileTypel));
-                        MediaInfo.FileType fileType = MediaInfo.FileType.from((int) fileTypel);
-                        mediaInfoList.add(new MediaInfo(title, fileName, summary, description, caption, thumbnail, relatedItems, isOnHomeGrid, fileType));
+                        MediaInfo.FileType fileType = MediaInfo.FileType.from((int) record.getLong("file_type"));
+                        int order = (int) record.getLong("order");
+                        Log.d(LOG_TAG, String.valueOf(order));
+                        mediaInfoList.add(new MediaInfo(title, fileName, summary, description, caption, thumbnail, relatedItems, isOnHomeGrid, fileType, order));
                     }
                 }
                 store.close();
@@ -186,7 +186,7 @@ public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
                     ", Summary" + info.getSummary() + ", Description: " + info.getDescription() +
                     ", Caption: " + info.getCaption() + ", Thumbnail: " + info.getThumbnailName() +
                     ", Path: " + info.getFilePath() + ", Related: " + info.getRelatedItems() +
-                    ", IsOnHome: " + info.getIsOnHomeGrid() + ", FileType: " + info.getFileType();
+                    ", IsOnHome: " + info.getIsOnHomeGrid() + ", FileType: " + info.getFileType() + ", Order: " + info.getOrder();
             Log.d("MediaInfo: ", msg);
         }
         mProgressDialog.dismiss();
