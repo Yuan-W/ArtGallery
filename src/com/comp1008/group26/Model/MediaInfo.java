@@ -2,6 +2,10 @@ package com.comp1008.group26.Model;
 
 import com.comp1008.group26.utility.DbxSyncConfig;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * MediaInfo Model
  *
@@ -10,29 +14,64 @@ import com.comp1008.group26.utility.DbxSyncConfig;
 
 public class MediaInfo
 {
+    public enum FileType
+    {
+        Video(1),
+        Audio(2),
+        Image(3);
+
+        private final int value;
+
+        private FileType(int value)
+        {
+            this.value = value;
+        }
+
+        private static final Map<Integer, FileType> _map = new HashMap<Integer, FileType>();
+        static
+        {
+            for (FileType fileType : FileType.values())
+                _map.put(fileType.value, fileType);
+        }
+
+        public static FileType from(int value)
+        {
+            return _map.get(value);
+        }
+
+        public int getValue()
+        {
+            return value;
+        }
+    }
+
     private int _id;
     private String _title;
     private String _fileName;
     private String _summary;
     private String _description;
+    private String _caption;
     private String _thumbnailName;
     private String _relatedItems;
     private Boolean _isOnHomeGrid;
+    private FileType _fileType;
 
-    public MediaInfo(String title, String fileName, String summary, String description, String thumbnailName, String relatedItems, Boolean isOnHomeGrid)
+    public MediaInfo(String title, String fileName, String summary, String description, String caption, String thumbnailName, String relatedItems, Boolean isOnHomeGrid, FileType fileType)
     {
         this._title = title;
         this._fileName = fileName;
         this._summary = summary;
         this._description = description;
+        this._caption = caption;
         this._thumbnailName = thumbnailName;
         this._relatedItems = relatedItems;
         this._isOnHomeGrid = isOnHomeGrid;
+        this._fileType = fileType;
     }
 
-    public MediaInfo(int id, String title, String fileName, String summary, String description, String thumbnailName, String relatedItems, Boolean isOnHomeGrid)
+    public MediaInfo(int id, String title, String fileName, String summary, String description, String caption, String thumbnailName, String relatedItems, Boolean isOnHomeGrid, FileType fileType)
     {
-        this(title, fileName, summary, description, thumbnailName, relatedItems, isOnHomeGrid);
+        this(title, fileName, summary, description, caption, thumbnailName, relatedItems, isOnHomeGrid, fileType);
         this._id = id;
     }
 
@@ -49,6 +88,11 @@ public class MediaInfo
     public void setSummary(String summary)
     {
         this._summary = summary;
+    }
+
+    public void setCaption(String caption)
+    {
+        this._caption = caption;
     }
 
     public void setThumbnailName(String thumbnailName)
@@ -71,6 +115,11 @@ public class MediaInfo
         this._isOnHomeGrid = _isOnHomeGrid;
     }
 
+    public void setFileType(FileType fileType)
+    {
+        this._fileType = fileType;
+    }
+
     public int getId()
     {
         return _id;
@@ -91,6 +140,11 @@ public class MediaInfo
         return _summary;
     }
 
+    public String getCaption()
+    {
+        return _caption;
+    }
+
     public String getDescription()
     {
         return _description;
@@ -109,6 +163,11 @@ public class MediaInfo
     public Boolean getIsOnHomeGrid()
     {
         return _isOnHomeGrid;
+    }
+
+    public FileType getFileType()
+    {
+        return _fileType;
     }
 
     public String getFilePath()

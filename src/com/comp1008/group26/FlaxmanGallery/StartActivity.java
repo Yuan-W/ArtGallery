@@ -50,56 +50,40 @@ public class StartActivity extends Activity {
 
 		ArrayList<Item> items = new ArrayList<Item>();
 
-		for (MediaInfo info : infoList) {
-			String msg = "\nID: " + info.getId() + ",\nTitle: "
-					+ info.getTitle() + ",\nName: " + info.getFileName()
-					+ ",\nSummary: " + info.getSummary() + ",\nDescription: "
-					+ info.getDescription() + ",\nThumbnail: "
-					+ info.getThumbnailName() + ",\nPath: "
-					+ info.getFilePath() + ",\nRelated: "
-					+ info.getRelatedItems() + ",\nIsOnHome: "
-					+ info.getIsOnHomeGrid() + "\n\n";
-			System.out.println(msg);
+		for (MediaInfo info : infoList)
+        {
+//			String msg = "\nID: " + info.getId() + ",\nTitle: "
+//					+ info.getTitle() + ",\nName: " + info.getFileName()
+//					+ ",\nSummary: " + info.getSummary() + ",\nDescription: "
+//					+ info.getDescription() + ",\nThumbnail: "
+//					+ info.getThumbnailName() + ",\nPath: "
+//					+ info.getFilePath() + ",\nRelated: "
+//					+ info.getRelatedItems() + ",\nIsOnHome: "
+//					+ info.getIsOnHomeGrid() + "\n\n";
+//			System.out.println(msg);
+            MediaInfo.FileType fileType = info.getFileType();
 
-			String filenameArray[] = info.getFileName().split("\\.");
-			String extension = filenameArray[filenameArray.length - 1];
-
-			String thumbnail = "/storage/emulated/0/ArtGallery/"
-					+ info.getThumbnailName();
-			if (extension.compareTo("txt") == 0) {
-				Item i1 = new Item();
-				i1.setType(Item.TEXT);
-				i1.setTitle(info.getTitle());
-				i1.setSummary(info.getSummary());
-				i1.setBody(info.getDescription());
-				items.add(i1);
-			} else if (extension.compareTo("wav") == 0) {
-				Item i2 = new Item();
-				i2.setType(Item.AUDIO);
-				i2.setTitle(info.getTitle());
-				i2.setSummary(info.getSummary());
-				i2.setBody(info.getDescription());
-				i2.setImage_src(thumbnail);
-				i2.setLink(info.getFilePath());
-				items.add(i2);
-			} else if (extension.compareTo("mp4") == 0) {
-				Item i3 = new Item();
-				i3.setType(Item.VIDEO);
-				i3.setTitle(info.getTitle());
-				i3.setSummary(info.getSummary());
-				i3.setBody(info.getDescription());
-				i3.setImage_src(thumbnail);
-				i3.setLink(info.getFilePath());
-				items.add(i3);
-			} else if (extension.compareTo("jpg") == 0) {
-				Item i4 = new Item();
-				i4.setType(Item.IMAGE);
-				i4.setTitle(info.getTitle());
-				i4.setCaption("Image caption");
-				i4.setImage_src(thumbnail);
-				i4.setBody(info.getDescription());
-				items.add(i4);
+            Item item = new Item();
+            item.setTitle(info.getTitle());
+            item.setSummary(info.getSummary());
+            item.setBody(info.getDescription());
+            item.setImage_src(info.getThumbnailPath());
+			if (fileType == MediaInfo.FileType.Audio)
+            {
+                item.setType(Item.AUDIO);
+				item.setLink(info.getFilePath());
 			}
+            else if (fileType == MediaInfo.FileType.Video)
+            {
+                item.setType(Item.VIDEO);
+				item.setLink(info.getFilePath());
+			}
+            else if (fileType == MediaInfo.FileType.Image)
+            {
+                item.setCaption(info.getCaption());
+                item.setType(Item.IMAGE);;
+			}
+            items.add(item);
 		}
 		Item i5 = new Item();
 		i5.setType(Item.WEB);

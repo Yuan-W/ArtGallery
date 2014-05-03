@@ -116,9 +116,11 @@ public class ItemListAdapter extends BaseAdapter {
 		} else if (type == Item.IMAGE) {
 			volume.setVisibility(View.GONE);
 			play.setVisibility(View.GONE);
-			titleV.setVisibility(View.GONE);
-			summaryV.setVisibility(View.GONE);
+			titleV.setVisibility(View.VISIBLE);
+			summaryV.setVisibility(View.VISIBLE);
 			image_srcB.setVisibility(View.VISIBLE);
+            titleV.setText(Html.fromHtml((title)));
+            summaryV.setText(Html.fromHtml((summary)));
 			image_srcB.setImageBitmap(BitmapFactory.decodeFile(image_src));
 			largeTitle.setVisibility(View.GONE);
 		} else if (type == Item.WEB || type == Item.PARTNER) {

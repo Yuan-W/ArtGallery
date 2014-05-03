@@ -144,9 +144,11 @@ def main():
         print 'File Name: ' + info.fileName
         print 'Summary: ' + info.summary
         print 'Description: ' + info.description
+        print 'Caption: ' + info.caption
         print 'Thumbnail: ' + info.thumbnail
         print 'Related: ' + info.relatedItems
         print 'IsOnHome: ' + bool_to_string(info.isOnHomeGrid)
+        print 'FileType: ' + str(info.fileType)
         print '-----------------------------'
     print '*' * 40
 
