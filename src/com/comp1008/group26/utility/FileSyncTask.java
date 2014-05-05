@@ -78,8 +78,10 @@ public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
                 DbxDatastore store = DbxDatastore.openDefault(mAccountManager.getLinkedAccount());
                 publishProgress("Syncing Database...");
                 store.sync();
-                while (store.getSyncStatus().hasIncoming || store.getSyncStatus().isDownloading)
+                while (store.getSyncStatus().hasIncoming || store.getSyncStatus().isDownloading || store.getSyncStatus().isUploading)
                 {
+                    store.sync();
+                    Thread.sleep(1000);
                 }
                 DbxTable tasksTbl = store.getTable("media");
                 DbxTable.QueryResult results = tasksTbl.query();
@@ -102,7 +104,6 @@ public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
                         Boolean isOnHomeGrid = record.getBoolean("is_on_home_grid");
                         MediaInfo.FileType fileType = MediaInfo.FileType.from((int) record.getLong("file_type"));
                         int order = (int) record.getLong("order");
-                        Log.d(LOG_TAG, String.valueOf(order));
                         mediaInfoList.add(new MediaInfo(title, fileName, summary, description, caption, thumbnail, relatedItems, isOnHomeGrid, fileType, order));
                     }
                 }
@@ -151,6 +152,9 @@ public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e)
+            {
                 e.printStackTrace();
             }
         }
