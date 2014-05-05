@@ -31,4 +31,7 @@ proguard/
 
 .DS_Store
 
+# Python program generated File
 *.pyc
+FileManager_Python/*.txt
+FileManager_Python/*.cfg
