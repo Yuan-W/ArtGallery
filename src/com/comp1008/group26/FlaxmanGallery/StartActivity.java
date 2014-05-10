@@ -68,6 +68,7 @@ public class StartActivity extends Activity {
             item.setSummary(info.getSummary());
             item.setBody(info.getDescription());
             item.setImage_src(info.getThumbnailPath());
+
 			if (fileType == MediaInfo.FileType.Audio)
             {
                 item.setType(Item.AUDIO);
@@ -83,6 +84,18 @@ public class StartActivity extends Activity {
                 item.setCaption(info.getCaption());
                 item.setType(Item.IMAGE);;
 			}
+            //////////////////////////////////////////////////////////////
+            // Sample code for get relatedItem from database by title
+            String relatedItemRaw = info.getRelatedItems();
+            if(!relatedItemRaw.trim().equals(""))
+            {
+                String[] relatedList = relatedItemRaw.split(",");
+                for(String relatedItem : relatedList)
+                {
+                    MediaInfo relatedInfo = databaseHandler.getMediaInfo(relatedItem);
+                }
+            }
+            //////////////////////////////////////////////////////////////
             items.add(item);
 		}
 		Item i5 = new Item();
