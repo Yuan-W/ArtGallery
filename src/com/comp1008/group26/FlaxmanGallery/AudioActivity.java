@@ -1,6 +1,14 @@
 package com.comp1008.group26.FlaxmanGallery;
 
 import java.io.File;
+import java.util.ArrayList;
+
+import com.comp1008.group26.Model.DatabaseHandler;
+import com.comp1008.group26.Model.Item;
+import com.comp1008.group26.Model.MediaInfo;
+import com.comp1008.group26.utility.ItemListAdapterSmall;
+import com.devsmart.android.ui.HorizontalListView;
+
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -71,7 +79,9 @@ public class AudioActivity extends Activity implements OnClickListener {
 		((TextView) findViewById(R.id.title)).setText(Html.fromHtml(title));
 		((TextView) findViewById(R.id.body)).setText(Html.fromHtml(body));
 		((ImageButton) findViewById(R.id.home)).setOnClickListener(this);
-
+		((ImageView) findViewById(R.id.videomain)).setOnClickListener(this);
+		((ImageButton) findViewById(R.id.fontsize)).setOnClickListener(this);
+		
 		File f = new File(link);
 		Uri uri = Uri.fromFile(f);
 		mplayer = MediaPlayer.create(this, uri);
@@ -89,6 +99,58 @@ public class AudioActivity extends Activity implements OnClickListener {
 		imageButton.setBackgroundResource(R.drawable.pause);
 		mplayer.start();
 		isPlay = !isPlay;
+		
+		DatabaseHandler databaseHandler = new DatabaseHandler(this);
+		String relatedItemRaw = getIntent().getExtras().getString("relatedInfoList");
+		ArrayList<Item> items = new ArrayList<Item>();
+		
+		if(!relatedItemRaw.trim().equals(""))
+		{
+			String[] relatedList = relatedItemRaw.split(",");
+			for(String relatedItem : relatedList)
+			{
+				MediaInfo info = databaseHandler.getMediaInfo(relatedItem);
+				
+				String msg = "\nRelatedID: " + info.getId() + ",\nTitle: "
+						+ info.getTitle() + ",\nName: " + info.getFileName()
+						+ ",\nSummary: " + info.getSummary() + ",\nDescription: "
+						+ info.getDescription() + ",\nThumbnail: "
+						+ info.getThumbnailName() + ",\nPath: "
+						+ info.getFilePath() + ",\nRelated: "
+						+ info.getRelatedItems() + ",\nIsOnHome: "
+						+ info.getIsOnHomeGrid() + "\n\n";
+				System.out.println(msg);
+	            MediaInfo.FileType fileType = info.getFileType();
+
+	            Item item = new Item();
+	            item.setTitle(info.getTitle());
+	            item.setSummary(info.getSummary());
+	            item.setBody(info.getDescription());
+	            item.setImage_src(info.getThumbnailPath());
+
+				if (fileType == MediaInfo.FileType.Audio)
+	            {
+	                item.setType(Item.AUDIO);
+					item.setLink(info.getFilePath());
+				}
+	            else if (fileType == MediaInfo.FileType.Video)
+	            {
+	                item.setType(Item.VIDEO);
+					item.setLink(info.getFilePath());
+				}
+	            else if (fileType == MediaInfo.FileType.Image)
+	            {
+	                item.setCaption(info.getCaption());
+	                item.setType(Item.IMAGE);;
+				}
+	            item.setRelatedInfoList(info.getRelatedItems());
+	            items.add(item);
+				
+			}
+		}
+		
+		HorizontalListView listview = (HorizontalListView) findViewById(R.id.horizonListview);
+		listview.setAdapter(new ItemListAdapterSmall(this, items));
 	}
 
 	public void updateAudio() {
@@ -107,10 +169,31 @@ public class AudioActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-
+		case R.id.fontsize: {
+			if(SettingActivity.fontSize == 1)
+				SettingActivity.fontSize =2;
+			else
+				SettingActivity.fontSize =1;
+			
+			this.recreate();
+			break;
+		}
 		case R.id.home: {
 			mplayer.stop();
 			super.onBackPressed();
+			break;
+		}
+		case R.id.videomain: {
+
+			if (isPlay) {
+				imageButton.setBackgroundResource(R.drawable.pause);
+				mplayer.start();
+			} else {
+				imageButton.setBackgroundResource(R.drawable.play2);
+				mplayer.pause();
+			}
+
+			isPlay = !isPlay;
 			break;
 		}
 		case R.id.audioControl: {
@@ -144,6 +227,23 @@ public class AudioActivity extends Activity implements OnClickListener {
 							| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 		}
 
+	}
+	
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		imageButton.setBackgroundResource(R.drawable.pause);
+		mplayer.start();
+		super.onResume();
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		imageButton.setBackgroundResource(R.drawable.play2);
+		mplayer.pause();
+		super.onPause();
 	}
 
 	@Override

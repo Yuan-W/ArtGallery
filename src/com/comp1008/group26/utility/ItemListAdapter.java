@@ -1,6 +1,8 @@
 package com.comp1008.group26.utility;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import com.comp1008.group26.FlaxmanGallery.AudioActivity;
 import com.comp1008.group26.FlaxmanGallery.PartnerActivity;
 import com.comp1008.group26.FlaxmanGallery.PhotoActivity;
@@ -9,6 +11,7 @@ import com.comp1008.group26.FlaxmanGallery.TextActivity;
 import com.comp1008.group26.FlaxmanGallery.VideoActivity;
 import com.comp1008.group26.FlaxmanGallery.WebActivity;
 import com.comp1008.group26.Model.Item;
+import com.comp1008.group26.Model.MediaInfo;
 
 import android.app.Activity;
 import android.content.Context;
@@ -82,8 +85,9 @@ public class ItemListAdapter extends BaseAdapter {
 		final String link = data.get(position).getLink();
 		final String caption = data.get(position).getCaption();
 		final String website = data.get(position).getWebsite();
-
-		if (type == Item.TEXT) {
+		final String relatedInfoList = data.get(position).getRelatedInfoList();
+		
+		/*if (type == Item.TEXT) {
 			image_srcB.setVisibility(View.GONE);
 			volume.setVisibility(View.GONE);
 			play.setVisibility(View.GONE);
@@ -92,7 +96,8 @@ public class ItemListAdapter extends BaseAdapter {
 			titleV.setText(Html.fromHtml((title)));
 			summaryV.setText(Html.fromHtml((summary)));
 			largeTitle.setVisibility(View.GONE);
-		} else if (type == Item.AUDIO) {
+		} else */
+		if (type == Item.AUDIO) {
 			volume.setVisibility(View.VISIBLE);
 			image_srcB.setVisibility(View.VISIBLE);
 			titleV.setVisibility(View.VISIBLE);
@@ -137,10 +142,11 @@ public class ItemListAdapter extends BaseAdapter {
 			public void onClick(View v) {
 				Intent intent = new Intent(activity, VideoActivity.class)
 						.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				if (type == Item.TEXT) {
+				/*if (type == Item.TEXT) {
 					intent = new Intent(activity, TextActivity.class)
 							.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				} else if (type == Item.AUDIO) {
+				} else*/ 
+				if (type == Item.AUDIO) {
 					intent = new Intent(activity, AudioActivity.class)
 							.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				} else if (type == Item.VIDEO) {
@@ -162,6 +168,7 @@ public class ItemListAdapter extends BaseAdapter {
 				intent.putExtra("img", image_src);
 				intent.putExtra("link", link);
 				intent.putExtra("website", website);
+				intent.putExtra("relatedInfoList", relatedInfoList);
 				activity.startActivity(intent);
 			}
 		});

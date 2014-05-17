@@ -47,20 +47,21 @@ public class StartActivity extends Activity {
 
 		DatabaseHandler databaseHandler = new DatabaseHandler(this);
 		List<MediaInfo> infoList = databaseHandler.getAllMediaInfo();
-
+		
 		ArrayList<Item> items = new ArrayList<Item>();
-
+		
 		for (MediaInfo info : infoList)
         {
-//			String msg = "\nID: " + info.getId() + ",\nTitle: "
-//					+ info.getTitle() + ",\nName: " + info.getFileName()
-//					+ ",\nSummary: " + info.getSummary() + ",\nDescription: "
-//					+ info.getDescription() + ",\nThumbnail: "
-//					+ info.getThumbnailName() + ",\nPath: "
-//					+ info.getFilePath() + ",\nRelated: "
-//					+ info.getRelatedItems() + ",\nIsOnHome: "
-//					+ info.getIsOnHomeGrid() + "\n\n";
-//			System.out.println(msg);
+
+			String msg = "\nID: " + info.getId() + ",\nTitle: "
+					+ info.getTitle() + ",\nName: " + info.getFileName()
+					+ ",\nSummary: " + info.getSummary() + ",\nDescription: "
+					+ info.getDescription() + ",\nThumbnail: "
+					+ info.getThumbnailName() + ",\nPath: "
+					+ info.getFilePath() + ",\nRelated: "
+					+ info.getRelatedItems() + ",\nIsOnHome: "
+					+ info.getIsOnHomeGrid() + "\n\n";
+			System.out.println(msg);
             MediaInfo.FileType fileType = info.getFileType();
 
             Item item = new Item();
@@ -86,7 +87,7 @@ public class StartActivity extends Activity {
 			}
             //////////////////////////////////////////////////////////////
             // Sample code for get relatedItem from database by title
-            String relatedItemRaw = info.getRelatedItems();
+            /*String relatedItemRaw = info.getRelatedItems();
             if(!relatedItemRaw.trim().equals(""))
             {
                 String[] relatedList = relatedItemRaw.split(",");
@@ -94,9 +95,12 @@ public class StartActivity extends Activity {
                 {
                     MediaInfo relatedInfo = databaseHandler.getMediaInfo(relatedItem);
                 }
-            }
+            }*/
             //////////////////////////////////////////////////////////////
+            item.setRelatedInfoList(info.getRelatedItems());
             items.add(item);
+            
+            
 		}
 		Item i5 = new Item();
 		i5.setType(Item.WEB);
@@ -143,6 +147,12 @@ public class StartActivity extends Activity {
 							| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 		}
 
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 	}
 
 	@Override

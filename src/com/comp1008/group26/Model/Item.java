@@ -1,5 +1,7 @@
 package com.comp1008.group26.Model;
 
+import java.util.List;
+
 /**
  * @author HO Sze Nga (s.ho.13@ucl.ac.uk)
  */
@@ -19,6 +21,17 @@ public class Item {
 	private String link = "";
 	private String caption = "";
 	private String website = "";
+	private String relatedInfoList="";
+
+	
+
+	public String getRelatedInfoList() {
+		return relatedInfoList;
+	}
+
+	public void setRelatedInfoList(String relatedInfoList) {
+		this.relatedInfoList = relatedInfoList;
+	}
 
 	public int getType() {
 		return type;

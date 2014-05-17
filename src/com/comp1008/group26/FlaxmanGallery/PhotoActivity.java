@@ -1,5 +1,7 @@
 package com.comp1008.group26.FlaxmanGallery;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.BitmapFactory;
@@ -15,6 +17,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.comp1008.group26.Model.DatabaseHandler;
+import com.comp1008.group26.Model.Item;
+import com.comp1008.group26.Model.MediaInfo;
+import com.comp1008.group26.utility.ItemListAdapterSmall;
+import com.devsmart.android.ui.HorizontalListView;
 
 /**
  * @author HO Sze Nga (s.ho.13@ucl.ac.uk)
@@ -63,7 +71,8 @@ public class PhotoActivity extends Activity implements OnClickListener {
 		((TextView) findViewById(R.id.body)).setText(Html.fromHtml(body));
 		((TextView) findViewById(R.id.caption)).setText(Html.fromHtml(caption));
 		((ImageButton) findViewById(R.id.home)).setOnClickListener(this);
-
+		((ImageButton) findViewById(R.id.fontsize)).setOnClickListener(this);
+		
 		layoutParamsParent = ((RelativeLayout) findViewById(R.id.photoLayoutParent))
 				.getLayoutParams();
 		layoutParams = imageView.getLayoutParams();
@@ -71,6 +80,59 @@ public class PhotoActivity extends Activity implements OnClickListener {
 		own_h = layoutParams.height;
 		parent_w = layoutParamsParent.width;
 		parent_h = layoutParamsParent.height;
+		
+		
+		DatabaseHandler databaseHandler = new DatabaseHandler(this);
+		String relatedItemRaw = getIntent().getExtras().getString("relatedInfoList");
+		ArrayList<Item> items = new ArrayList<Item>();
+		
+		if(!relatedItemRaw.trim().equals(""))
+		{
+			String[] relatedList = relatedItemRaw.split(",");
+			for(String relatedItem : relatedList)
+			{
+				MediaInfo info = databaseHandler.getMediaInfo(relatedItem);
+				
+				String msg = "\nRelatedID: " + info.getId() + ",\nTitle: "
+						+ info.getTitle() + ",\nName: " + info.getFileName()
+						+ ",\nSummary: " + info.getSummary() + ",\nDescription: "
+						+ info.getDescription() + ",\nThumbnail: "
+						+ info.getThumbnailName() + ",\nPath: "
+						+ info.getFilePath() + ",\nRelated: "
+						+ info.getRelatedItems() + ",\nIsOnHome: "
+						+ info.getIsOnHomeGrid() + "\n\n";
+				System.out.println(msg);
+	            MediaInfo.FileType fileType = info.getFileType();
+
+	            Item item = new Item();
+	            item.setTitle(info.getTitle());
+	            item.setSummary(info.getSummary());
+	            item.setBody(info.getDescription());
+	            item.setImage_src(info.getThumbnailPath());
+
+				if (fileType == MediaInfo.FileType.Audio)
+	            {
+	                item.setType(Item.AUDIO);
+					item.setLink(info.getFilePath());
+				}
+	            else if (fileType == MediaInfo.FileType.Video)
+	            {
+	                item.setType(Item.VIDEO);
+					item.setLink(info.getFilePath());
+				}
+	            else if (fileType == MediaInfo.FileType.Image)
+	            {
+	                item.setCaption(info.getCaption());
+	                item.setType(Item.IMAGE);;
+				}
+	            item.setRelatedInfoList(info.getRelatedItems());
+	            items.add(item);
+				
+			}
+		}
+		
+		HorizontalListView listview = (HorizontalListView) findViewById(R.id.horizonListview);
+		listview.setAdapter(new ItemListAdapterSmall(this, items));
 	}
 
 	@Override
@@ -84,7 +146,16 @@ public class PhotoActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
-
+		
+		case R.id.fontsize: {
+			if(SettingActivity.fontSize == 1)
+				SettingActivity.fontSize =2;
+			else
+				SettingActivity.fontSize =1;
+			
+			this.recreate();
+			break;
+		}
 		case R.id.home: {
 			super.onBackPressed();
 			break;
@@ -116,6 +187,11 @@ public class PhotoActivity extends Activity implements OnClickListener {
 				((ImageButton) findViewById(R.id.home))
 						.setVisibility(View.INVISIBLE);
 
+				((ImageButton) findViewById(R.id.fontsize))
+						.setVisibility(View.INVISIBLE);
+				((TextView) findViewById(R.id.remind))
+						.setVisibility(View.INVISIBLE);
+				
 				((TextView) findViewById(R.id.title))
 						.setVisibility(View.INVISIBLE);
 				((TextView) findViewById(R.id.body))
@@ -147,6 +223,10 @@ public class PhotoActivity extends Activity implements OnClickListener {
 				((TextView) findViewById(R.id.body))
 						.setVisibility(View.VISIBLE);
 				((TextView) findViewById(R.id.caption))
+						.setVisibility(View.VISIBLE);
+				((ImageButton) findViewById(R.id.fontsize))
+				.setVisibility(View.VISIBLE);
+				((TextView) findViewById(R.id.remind))
 						.setVisibility(View.VISIBLE);
 			}
 
