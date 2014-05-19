@@ -13,6 +13,7 @@ import android.view.Window;
 
 import com.comp1008.group26.utility.DbxSyncConfig;
 import com.comp1008.group26.utility.FileSyncTask;
+import com.comp1008.group26.utility.UsageLog;
 import com.dropbox.sync.android.*;
 
 import java.util.List;
@@ -30,6 +31,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		UsageLog.setLocation("/storage/emulated/0");
+		assert UsageLog.getInstance().isInitialized();
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		if (SettingActivity.fontSize == 2) {
 			setTheme(R.style.Theme_Large);
@@ -147,6 +150,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
 	}
 
+	
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub

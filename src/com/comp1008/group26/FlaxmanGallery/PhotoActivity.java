@@ -22,6 +22,8 @@ import com.comp1008.group26.Model.DatabaseHandler;
 import com.comp1008.group26.Model.Item;
 import com.comp1008.group26.Model.MediaInfo;
 import com.comp1008.group26.utility.ItemListAdapterSmall;
+import com.comp1008.group26.utility.UsageLog;
+import com.comp1008.group26.utility.UsageLog.Action;
 import com.devsmart.android.ui.HorizontalListView;
 
 /**
@@ -157,6 +159,8 @@ public class PhotoActivity extends Activity implements OnClickListener {
 			break;
 		}
 		case R.id.home: {
+			UsageLog.getInstance().writeEvent(Action.EXIT, this.title);
+
 			super.onBackPressed();
 			break;
 		}
@@ -164,6 +168,8 @@ public class PhotoActivity extends Activity implements OnClickListener {
 
 			layoutParams = imageView.getLayoutParams();
 			if (isPlay) {
+
+				UsageLog.getInstance().writeEvent(Action.PLAY, this.title);
 
 				FrameLayout.LayoutParams llp2 = new FrameLayout.LayoutParams(
 						LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
@@ -204,6 +210,8 @@ public class PhotoActivity extends Activity implements OnClickListener {
 				 */
 
 			} else {
+				UsageLog.getInstance().writeEvent(Action.PAUSE, this.title);
+
 				((RelativeLayout) findViewById(R.id.photoLayoutParent))
 						.setBackgroundColor(Color.parseColor("#BBFFFFFF"));
 				FrameLayout.LayoutParams llp2 = new FrameLayout.LayoutParams(

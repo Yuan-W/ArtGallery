@@ -7,6 +7,8 @@ import com.comp1008.group26.Model.DatabaseHandler;
 import com.comp1008.group26.Model.Item;
 import com.comp1008.group26.Model.MediaInfo;
 import com.comp1008.group26.utility.ItemListAdapterSmall;
+import com.comp1008.group26.utility.UsageLog;
+import com.comp1008.group26.utility.UsageLog.Action;
 import com.devsmart.android.ui.HorizontalListView;
 
 import android.net.Uri;
@@ -162,6 +164,8 @@ public class VideoActivity extends Activity implements OnClickListener,
 		switch (v.getId()) {
 
 			case R.id.home: {
+				UsageLog.getInstance().writeEvent(Action.EXIT, this.title);
+
 				super.onBackPressed();
 				break;
 			}
@@ -201,6 +205,8 @@ public class VideoActivity extends Activity implements OnClickListener,
 		layoutParams = videoView.getLayoutParams();
 		if (isPlay) {
 
+			UsageLog.getInstance().writeEvent(Action.PLAY, this.title);
+
 			FrameLayout.LayoutParams llp2 = new FrameLayout.LayoutParams(
 					LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			llp2.setMargins(0, 0, 0, 0); 
@@ -225,6 +231,8 @@ public class VideoActivity extends Activity implements OnClickListener,
 			.setVisibility(View.INVISIBLE);
 
 		} else {
+			UsageLog.getInstance().writeEvent(Action.PAUSE, this.title);
+
 			((RelativeLayout) findViewById(R.id.videoLayoutParent))
 					.setBackgroundColor(Color.parseColor("#BBFFFFFF"));
 			FrameLayout.LayoutParams llp2 = new FrameLayout.LayoutParams(

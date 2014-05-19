@@ -1,5 +1,8 @@
 package com.comp1008.group26.FlaxmanGallery;
 
+import com.comp1008.group26.utility.UsageLog;
+import com.comp1008.group26.utility.UsageLog.Action;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -90,6 +93,8 @@ public class WebActivity extends Activity implements OnClickListener {
 		switch (v.getId()) {
 
 		case R.id.home: {
+			UsageLog.getInstance().writeEvent(Action.EXIT, this.website);
+
 			super.onBackPressed();
 			break;
 		}

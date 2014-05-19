@@ -12,6 +12,7 @@ import com.comp1008.group26.FlaxmanGallery.VideoActivity;
 import com.comp1008.group26.FlaxmanGallery.WebActivity;
 import com.comp1008.group26.Model.Item;
 import com.comp1008.group26.Model.MediaInfo;
+import com.comp1008.group26.utility.UsageLog.Action;
 
 import android.app.Activity;
 import android.content.Context;
@@ -169,6 +170,7 @@ public class ItemListAdapter extends BaseAdapter {
 				intent.putExtra("link", link);
 				intent.putExtra("website", website);
 				intent.putExtra("relatedInfoList", relatedInfoList);
+				UsageLog.getInstance().writeEvent(Action.ENTER, title);
 				activity.startActivity(intent);
 			}
 		});

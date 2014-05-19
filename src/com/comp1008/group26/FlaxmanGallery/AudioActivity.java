@@ -7,6 +7,8 @@ import com.comp1008.group26.Model.DatabaseHandler;
 import com.comp1008.group26.Model.Item;
 import com.comp1008.group26.Model.MediaInfo;
 import com.comp1008.group26.utility.ItemListAdapterSmall;
+import com.comp1008.group26.utility.UsageLog;
+import com.comp1008.group26.utility.UsageLog.Action;
 import com.devsmart.android.ui.HorizontalListView;
 
 import android.media.MediaPlayer;
@@ -75,13 +77,13 @@ public class AudioActivity extends Activity implements OnClickListener {
 		decorView.setSystemUiVisibility(uiOptions);
 
 		((ImageView) findViewById(R.id.videomain))
-				.setImageBitmap(BitmapFactory.decodeFile(img));
+		.setImageBitmap(BitmapFactory.decodeFile(img));
 		((TextView) findViewById(R.id.title)).setText(Html.fromHtml(title));
 		((TextView) findViewById(R.id.body)).setText(Html.fromHtml(body));
 		((ImageButton) findViewById(R.id.home)).setOnClickListener(this);
 		((ImageView) findViewById(R.id.videomain)).setOnClickListener(this);
 		((ImageButton) findViewById(R.id.fontsize)).setOnClickListener(this);
-		
+
 		File f = new File(link);
 		Uri uri = Uri.fromFile(f);
 		mplayer = MediaPlayer.create(this, uri);
@@ -99,18 +101,18 @@ public class AudioActivity extends Activity implements OnClickListener {
 		imageButton.setBackgroundResource(R.drawable.pause);
 		mplayer.start();
 		isPlay = !isPlay;
-		
+
 		DatabaseHandler databaseHandler = new DatabaseHandler(this);
 		String relatedItemRaw = getIntent().getExtras().getString("relatedInfoList");
 		ArrayList<Item> items = new ArrayList<Item>();
-		
+
 		if(!relatedItemRaw.trim().equals(""))
 		{
 			String[] relatedList = relatedItemRaw.split(",");
 			for(String relatedItem : relatedList)
 			{
 				MediaInfo info = databaseHandler.getMediaInfo(relatedItem);
-				
+
 				String msg = "\nRelatedID: " + info.getId() + ",\nTitle: "
 						+ info.getTitle() + ",\nName: " + info.getFileName()
 						+ ",\nSummary: " + info.getSummary() + ",\nDescription: "
@@ -120,35 +122,35 @@ public class AudioActivity extends Activity implements OnClickListener {
 						+ info.getRelatedItems() + ",\nIsOnHome: "
 						+ info.getIsOnHomeGrid() + "\n\n";
 				System.out.println(msg);
-	            MediaInfo.FileType fileType = info.getFileType();
+				MediaInfo.FileType fileType = info.getFileType();
 
-	            Item item = new Item();
-	            item.setTitle(info.getTitle());
-	            item.setSummary(info.getSummary());
-	            item.setBody(info.getDescription());
-	            item.setImage_src(info.getThumbnailPath());
+				Item item = new Item();
+				item.setTitle(info.getTitle());
+				item.setSummary(info.getSummary());
+				item.setBody(info.getDescription());
+				item.setImage_src(info.getThumbnailPath());
 
 				if (fileType == MediaInfo.FileType.Audio)
-	            {
-	                item.setType(Item.AUDIO);
+				{
+					item.setType(Item.AUDIO);
 					item.setLink(info.getFilePath());
 				}
-	            else if (fileType == MediaInfo.FileType.Video)
-	            {
-	                item.setType(Item.VIDEO);
+				else if (fileType == MediaInfo.FileType.Video)
+				{
+					item.setType(Item.VIDEO);
 					item.setLink(info.getFilePath());
 				}
-	            else if (fileType == MediaInfo.FileType.Image)
-	            {
-	                item.setCaption(info.getCaption());
-	                item.setType(Item.IMAGE);;
+				else if (fileType == MediaInfo.FileType.Image)
+				{
+					item.setCaption(info.getCaption());
+					item.setType(Item.IMAGE);;
 				}
-	            item.setRelatedInfoList(info.getRelatedItems());
-	            items.add(item);
-				
+				item.setRelatedInfoList(info.getRelatedItems());
+				items.add(item);
+
 			}
 		}
-		
+
 		HorizontalListView listview = (HorizontalListView) findViewById(R.id.horizonListview);
 		listview.setAdapter(new ItemListAdapterSmall(this, items));
 	}
@@ -174,11 +176,12 @@ public class AudioActivity extends Activity implements OnClickListener {
 				SettingActivity.fontSize =2;
 			else
 				SettingActivity.fontSize =1;
-			
+
 			this.recreate();
 			break;
 		}
 		case R.id.home: {
+			UsageLog.getInstance().writeEvent(Action.EXIT, this.title);
 			mplayer.stop();
 			super.onBackPressed();
 			break;
@@ -186,9 +189,11 @@ public class AudioActivity extends Activity implements OnClickListener {
 		case R.id.videomain: {
 
 			if (isPlay) {
+				UsageLog.getInstance().writeEvent(Action.PLAY, this.title);
 				imageButton.setBackgroundResource(R.drawable.pause);
 				mplayer.start();
 			} else {
+				UsageLog.getInstance().writeEvent(Action.PAUSE, this.title);
 				imageButton.setBackgroundResource(R.drawable.play2);
 				mplayer.pause();
 			}
@@ -219,16 +224,16 @@ public class AudioActivity extends Activity implements OnClickListener {
 		if (hasFocus) {
 
 			decorView
-					.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-							| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-							| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav
-																	// bar
-							| View.SYSTEM_UI_FLAG_FULLSCREEN
-							| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+			.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+					| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+					| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav
+					// bar
+					| View.SYSTEM_UI_FLAG_FULLSCREEN
+					| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
 		}
 
 	}
-	
+
 
 	@Override
 	protected void onResume() {
