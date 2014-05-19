@@ -1,22 +1,29 @@
-<GridView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity"
-    android:id="@+id/grid_view"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:numColumns="auto_fit"
-    android:columnWidth="200dp"
-    android:horizontalSpacing="10dp"
-    android:verticalSpacing="10dp"
-	android:scrollingCache="true"
-    android:padding="10dp" >  
- 
-</GridView>
-<!-- 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
-    android:stretchMode="columnWidth"
-    android:gravity="fill_vertical"
-    android:clipToPadding="true"
-    android:fitsSystemWindows="true"
- -->
+    <GridView
+        android:id="@+id/grid_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:columnWidth="200dp"
+        android:horizontalSpacing="10dp"
+        android:numColumns="auto_fit"
+        android:padding="10dp"
+        android:scrollingCache="true"
+        android:verticalSpacing="10dp"
+        tools:context=".MainActivity" >
+    </GridView>
+
+    <ImageButton
+        android:id="@+id/home"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/home_white" />
+
+</RelativeLayout>

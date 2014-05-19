@@ -7,23 +7,31 @@ import com.comp1008.group26.Model.DatabaseHandler;
 import com.comp1008.group26.Model.Item;
 import com.comp1008.group26.Model.MediaInfo;
 import com.comp1008.group26.utility.ItemListAdapter;
+import com.comp1008.group26.utility.UsageLog;
+import com.comp1008.group26.utility.UsageLog.Action;
+
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.View.OnClickListener;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 
 /**
  * @author HO Sze Nga (s.ho.13@ucl.ac.uk)
  */
-public class StartActivity extends Activity {
+public class StartActivity extends Activity implements OnClickListener{
 
 	ListView listview;
 	ItemListAdapter listAdapter;
 	View decorView;
-
+	GridView gridView;
+	int pos;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -127,8 +135,10 @@ public class StartActivity extends Activity {
 
 		listAdapter = new ItemListAdapter(this, items);
 
-		GridView gridView = (GridView) findViewById(R.id.grid_view);
+		gridView = (GridView) findViewById(R.id.grid_view);
 		gridView.setAdapter(listAdapter);
+		
+		((ImageButton) findViewById(R.id.home)).setOnClickListener(this);
 
 	}
 
@@ -159,5 +169,17 @@ public class StartActivity extends Activity {
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		// super.onBackPressed();
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+
+		case R.id.home: {
+			gridView.smoothScrollToPositionFromTop(0, 0, 1000);
+			break;
+		}
+		}
 	}
 }
