@@ -10,7 +10,7 @@
         android:columnWidth="200dp"
         android:horizontalSpacing="10dp"
         android:numColumns="auto_fit"
-        android:padding="10dp"
+        android:padding="110dp"
         android:scrollingCache="true"
         android:verticalSpacing="10dp"
         tools:context=".MainActivity" >
