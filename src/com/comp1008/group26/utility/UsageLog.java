@@ -65,7 +65,8 @@ public class UsageLog {
 		String line = DateFormat.format("yyyy-MM-dd HH:mm:ss", System.currentTimeMillis()) + "," + stringifyEvent(action, view) + "\n";
 		Log.d(TAG, "Writing line: " + line);
 		try {
-			fw.write(line);
+			fw.append(line);
+			fw.flush();
 			fos.getFD().sync();
 			
 		} catch (SyncFailedException e) {
