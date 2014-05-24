@@ -149,7 +149,7 @@ public class VideoActivity extends Activity implements OnClickListener,
 		}
 		
 		HorizontalListView listview = (HorizontalListView) findViewById(R.id.horizonListview);
-		listview.setAdapter(new ItemListAdapterSmall(this, items));
+		listview.setAdapter(new ItemListAdapterSmall(this, items, title));
 		
 		TimeoutManager tom = new TimeoutManager(this, title);
 		videoView.postDelayed(tom, 300000);

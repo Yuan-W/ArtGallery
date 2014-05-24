@@ -136,7 +136,7 @@ public class PhotoActivity extends Activity implements OnClickListener {
 		}
 		
 		HorizontalListView listview = (HorizontalListView) findViewById(R.id.horizonListview);
-		listview.setAdapter(new ItemListAdapterSmall(this, items));
+		listview.setAdapter(new ItemListAdapterSmall(this, items, title));
 		
 		TimeoutManager tom = new TimeoutManager(this, this.title);
 		imageView.postDelayed(tom, 300000);
