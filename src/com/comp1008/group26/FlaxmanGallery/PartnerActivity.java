@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.comp1008.group26.Model.Partner;
 import com.comp1008.group26.utility.PartnerListAdapter;
+import com.comp1008.group26.utility.TimeoutManager;
 import com.comp1008.group26.utility.UsageLog;
 import com.comp1008.group26.utility.UsageLog.Action;
 
@@ -25,6 +26,7 @@ public class PartnerActivity extends Activity implements OnClickListener {
 	String body;
 
 	View decorView;
+	TimeoutManager latestTOM;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,10 @@ public class PartnerActivity extends Activity implements OnClickListener {
 		ListView list = (ListView) findViewById(R.id.partnerList);
 		PartnerListAdapter las = new PartnerListAdapter(this, partners);
 		list.setAdapter(las);
+		
+		TimeoutManager tom = new TimeoutManager(this, title);
+		decorView.postDelayed(tom, 300000);
+		latestTOM = tom;
 	}
 
 	@Override
@@ -68,11 +74,17 @@ public class PartnerActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		latestTOM.setTimeout(false);
+		TimeoutManager tom = new TimeoutManager(this, title);
+		v.postDelayed(tom, 300000);
+		latestTOM = tom;
+		
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 
 		case R.id.home: {
 			UsageLog.getInstance().writeEvent(Action.EXIT, this.title);
+			latestTOM.setTimeout(false);
 			super.onBackPressed();
 			break;
 		}

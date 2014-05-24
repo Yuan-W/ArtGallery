@@ -37,9 +37,8 @@ public class ItemListAdapterSmall extends BaseAdapter {
 	private String activityName;
 	private static LayoutInflater inflater=null;
 
-	public ItemListAdapterSmall(Activity a, ArrayList<Item> b, String activityName) {
-		this.activityName = activityName;
-				activity = a;
+	public ItemListAdapterSmall(Activity a, ArrayList<Item> b) {
+		activity = a;
 		data = b;
 		inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
@@ -110,7 +109,7 @@ public class ItemListAdapterSmall extends BaseAdapter {
 				intent.putExtra("link", link);
 				intent.putExtra("website", website);
 				intent.putExtra("relatedInfoList", relatedInfoList);
-				//UsageLog.getInstance().writeEvent(Action.EXIT, activityName);
+				TimeoutManager.cancelAll();
 				UsageLog.getInstance().writeEvent(Action.ENTER, title);
 				activity.startActivity(intent);
 			}

@@ -104,6 +104,7 @@ public class WebActivity extends Activity implements OnClickListener {
 
 		case R.id.home: {
 			UsageLog.getInstance().writeEvent(Action.EXIT, this.website);
+			latestTOM.setTimeout(false);
 
 			super.onBackPressed();
 			break;

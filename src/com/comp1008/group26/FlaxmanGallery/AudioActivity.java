@@ -155,7 +155,7 @@ public class AudioActivity extends Activity implements OnClickListener {
 		}
 
 		HorizontalListView listview = (HorizontalListView) findViewById(R.id.horizonListview);
-		listview.setAdapter(new ItemListAdapterSmall(this, items, title));
+		listview.setAdapter(new ItemListAdapterSmall(this, items));
 		
 		TimeoutManager tom = new TimeoutManager(this, title);
 		decorView.postDelayed(tom, 300000);
@@ -194,6 +194,7 @@ public class AudioActivity extends Activity implements OnClickListener {
 		}
 		case R.id.home: {
 			UsageLog.getInstance().writeEvent(Action.EXIT, this.title);
+			latestTOM.setTimeout(false);
 			mplayer.stop();
 			super.onBackPressed();
 			break;
