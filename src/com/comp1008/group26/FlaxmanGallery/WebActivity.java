@@ -1,5 +1,6 @@
 package com.comp1008.group26.FlaxmanGallery;
 
+import com.comp1008.group26.utility.TimeoutManager;
 import com.comp1008.group26.utility.UsageLog;
 import com.comp1008.group26.utility.UsageLog.Action;
 
@@ -22,6 +23,7 @@ public class WebActivity extends Activity implements OnClickListener {
 
 	String website;
 	View decorView;
+	TimeoutManager latestTOM;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +80,10 @@ public class WebActivity extends Activity implements OnClickListener {
 		});
 
 		webview.loadUrl(website);
+		
+		TimeoutManager tom = new TimeoutManager(this, website);
+		decorView.postDelayed(tom, 300000);
+		latestTOM = tom;
 	}
 
 	@Override
@@ -89,6 +95,10 @@ public class WebActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		latestTOM.setTimeout(false);
+		TimeoutManager tom = new TimeoutManager(this, website);
+		v.postDelayed(tom, 300000);
+		latestTOM = tom;
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 

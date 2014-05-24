@@ -7,6 +7,7 @@ import com.comp1008.group26.Model.DatabaseHandler;
 import com.comp1008.group26.Model.Item;
 import com.comp1008.group26.Model.MediaInfo;
 import com.comp1008.group26.utility.ItemListAdapterSmall;
+import com.comp1008.group26.utility.TimeoutManager;
 import com.comp1008.group26.utility.UsageLog;
 import com.comp1008.group26.utility.UsageLog.Action;
 import com.devsmart.android.ui.HorizontalListView;
@@ -42,6 +43,8 @@ public class AudioActivity extends Activity implements OnClickListener {
 	String caption;
 	String img;
 	String link;
+	
+	TimeoutManager latestTOM;
 
 	View decorView;
 	final Runnable run = new Runnable() {
@@ -153,6 +156,10 @@ public class AudioActivity extends Activity implements OnClickListener {
 
 		HorizontalListView listview = (HorizontalListView) findViewById(R.id.horizonListview);
 		listview.setAdapter(new ItemListAdapterSmall(this, items));
+		
+		TimeoutManager tom = new TimeoutManager(this, title);
+		decorView.postDelayed(tom, 300000);
+		latestTOM = tom;
 	}
 
 	public void updateAudio() {
@@ -169,6 +176,11 @@ public class AudioActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		latestTOM.setTimeout(false);
+		TimeoutManager tom = new TimeoutManager(this, title);
+		v.postDelayed(tom, 300000);
+		latestTOM = tom;
+		
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.fontsize: {

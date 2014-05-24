@@ -22,6 +22,7 @@ import com.comp1008.group26.Model.DatabaseHandler;
 import com.comp1008.group26.Model.Item;
 import com.comp1008.group26.Model.MediaInfo;
 import com.comp1008.group26.utility.ItemListAdapterSmall;
+import com.comp1008.group26.utility.TimeoutManager;
 import com.comp1008.group26.utility.UsageLog;
 import com.comp1008.group26.utility.UsageLog.Action;
 import com.devsmart.android.ui.HorizontalListView;
@@ -35,6 +36,7 @@ public class PhotoActivity extends Activity implements OnClickListener {
 	String body;
 	String caption;
 	String img;
+	TimeoutManager latestTOM;
 
 	boolean isfill = false;
 	View decorView;
@@ -135,6 +137,10 @@ public class PhotoActivity extends Activity implements OnClickListener {
 		
 		HorizontalListView listview = (HorizontalListView) findViewById(R.id.horizonListview);
 		listview.setAdapter(new ItemListAdapterSmall(this, items));
+		
+		TimeoutManager tom = new TimeoutManager(this, this.title);
+		imageView.postDelayed(tom, 300000);
+		latestTOM = tom;
 	}
 
 	@Override
@@ -146,6 +152,11 @@ public class PhotoActivity extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
+		latestTOM.setTimeout(false);
+		TimeoutManager tom = new TimeoutManager(this, title);
+		v.postDelayed(tom, 300000);
+		latestTOM = tom;
+		
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		
