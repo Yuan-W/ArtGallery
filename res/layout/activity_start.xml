@@ -3,6 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <LinearLayout android:layout_width="match_parent" android:layout_height="60dp" android:layout_marginLeft="10dp"
+                  android:layout_marginTop="20dp" android:orientation="horizontal" android:id="@+id/linearLayout"
+            >
+        <ImageView android:id="@+id/imageView1" android:layout_width="307dp" android:layout_height="46dp"
+                   android:alpha="0.9" android:src="@drawable/title2"/>
+        <ImageView android:id="@+id/imageView3" android:layout_width="307dp" android:layout_height="46dp"
+                   android:src="@drawable/header_dec22"/>
+    </LinearLayout>
     <GridView
         android:id="@+id/grid_view"
         android:layout_width="fill_parent"

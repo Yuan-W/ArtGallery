@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import com.comp1008.group26.Model.DatabaseHandler;
 import com.comp1008.group26.Model.Item;
 import com.comp1008.group26.Model.MediaInfo;
+import com.comp1008.group26.utility.ButtonEventHandler;
 import com.comp1008.group26.utility.ItemListAdapterSmall;
 import com.comp1008.group26.utility.TimeoutManager;
 import com.comp1008.group26.utility.UsageLog;
@@ -176,7 +177,7 @@ public class VideoActivity extends Activity implements OnClickListener,
 			case R.id.home: {
 				UsageLog.getInstance().writeEvent(Action.EXIT, this.title);
 				latestTOM.setTimeout(false);
-				super.onBackPressed();
+                ButtonEventHandler.backToHome(this);
 				break;
 			}
 			case R.id.videomain: {
@@ -188,12 +189,7 @@ public class VideoActivity extends Activity implements OnClickListener,
 				break;
 			}
 			case R.id.fontsize: {
-				if(SettingActivity.fontSize == 1)
-					SettingActivity.fontSize =2;
-				else
-					SettingActivity.fontSize =1;
-				
-				this.recreate();
+				ButtonEventHandler.changeFontSize(this);
 				break;
 			}
 			

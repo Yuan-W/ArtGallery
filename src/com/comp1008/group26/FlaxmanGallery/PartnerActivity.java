@@ -3,6 +3,7 @@ package com.comp1008.group26.FlaxmanGallery;
 import java.util.ArrayList;
 
 import com.comp1008.group26.Model.Partner;
+import com.comp1008.group26.utility.ButtonEventHandler;
 import com.comp1008.group26.utility.PartnerListAdapter;
 import com.comp1008.group26.utility.TimeoutManager;
 import com.comp1008.group26.utility.UsageLog;
@@ -85,7 +86,7 @@ public class PartnerActivity extends Activity implements OnClickListener {
 		case R.id.home: {
 			UsageLog.getInstance().writeEvent(Action.EXIT, this.title);
 			latestTOM.setTimeout(false);
-			super.onBackPressed();
+            ButtonEventHandler.backToHome(this);
 			break;
 		}
 

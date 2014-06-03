@@ -60,16 +60,6 @@ public class StartActivity extends Activity implements OnClickListener{
 		
 		for (MediaInfo info : infoList)
         {
-
-			String msg = "\nID: " + info.getId() + ",\nTitle: "
-					+ info.getTitle() + ",\nName: " + info.getFileName()
-					+ ",\nSummary: " + info.getSummary() + ",\nDescription: "
-					+ info.getDescription() + ",\nThumbnail: "
-					+ info.getThumbnailName() + ",\nPath: "
-					+ info.getFilePath() + ",\nRelated: "
-					+ info.getRelatedItems() + ",\nIsOnHome: "
-					+ info.getIsOnHomeGrid() + "\n\n";
-			System.out.println(msg);
             MediaInfo.FileType fileType = info.getFileType();
 
             Item item = new Item();
@@ -91,42 +81,30 @@ public class StartActivity extends Activity implements OnClickListener{
             else if (fileType == MediaInfo.FileType.Image)
             {
                 item.setCaption(info.getCaption());
+                item.setLink(info.getFilePath());
                 item.setType(Item.IMAGE);;
 			}
-            //////////////////////////////////////////////////////////////
-            // Sample code for get relatedItem from database by title
-            /*String relatedItemRaw = info.getRelatedItems();
-            if(!relatedItemRaw.trim().equals(""))
-            {
-                String[] relatedList = relatedItemRaw.split(",");
-                for(String relatedItem : relatedList)
-                {
-                    MediaInfo relatedInfo = databaseHandler.getMediaInfo(relatedItem);
-                }
-            }*/
-            //////////////////////////////////////////////////////////////
+
             item.setRelatedInfoList(info.getRelatedItems());
             items.add(item);
-            
-            
 		}
-		Item i5 = new Item();
-		i5.setType(Item.WEB);
-		i5.setTitle("About");
-		i5.setWebsite("http://www.ucl.ac.uk/museums/uclart");
-		items.add(i5);
-
-		Item i6 = new Item();
-		i6.setType(Item.WEB);
-		i6.setTitle("Contact");
-		i6.setWebsite("http://www.ucl.ac.uk/museums/uclart/visit/find-us");
-		items.add(i6);
-
-		Item i7 = new Item();
-		i7.setType(Item.WEB);
-		i7.setTitle("Special");
-		i7.setWebsite("http://www.ucl.ac.uk/museums/uclart/whats-on");
-		items.add(i7);
+//		Item i5 = new Item();
+//		i5.setType(Item.WEB);
+//		i5.setTitle("About");
+//		i5.setWebsite("http://www.ucl.ac.uk/museums/uclart");
+//		items.add(i5);
+//
+//		Item i6 = new Item();
+//		i6.setType(Item.WEB);
+//		i6.setTitle("Contact");
+//		i6.setWebsite("http://www.ucl.ac.uk/museums/uclart/visit/find-us");
+//		items.add(i6);
+//
+//		Item i7 = new Item();
+//		i7.setType(Item.WEB);
+//		i7.setTitle("Special");
+//		i7.setWebsite("http://www.ucl.ac.uk/museums/uclart/whats-on");
+//		items.add(i7);
 
 		Item i8 = new Item();
 		i8.setType(Item.PARTNER);

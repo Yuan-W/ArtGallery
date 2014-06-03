@@ -75,7 +75,8 @@ public class ItemListAdapterSmall extends BaseAdapter {
 
 		ImageView image=(ImageView)vi.findViewById(R.id.image_src);
 		image.setImageBitmap(BitmapFactory.decodeFile(image_src));
-		//text.setText(title);
+		TextView text = (TextView)vi.findViewById(R.id.txt_title);
+        text.setText(title);
 
 
 		vi.setOnClickListener(new OnClickListener() {
