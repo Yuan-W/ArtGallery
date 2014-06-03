@@ -20,21 +20,14 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal" >
-	        <TextView
-	            android:id="@+id/title"
-	            style="?textTitle"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="MARCIA FARQUHAR&apos;S"
-	            android:textAppearance="?android:attr/textAppearanceMedium" />
-			<ImageButton
-			        android:id="@+id/fontsize"
-			        android:layout_width="40dp"
-			        android:layout_height="40dp"
-			        android:layout_gravity="right"
-			        android:padding="6dp"
-			        android:scaleType="fitCenter"
-			        android:src="@drawable/font" />
+
+            <TextView
+                android:id="@+id/title"
+                style="?textTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MARCIA FARQUHAR&apos;S"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
 
         <ScrollView
@@ -72,18 +65,19 @@
             android:layout_width="324dp"
             android:layout_height="193dp"
             android:src="@drawable/video" />
-		<TextView
+
+        <TextView
             android:id="@+id/remind"
             android:layout_width="324dp"
             android:layout_height="wrap_content"
-            android:text="Tap it"
-            android:padding="10dp"
-            android:gravity="center"
-            android:textColor="#EEEEEE"
-            android:textStyle="bold" 
             android:layout_alignBottom="@+id/videomain"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Tap it"
             android:textAppearance="?android:attr/textAppearanceSmall"
-		 /> 
+            android:textColor="#EEEEEE"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/caption"
             style="?textTitle"
@@ -93,24 +87,40 @@
             android:text="caption"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textStyle="bold" />
-
-         <com.devsmart.android.ui.HorizontalListView
-             android:id="@+id/horizonListview"
-             android:layout_width="300dp"
-             android:layout_height="80dp"
-             android:layout_alignParentLeft="true"
-             android:layout_below="@+id/caption" />
-    
     </RelativeLayout>
 
-    <ImageButton
-        android:id="@+id/home"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <com.devsmart.android.ui.HorizontalListView
+        android:id="@+id/horizonListview"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:padding="6dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/home_white" />
+        android:gravity="center_vertical|right"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/fontsize"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/font" />
+
+        <ImageButton
+            android:id="@+id/home"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/home_white" />
+    </LinearLayout>
 
 </RelativeLayout>

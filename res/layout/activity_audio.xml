@@ -105,16 +105,33 @@
         android:layout_width="300dp"
         android:layout_height="80dp"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/home" />
+        android:layout_alignParentLeft="true" />
 
-    <ImageButton
-        android:id="@+id/home"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:padding="6dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/home_white" />
+        android:gravity="center_vertical|right"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/fontsize"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/font" />
+
+        <ImageButton
+            android:id="@+id/home"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:padding="6dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/home_white" />
+    </LinearLayout>
 
 </RelativeLayout>
