@@ -21,7 +21,8 @@
         android:padding="110dp"
         android:scrollingCache="true"
         android:verticalSpacing="10dp"
-        tools:context=".MainActivity" >
+        tools:context=".MainActivity"
+        android:scrollbarFadeDuration="0">
     </GridView>
 
     <ImageButton
@@ -32,6 +33,6 @@
         android:layout_alignParentRight="true"
         android:padding="10dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/home_white" />
+        android:src="@drawable/home_white" android:layout_margin="10dp"/>
 
 </RelativeLayout>

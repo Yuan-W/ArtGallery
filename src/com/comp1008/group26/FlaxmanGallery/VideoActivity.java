@@ -231,10 +231,9 @@ public class VideoActivity extends Activity implements OnClickListener,
 			llp.height = parent_h;
 			videoView.setLayoutParams(llp);
 
-			((ImageButton) findViewById(R.id.home))
-					.setVisibility(View.INVISIBLE);
-			((com.devsmart.android.ui.HorizontalListView) findViewById(R.id.horizonListview))
-			.setVisibility(View.INVISIBLE);
+			findViewById(R.id.home).setVisibility(View.INVISIBLE);
+            findViewById(R.id.fontsize).setVisibility(View.INVISIBLE);
+			findViewById(R.id.horizonListview).setVisibility(View.INVISIBLE);
 
 		} else {
 			UsageLog.getInstance().writeEvent(Action.PAUSE, this.title);
@@ -247,9 +246,9 @@ public class VideoActivity extends Activity implements OnClickListener,
 												// bottom);
 			((RelativeLayout) findViewById(R.id.videoLayoutParent))
 					.setLayoutParams(llp2);
-			((ImageButton) findViewById(R.id.home)).setVisibility(View.VISIBLE);
-			((com.devsmart.android.ui.HorizontalListView) findViewById(R.id.horizonListview))
-			.setVisibility(View.VISIBLE);
+			findViewById(R.id.home).setVisibility(View.VISIBLE);
+            findViewById(R.id.fontsize).setVisibility(View.VISIBLE);
+			findViewById(R.id.horizonListview).setVisibility(View.VISIBLE);
 			layoutParams.width = own_w;
 			layoutParams.height = own_h;
 			videoView.setLayoutParams(layoutParams);

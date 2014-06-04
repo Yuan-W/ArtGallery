@@ -115,9 +115,9 @@ public class PhotoActivity extends Activity implements OnClickListener
                     item.setLink(info.getFilePath());
                 } else if (fileType == MediaInfo.FileType.Image)
                 {
-                    item.setCaption(info.getCaption());
                     item.setType(Item.IMAGE);
-                    ;
+                    item.setLink(info.getFilePath());
+                    item.setCaption(info.getCaption());
                 }
                 item.setRelatedInfoList(info.getRelatedItems());
                 items.add(item);

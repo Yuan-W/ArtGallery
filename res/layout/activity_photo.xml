@@ -62,7 +62,6 @@
             android:src="@drawable/video" android:layout_alignParentEnd="false"
             android:maxHeight="600dp" android:maxWidth="800dp"/>
         <TextView
-            style="?textTitle"
             android:id="@+id/remind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,7 +72,8 @@
             android:padding="10dp"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:background="#c0ffffff" android:layout_alignLeft="@+id/videomain"
-            android:layout_alignRight="@+id/videomain" android:layout_alignBottom="@+id/videomain"/>
+            android:layout_alignRight="@+id/videomain" android:layout_alignBottom="@+id/videomain"
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/caption"
@@ -89,13 +89,13 @@
 
     <com.devsmart.android.ui.HorizontalListView
         android:id="@+id/horizonListview"
-        android:layout_width="300dp"
+        android:layout_width="800dp"
         android:layout_height="100dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"

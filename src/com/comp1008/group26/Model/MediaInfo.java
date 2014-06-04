@@ -2,7 +2,6 @@ package com.comp1008.group26.Model;
 
 import com.comp1008.group26.utility.DbxSyncConfig;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +17,8 @@ public class MediaInfo
     {
         Video(1),
         Audio(2),
-        Image(3);
+        Image(3),
+        Partner(4);
 
         private final int value;
 
