@@ -126,10 +126,23 @@ public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
                         Log.d(LOG_TAG, "Downloading File: " + fileName);
                         publishProgress(info.path.getName());
                         DbxFile inputFile = fs.open(info.path);
+                        DbxFileStatus fileStatus = inputFile.getNewerStatus();
 
                         File outputFile = new File(dbxStoreDir + "/" + fileName);
-                        if(!outputFile.exists())
+                        if(!outputFile.exists() || fileStatus != null)
                         {
+                            if(fileStatus != null)
+                            {
+                                inputFile.update();
+                                while(!fileStatus.isLatest|| !fileStatus.isCached)
+                                {
+                                    inputFile.update();
+                                    Thread.sleep(1000);
+                                    fileStatus = inputFile.getSyncStatus();
+                                }
+                            }
+                            
+                            Log.d(LOG_TAG, "Updating File: " + fileName);
                             InputStream inputStream = inputFile.getReadStream();
                             FileOutputStream outputStream = new FileOutputStream(dbxStoreDir + "/" + fileName);
                             byte data[] = new byte[1024];
