@@ -19,7 +19,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:src="@drawable/video" android:maxHeight="600dp" android:maxWidth="800dp"/>
+            android:maxHeight="600dp"
+            android:maxWidth="800dp"
+            android:src="@drawable/video" />
     </RelativeLayout>
 
     <LinearLayout
@@ -69,9 +71,10 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/relatedLabel"
+        android:layout_alignParentLeft="true"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:layout_above="@+id/horizonListview" android:layout_alignParentLeft="true">
+        android:orientation="horizontal" >
 
         <ImageButton
             android:id="@+id/audioControl"
@@ -86,6 +89,20 @@
             android:layout_width="500dp"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/relatedLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/horizonListview"
+        android:layout_alignRight="@+id/horizonListview"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="left"
+        android:text="Related Items"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="23sp"
+        android:textStyle="bold" />
 
     <com.devsmart.android.ui.HorizontalListView
         android:id="@+id/horizonListview"

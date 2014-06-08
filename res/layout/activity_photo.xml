@@ -5,16 +5,16 @@
     android:layout_height="match_parent"
     android:layout_margin="10dp"
     android:background="#BBFFFFFF"
+    android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".PhotoActivity" android:orientation="vertical">
+    tools:context=".PhotoActivity" >
 
     <LinearLayout
         android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:orientation="vertical">
-
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/title"
@@ -52,59 +52,69 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:gravity="top"
-        android:layout_gravity="right|top">
+        android:layout_gravity="right|top"
+        android:gravity="top" >
 
         <ImageView
             android:id="@+id/videomain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/video" android:layout_alignParentEnd="false"
-            android:maxHeight="600dp" android:maxWidth="800dp"/>
+            android:layout_alignParentEnd="false"
+            android:maxHeight="600dp"
+            android:maxWidth="800dp"
+            android:src="@drawable/video" />
+
         <TextView
             android:id="@+id/remind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tap to enlarge"
-            android:textColor="#393939"
-            android:textStyle="bold"
+            android:layout_alignBottom="@+id/videomain"
+            android:layout_alignLeft="@+id/videomain"
+            android:layout_alignRight="@+id/videomain"
+            android:background="#c0ffffff"
             android:gravity="center"
             android:padding="10dp"
+            android:text="Tap to enlarge"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:background="#c0ffffff" android:layout_alignLeft="@+id/videomain"
-            android:layout_alignRight="@+id/videomain" android:layout_alignBottom="@+id/videomain"
-            android:textSize="20sp"/>
+            android:textColor="#393939"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/videomain"
             android:layout_below="@+id/videomain"
+            android:gravity="right"
             android:text="caption"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="italic"
-            android:gravity="right" android:layout_alignRight="@+id/videomain"/>
-
+            android:textStyle="italic" />
     </RelativeLayout>
 
     <TextView
-            android:id="@+id/realtedLabel"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/horizontalDivisor"
-            android:text="Related Items"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold"
-            android:gravity="left" android:layout_alignRight="@+id/horizonListview" android:textSize="23sp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="5dp"/>
+        android:id="@+id/realtedLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/horizontalDivisor"
+        android:layout_alignRight="@+id/horizonListview"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:gravity="left"
+        android:text="Related Items"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="23sp"
+        android:textStyle="bold" />
+
     <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dip"
-            android:background="#4d4d4d" android:layout_marginBottom="5dp"
-            android:id="@+id/horizontalDivisor" android:layout_above="@+id/horizonListview"
-            android:layout_alignRight="@+id/horizonListview"/>
-    
+        android:id="@+id/horizontalDivisor"
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:layout_above="@+id/horizonListview"
+        android:layout_alignRight="@+id/horizonListview"
+        android:layout_marginBottom="5dp"
+        android:background="#4d4d4d" />
+
     <com.devsmart.android.ui.HorizontalListView
         android:id="@+id/horizonListview"
         android:layout_width="800dp"
@@ -127,15 +137,17 @@
             android:padding="6dp"
             android:scaleType="fitCenter"
             android:src="@drawable/font" />
+
         <ImageButton
             android:id="@+id/home"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_gravity="right"
             android:padding="6dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/home_white" android:layout_gravity="right"/>
+            android:src="@drawable/home_white" />
     </LinearLayout>
 
 </RelativeLayout>
