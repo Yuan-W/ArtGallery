@@ -123,7 +123,7 @@ public class ItemListAdapter extends BaseAdapter
         image_srcB.setImageBitmap(thumbnail);
         titleV.setVisibility(View.VISIBLE);
         titleV.setText(Html.fromHtml((title)));
-        summaryV.setVisibility(View.VISIBLE);
+        summaryV.setVisibility(View.INVISIBLE);
         summaryV.setText(Html.fromHtml((summary)));
         if (type == MediaInfo.FileType.Audio)
         {
