@@ -32,7 +32,7 @@
 
         <ScrollView
             android:id="@+id/scrollView1"
-            android:layout_width="400dp"
+            android:layout_width="600dp"
             android:layout_height="450dp" >
 
             <LinearLayout
@@ -66,8 +66,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:maxHeight="600dp"
-            android:maxWidth="800dp"
+            android:maxHeight="800dp"
+            android:maxWidth="1000dp"
             android:src="@drawable/video" />
 
         <VideoView

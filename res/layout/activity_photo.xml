@@ -26,7 +26,7 @@
 
         <ScrollView
             android:id="@+id/scrollView1"
-            android:layout_width="400dp"
+            android:layout_width="600dp"
             android:layout_height="450dp" >
 
             <LinearLayout
@@ -60,8 +60,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="false"
-            android:maxHeight="600dp"
-            android:maxWidth="800dp"
+            android:maxHeight="800dp"
+            android:maxWidth="1000dp"
             android:src="@drawable/video" />
 
         <TextView
@@ -93,7 +93,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/realtedLabel"
+        android:id="@+id/relatedLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/horizontalDivisor"

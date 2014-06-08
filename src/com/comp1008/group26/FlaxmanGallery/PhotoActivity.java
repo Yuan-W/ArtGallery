@@ -190,7 +190,7 @@ public class PhotoActivity extends Activity implements OnClickListener
                     findViewById(R.id.title).setVisibility(View.INVISIBLE);
                     findViewById(R.id.body).setVisibility(View.INVISIBLE);
                     findViewById(R.id.caption).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.realtedLabel).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.relatedLabel).setVisibility(View.INVISIBLE);
                     findViewById(R.id.horizontalDivisor).setVisibility(View.INVISIBLE);
                     findViewById(R.id.horizonListview).setVisibility(View.INVISIBLE);
 
@@ -213,7 +213,7 @@ public class PhotoActivity extends Activity implements OnClickListener
                     findViewById(R.id.caption).setVisibility(View.VISIBLE);
                     findViewById(R.id.fontsize).setVisibility(View.VISIBLE);
                     findViewById(R.id.remind).setVisibility(View.VISIBLE);
-                    findViewById(R.id.realtedLabel).setVisibility(View.VISIBLE);
+                    findViewById(R.id.relatedLabel).setVisibility(View.VISIBLE);
                     findViewById(R.id.horizontalDivisor).setVisibility(View.VISIBLE);
                     findViewById(R.id.horizonListview).setVisibility(View.VISIBLE);
                 }
