@@ -87,6 +87,16 @@
 
     </RelativeLayout>
 
+    <TextView
+            android:id="@+id/realtedLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/horizonListview"
+            android:text="Related Items"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold"
+            android:gravity="left" android:layout_alignRight="@+id/horizonListview"/>
+    
     <com.devsmart.android.ui.HorizontalListView
         android:id="@+id/horizonListview"
         android:layout_width="800dp"
