@@ -16,6 +16,7 @@ import com.comp1008.group26.utility.FileSyncTask;
 import com.comp1008.group26.utility.UsageLog;
 import com.dropbox.sync.android.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.comp1008.group26.utility.DbxSyncConfig.getAccountManager;
@@ -87,11 +88,12 @@ public class MainActivity extends Activity implements View.OnClickListener {
 	private CharSequence[] getArmatureList() throws DbxException {
 		List<DbxFileInfo> folderList = DbxFileSystem.forAccount(
 				mDbxAcctMgr.getLinkedAccount()).listFolder(DbxPath.ROOT);
-		CharSequence[] charSequence = new CharSequence[folderList.size()];
-		int i = 0;
+		List<String> list = new ArrayList<String>();
 		for (DbxFileInfo info : folderList) {
-			charSequence[i++] = info.path.getName();
+            if(info.isFolder)
+                list.add(info.path.getName());
 		}
+        CharSequence[] charSequence = list.toArray(new CharSequence[list.size()]);
 		return charSequence;
 	}
 

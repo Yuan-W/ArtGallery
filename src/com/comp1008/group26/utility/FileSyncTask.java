@@ -3,12 +3,14 @@ package com.comp1008.group26.utility;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.util.Log;
 import com.comp1008.group26.Model.DatabaseHandler;
 import com.comp1008.group26.Model.MediaInfo;
 import com.dropbox.sync.android.*;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -141,16 +143,11 @@ public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
                                     fileStatus = inputFile.getSyncStatus();
                                 }
                             }
-                            
+
                             Log.d(LOG_TAG, "Updating File: " + fileName);
                             InputStream inputStream = inputFile.getReadStream();
                             FileOutputStream outputStream = new FileOutputStream(dbxStoreDir + "/" + fileName);
-                            byte data[] = new byte[1024];
-                            int count;
-                            while ((count = inputStream.read(data)) != -1)
-                            {
-                                outputStream.write(data, 0, count);
-                            }
+                            copyFile(inputStream, outputStream);
                             outputStream.flush();
                             outputStream.close();
                             inputStream.close();
@@ -158,6 +155,16 @@ public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
                         inputFile.close();
                     }
                 }
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
+                String currentDateTime = dateFormat.format(new Date());
+                DbxFile logFile = fs.create(new DbxPath("Log_" + currentDateTime + ".csv"));
+                FileOutputStream outputStream = logFile.getWriteStream();
+                File localFile = new File(Environment.getExternalStorageDirectory(), "usageLog.csv");
+                FileInputStream inputStream = new FileInputStream(localFile);
+                copyFile(inputStream, outputStream);
+                outputStream.flush();
+                outputStream.close();
+                inputStream.close();
 
                 return mediaInfoList;
             } catch (DbxException e) {
@@ -225,5 +232,15 @@ public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
             }
         }
         return null;
+    }
+
+    private static void copyFile(InputStream inputStream, OutputStream outputStream) throws IOException
+    {
+        byte data[] = new byte[1024];
+        int count;
+        while ((count = inputStream.read(data)) != -1)
+        {
+            outputStream.write(data, 0, count);
+        }
     }
 }
