@@ -71,14 +71,14 @@
             android:layout_alignBottom="@+id/videomain"
             android:layout_alignLeft="@+id/videomain"
             android:layout_alignRight="@+id/videomain"
-            android:background="#c0ffffff"
+            android:background="#70000000"
             android:gravity="center"
-            android:padding="10dp"
+            android:padding="5dp"
             android:text="Tap to enlarge"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#393939"
+            android:textColor="@android:color/white"
             android:textSize="20sp"
-            android:textStyle="bold" />
+                />
 
         <TextView
             android:id="@+id/caption"

@@ -93,18 +93,27 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/relatedLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/horizonListview"
-        android:layout_alignRight="@+id/horizonListview"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="10dp"
-        android:gravity="left"
-        android:text="Related Items"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="23sp"
-        android:textStyle="bold" />
+            android:id="@+id/relatedLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/horizontalDivisor"
+            android:layout_alignRight="@+id/horizonListview"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="left"
+            android:text="Related Items"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+
+    <View
+            android:id="@+id/horizontalDivisor"
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_above="@+id/horizonListview"
+            android:layout_alignRight="@+id/horizonListview"
+            android:layout_marginBottom="5dp"
+            android:background="#4d4d4d" />
 
     <com.devsmart.android.ui.HorizontalListView
         android:id="@+id/horizonListview"

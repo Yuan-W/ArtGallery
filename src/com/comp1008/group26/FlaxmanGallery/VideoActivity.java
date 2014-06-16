@@ -1,8 +1,19 @@
 package com.comp1008.group26.FlaxmanGallery;
 
-import java.io.File;
-import java.util.ArrayList;
-
+import android.app.Activity;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import android.text.Html;
+import android.view.Menu;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
+import android.widget.*;
 import com.comp1008.group26.Model.DatabaseHandler;
 import com.comp1008.group26.Model.Item;
 import com.comp1008.group26.Model.MediaInfo;
@@ -13,25 +24,8 @@ import com.comp1008.group26.utility.UsageLog;
 import com.comp1008.group26.utility.UsageLog.Action;
 import com.devsmart.android.ui.HorizontalListView;
 
-import android.net.Uri;
-import android.os.Bundle;
-import android.app.Activity;
-import android.graphics.BitmapFactory;
-import android.graphics.Color;
-import android.text.Html;
-import android.view.Menu;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.VideoView;
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * @author HO Sze Nga (s.ho.13@ucl.ac.uk)
@@ -103,54 +97,46 @@ public class VideoActivity extends Activity implements OnClickListener,
 		
 		DatabaseHandler databaseHandler = new DatabaseHandler(this);
 		String relatedItemRaw = getIntent().getExtras().getString("relatedInfoList");
-		ArrayList<Item> items = new ArrayList<Item>();
-		
-		if(!relatedItemRaw.trim().equals(""))
-		{
-			String[] relatedList = relatedItemRaw.split(",");
-			for(String relatedItem : relatedList)
-			{
-				MediaInfo info = databaseHandler.getMediaInfo(relatedItem);
-				
-				String msg = "\nRelatedID: " + info.getId() + ",\nTitle: "
-						+ info.getTitle() + ",\nName: " + info.getFileName()
-						+ ",\nSummary: " + info.getSummary() + ",\nDescription: "
-						+ info.getDescription() + ",\nThumbnail: "
-						+ info.getThumbnailName() + ",\nPath: "
-						+ info.getFilePath() + ",\nRelated: "
-						+ info.getRelatedItems() + ",\nIsOnHome: "
-						+ info.getIsOnHomeGrid() + "\n\n";
-				System.out.println(msg);
-	            MediaInfo.FileType fileType = info.getFileType();
+        if(relatedItemRaw.trim().equals(""))
+        {
+            findViewById(R.id.relatedLabel).setVisibility(View.INVISIBLE);
+            findViewById(R.id.horizontalDivisor).setVisibility(View.INVISIBLE);
+            findViewById(R.id.horizonListview).setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            ArrayList<Item> items = new ArrayList<Item>();
+            String[] relatedList = relatedItemRaw.split(",");
+            for (String relatedItem : relatedList)
+            {
+                MediaInfo info = databaseHandler.getMediaInfo(relatedItem);
+                MediaInfo.FileType fileType = info.getFileType();
 
-	            Item item = new Item();
-	            item.setTitle(info.getTitle());
-	            item.setSummary(info.getSummary());
-	            item.setBody(info.getDescription());
-	            item.setImage_src(info.getThumbnailPath());
+                Item item = new Item();
+                item.setTitle(info.getTitle());
+                item.setSummary(info.getSummary());
+                item.setBody(info.getDescription());
+                item.setImage_src(info.getThumbnailPath());
 
-				if (fileType == MediaInfo.FileType.Audio)
-	            {
-	                item.setType(Item.AUDIO);
-					item.setLink(info.getFilePath());
-				}
-	            else if (fileType == MediaInfo.FileType.Video)
-	            {
-	                item.setType(Item.VIDEO);
-					item.setLink(info.getFilePath());
-				}
-	            else if (fileType == MediaInfo.FileType.Image)
-	            {
-	                item.setCaption(info.getCaption());
-	                item.setType(Item.IMAGE);;
-				}
-	            item.setRelatedInfoList(info.getRelatedItems());
-	            items.add(item); 
-			}
-		}
-		
-		HorizontalListView listview = (HorizontalListView) findViewById(R.id.horizonListview);
-		listview.setAdapter(new ItemListAdapterSmall(this, items));
+                if (fileType == MediaInfo.FileType.Audio)
+                {
+                    item.setType(Item.AUDIO);
+                    item.setLink(info.getFilePath());
+                } else if (fileType == MediaInfo.FileType.Video)
+                {
+                    item.setType(Item.VIDEO);
+                    item.setLink(info.getFilePath());
+                } else if (fileType == MediaInfo.FileType.Image)
+                {
+                    item.setType(Item.IMAGE);
+                    item.setLink(info.getFilePath());
+                    item.setCaption(info.getCaption());
+                }
+                item.setRelatedInfoList(info.getRelatedItems());
+                items.add(item);
+            }
+            ((HorizontalListView) findViewById(R.id.horizonListview)).setAdapter(new ItemListAdapterSmall(this, items));
+        }
 		
 		TimeoutManager tom = new TimeoutManager(this, title);
 		videoView.postDelayed(tom, 300000);

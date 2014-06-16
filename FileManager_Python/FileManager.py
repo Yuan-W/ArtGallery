@@ -539,7 +539,7 @@ class ItemEditDialog(wx.Dialog):
         armature = self.cbx_armature.GetValue()
         order = self.num_order.GetValue()
         if not (title and fileName and summary and description and thumbnail and armature):
-            wx.MessageBox('Invalid item.', 'Error', wx.OK|wx.ICON_ERROR, self)
+            wx.MessageBox('Invalid item. Please fill out all fields.', 'Error', wx.OK|wx.ICON_ERROR, self)
             return
         armature_dir = os.path.join(self.dbxPath, armature)
         if self.filePath is not None:

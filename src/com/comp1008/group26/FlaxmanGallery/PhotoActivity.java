@@ -79,24 +79,19 @@ public class PhotoActivity extends Activity implements OnClickListener
 
         DatabaseHandler databaseHandler = new DatabaseHandler(this);
         String relatedItemRaw = getIntent().getExtras().getString("relatedInfoList");
-        ArrayList<Item> items = new ArrayList<Item>();
-
-        if (!relatedItemRaw.trim().equals(""))
+        if(relatedItemRaw.trim().equals(""))
         {
+            findViewById(R.id.relatedLabel).setVisibility(View.INVISIBLE);
+            findViewById(R.id.horizontalDivisor).setVisibility(View.INVISIBLE);
+            findViewById(R.id.horizonListview).setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            ArrayList<Item> items = new ArrayList<Item>();
             String[] relatedList = relatedItemRaw.split(",");
             for (String relatedItem : relatedList)
             {
                 MediaInfo info = databaseHandler.getMediaInfo(relatedItem);
-
-//                String msg = "\nRelatedID: " + info.getId() + ",\nTitle: "
-//                        + info.getTitle() + ",\nName: " + info.getFileName()
-//                        + ",\nSummary: " + info.getSummary() + ",\nDescription: "
-//                        + info.getDescription() + ",\nThumbnail: "
-//                        + info.getThumbnailName() + ",\nPath: "
-//                        + info.getFilePath() + ",\nRelated: "
-//                        + info.getRelatedItems() + ",\nIsOnHome: "
-//                        + info.getIsOnHomeGrid() + "\n\n";
-//                System.out.println(msg);
                 MediaInfo.FileType fileType = info.getFileType();
 
                 Item item = new Item();
@@ -122,9 +117,13 @@ public class PhotoActivity extends Activity implements OnClickListener
                 item.setRelatedInfoList(info.getRelatedItems());
                 items.add(item);
             }
+            ((HorizontalListView) findViewById(R.id.horizonListview)).setAdapter(new ItemListAdapterSmall(this, items));
         }
 
-        ((HorizontalListView) findViewById(R.id.horizonListview)).setAdapter(new ItemListAdapterSmall(this, items));
+        if(title.startsWith("Partner"))
+        {
+            findViewById(R.id.remind).setVisibility(View.INVISIBLE);
+        }
 
         TimeoutManager tom = new TimeoutManager(this, this.title);
         imageView.postDelayed(tom, 300000);
