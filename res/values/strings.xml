@@ -10,7 +10,7 @@
     <string name="title_activity_audio">AudioActivity</string>
     <string name="title_activity_photo">PhotoActivity</string>
     <string name="dev_names">By Mateo Inchaurrandieta, Yuan Wei and Sze Nga Ho.</string>
-    <string name="copyright">© 2014 Hydar Dewachi. All rights reserved.</string>
+    <string name="copyright">© 2014 UCL Art Museum. All rights reserved.</string>
     <string name="title_activity_video_player">VideoPlayerActivity</string>
 	<string name="title_activity_text">TextActivity</string>
     <string name="title_activity_about">AboutActivity</string>

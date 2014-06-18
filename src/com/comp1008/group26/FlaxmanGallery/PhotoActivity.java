@@ -215,6 +215,13 @@ public class PhotoActivity extends Activity implements OnClickListener
                     findViewById(R.id.relatedLabel).setVisibility(View.VISIBLE);
                     findViewById(R.id.horizontalDivisor).setVisibility(View.VISIBLE);
                     findViewById(R.id.horizonListview).setVisibility(View.VISIBLE);
+                    String relatedItemRaw = getIntent().getExtras().getString("relatedInfoList");
+                    if(relatedItemRaw.trim().equals(""))
+                    {
+                        findViewById(R.id.relatedLabel).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.horizontalDivisor).setVisibility(View.INVISIBLE);
+                        findViewById(R.id.horizonListview).setVisibility(View.INVISIBLE);
+                    }
                 }
 
                 isPlay = !isPlay;

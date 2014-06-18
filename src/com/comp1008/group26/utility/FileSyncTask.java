@@ -157,7 +157,7 @@ public class FileSyncTask extends AsyncTask<Void, String, List<MediaInfo>>
                 }
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd_HHmmss");
                 String currentDateTime = dateFormat.format(new Date());
-                DbxFile logFile = fs.create(new DbxPath("Log_" + currentDateTime + ".csv"));
+                DbxFile logFile = fs.create(new DbxPath("Log/Log_" + currentDateTime + ".csv"));
                 FileOutputStream outputStream = logFile.getWriteStream();
                 File localFile = new File(Environment.getExternalStorageDirectory(), "usageLog.csv");
                 FileInputStream inputStream = new FileInputStream(localFile);

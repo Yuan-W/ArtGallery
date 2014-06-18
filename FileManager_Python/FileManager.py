@@ -16,6 +16,8 @@ from dbxDatabase import *
 
 ID_UNLINK = wx.NewId()
 
+VERSION_NO = 'V1.01'
+
 #----------------------------------------------------------------------------
 
 class MainFrame(wx.Frame):
@@ -110,7 +112,7 @@ class MainFrame(wx.Frame):
         # self.SetSizeHints(250, 200)
         self.SetSize(wx.Size(600, 400))
 
-        self.SetTitle('File Manager')
+        self.SetTitle('File Manager ' + VERSION_NO)
 
         self.needSave = False
 

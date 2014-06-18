@@ -89,8 +89,9 @@ public class MainActivity extends Activity implements View.OnClickListener {
 		List<DbxFileInfo> folderList = DbxFileSystem.forAccount(
 				mDbxAcctMgr.getLinkedAccount()).listFolder(DbxPath.ROOT);
 		List<String> list = new ArrayList<String>();
-		for (DbxFileInfo info : folderList) {
-            if(info.isFolder)
+		for (DbxFileInfo info : folderList)
+        {
+            if(info.isFolder && !info.path.getName().startsWith("Log"))
                 list.add(info.path.getName());
 		}
         CharSequence[] charSequence = list.toArray(new CharSequence[list.size()]);

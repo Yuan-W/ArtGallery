@@ -220,6 +220,10 @@ public class VideoActivity extends Activity implements OnClickListener,
 			findViewById(R.id.home).setVisibility(View.INVISIBLE);
             findViewById(R.id.fontsize).setVisibility(View.INVISIBLE);
 			findViewById(R.id.horizonListview).setVisibility(View.INVISIBLE);
+            String relatedItemRaw = getIntent().getExtras().getString("relatedInfoList");
+            findViewById(R.id.relatedLabel).setVisibility(View.INVISIBLE);
+            findViewById(R.id.horizontalDivisor).setVisibility(View.INVISIBLE);
+            findViewById(R.id.horizonListview).setVisibility(View.INVISIBLE);
 
 		} else {
 			UsageLog.getInstance().writeEvent(Action.PAUSE, this.title);
@@ -238,6 +242,16 @@ public class VideoActivity extends Activity implements OnClickListener,
 			layoutParams.width = own_w;
 			layoutParams.height = own_h;
 			videoView.setLayoutParams(layoutParams);
+            findViewById(R.id.relatedLabel).setVisibility(View.VISIBLE);
+            findViewById(R.id.horizontalDivisor).setVisibility(View.VISIBLE);
+            findViewById(R.id.horizonListview).setVisibility(View.VISIBLE);
+            String relatedItemRaw = getIntent().getExtras().getString("relatedInfoList");
+            if(relatedItemRaw.trim().equals(""))
+            {
+                findViewById(R.id.relatedLabel).setVisibility(View.INVISIBLE);
+                findViewById(R.id.horizontalDivisor).setVisibility(View.INVISIBLE);
+                findViewById(R.id.horizonListview).setVisibility(View.INVISIBLE);
+            }
 		}
 
 		isPlay = !isPlay;
